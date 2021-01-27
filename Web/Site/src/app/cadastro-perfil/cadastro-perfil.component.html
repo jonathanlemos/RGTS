@@ -1,0 +1,15 @@
+<div class="container" style="margin-top: 50px;">
+    <form class="row g-3" [formGroup]="perfilFormulario" (submit)="SalvarPerfil()">
+      <div class="col-md-6">
+        <label for="PerfilId" class="form-label">Nome</label>
+        <input type="text" formControlName="Nome" class="form-control" id="PerfilId">
+      </div>
+      <div class="col-md-6">
+        <label for="DescricaoId" class="form-label">Descrição</label>
+        <input type="text" formControlName="Descricao" class="form-control" id="DescricaoId">
+      </div>
+      <div class="col-12">
+        <button type="submit" [disabled]="!perfilFormulario.valid" class="btn btn-primary">Salvar</button>
+      </div>
+    </form>
+</div>

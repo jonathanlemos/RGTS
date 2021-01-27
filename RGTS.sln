@@ -1,0 +1,79 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30907.101
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1 - Apresentação", "1 - Apresentação", "{EC82B2C7-D4CC-40BB-93E1-EB8F43C4B324}"
+EndProject
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "Site", "Web\Site\", "{297D5748-CC18-41EB-917E-9120E06A099E}"
+	ProjectSection(WebsiteProperties) = preProject
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.0"
+		Debug.AspNetCompiler.VirtualPath = "/localhost_56060"
+		Debug.AspNetCompiler.PhysicalPath = "Web\Site\"
+		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_56060\"
+		Debug.AspNetCompiler.Updateable = "true"
+		Debug.AspNetCompiler.ForceOverwrite = "true"
+		Debug.AspNetCompiler.FixedNames = "false"
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.VirtualPath = "/localhost_56060"
+		Release.AspNetCompiler.PhysicalPath = "Web\Site\"
+		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_56060\"
+		Release.AspNetCompiler.Updateable = "true"
+		Release.AspNetCompiler.ForceOverwrite = "true"
+		Release.AspNetCompiler.FixedNames = "false"
+		Release.AspNetCompiler.Debug = "False"
+		VWDPort = "56060"
+		SlnRelativePath = "Web\Site\"
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3 - Dominio", "3 - Dominio", "{C1AC10AE-E0EA-40BF-9A6F-1D144A6C4441}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2 - Aplicação", "2 - Aplicação", "{E17BC97F-B93F-42F1-BE48-874FE45B9387}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4 - Infra", "4 - Infra", "{350AB3DE-19CA-46FA-BB22-6B902964AF97}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4.1 - Data", "4.1 - Data", "{C42B7A3A-811F-4C1F-B15F-CAF35709FE01}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dominio", "Dominio\Dominio.csproj", "{06D357A2-2829-46CE-96E5-0039E9ECF367}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infra.Data", "Infra.Data\Infra.Data.csproj", "{56B1034E-1988-4FB6-AF8A-BC9E69CAC8CB}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RGTS.API", "RGTS.API\RGTS.API.csproj", "{2835B094-C9A5-46EC-9896-150C84C5C056}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{297D5748-CC18-41EB-917E-9120E06A099E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{297D5748-CC18-41EB-917E-9120E06A099E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{297D5748-CC18-41EB-917E-9120E06A099E}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{297D5748-CC18-41EB-917E-9120E06A099E}.Release|Any CPU.Build.0 = Debug|Any CPU
+		{06D357A2-2829-46CE-96E5-0039E9ECF367}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{06D357A2-2829-46CE-96E5-0039E9ECF367}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{06D357A2-2829-46CE-96E5-0039E9ECF367}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{06D357A2-2829-46CE-96E5-0039E9ECF367}.Release|Any CPU.Build.0 = Release|Any CPU
+		{56B1034E-1988-4FB6-AF8A-BC9E69CAC8CB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{56B1034E-1988-4FB6-AF8A-BC9E69CAC8CB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{56B1034E-1988-4FB6-AF8A-BC9E69CAC8CB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{56B1034E-1988-4FB6-AF8A-BC9E69CAC8CB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2835B094-C9A5-46EC-9896-150C84C5C056}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2835B094-C9A5-46EC-9896-150C84C5C056}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2835B094-C9A5-46EC-9896-150C84C5C056}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2835B094-C9A5-46EC-9896-150C84C5C056}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{297D5748-CC18-41EB-917E-9120E06A099E} = {EC82B2C7-D4CC-40BB-93E1-EB8F43C4B324}
+		{C42B7A3A-811F-4C1F-B15F-CAF35709FE01} = {350AB3DE-19CA-46FA-BB22-6B902964AF97}
+		{06D357A2-2829-46CE-96E5-0039E9ECF367} = {C1AC10AE-E0EA-40BF-9A6F-1D144A6C4441}
+		{56B1034E-1988-4FB6-AF8A-BC9E69CAC8CB} = {C42B7A3A-811F-4C1F-B15F-CAF35709FE01}
+		{2835B094-C9A5-46EC-9896-150C84C5C056} = {E17BC97F-B93F-42F1-BE48-874FE45B9387}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F6230436-81FE-4931-B100-9F499BDB6180}
+	EndGlobalSection
+EndGlobal
