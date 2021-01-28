@@ -62,7 +62,7 @@ namespace Infra.Data.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasColumnName("Id")
+                        .HasColumnName("PerfilId")
                         .UseIdentityColumn();
 
                     b.Property<string>("Descricao")
@@ -85,8 +85,10 @@ namespace Infra.Data.Migrations
             modelBuilder.Entity("Dominio.Entidades.Permissao", b =>
                 {
                     b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasColumnName("Id");
+                        .HasColumnName("PermissaoId")
+                        .UseIdentityColumn();
 
                     b.Property<string>("Descricao")
                         .IsRequired()
@@ -129,7 +131,7 @@ namespace Infra.Data.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasColumnName("Id")
+                        .HasColumnName("UsuarioId")
                         .UseIdentityColumn();
 
                     b.Property<bool>("Ativo")
@@ -179,6 +181,12 @@ namespace Infra.Data.Migrations
                         .HasColumnType("int")
                         .HasColumnName("Numero");
 
+                    b.Property<int?>("PerfilId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("PermissaoId")
+                        .HasColumnType("int");
+
                     b.Property<string>("PrimeiroNome")
                         .IsRequired()
                         .HasMaxLength(10)
@@ -197,18 +205,56 @@ namespace Infra.Data.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("PerfilId");
+
+                    b.HasIndex("PermissaoId");
+
                     b.ToTable("Usuario");
                 });
 
-            modelBuilder.Entity("Dominio.Entidades.Permissao", b =>
+            modelBuilder.Entity("PerfilPermissao", b =>
+                {
+                    b.Property<int>("ListaPerfilId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ListaPermissaoId")
+                        .HasColumnType("int");
+
+                    b.HasKey("ListaPerfilId", "ListaPermissaoId");
+
+                    b.HasIndex("ListaPermissaoId");
+
+                    b.ToTable("PerfilPermissao");
+                });
+
+            modelBuilder.Entity("Dominio.Entidades.Usuario", b =>
                 {
                     b.HasOne("Dominio.Entidades.Perfil", "Perfil")
                         .WithMany()
-                        .HasForeignKey("Id")
+                        .HasForeignKey("PerfilId");
+
+                    b.HasOne("Dominio.Entidades.Permissao", "Permissao")
+                        .WithMany()
+                        .HasForeignKey("PermissaoId");
+
+                    b.Navigation("Perfil");
+
+                    b.Navigation("Permissao");
+                });
+
+            modelBuilder.Entity("PerfilPermissao", b =>
+                {
+                    b.HasOne("Dominio.Entidades.Perfil", null)
+                        .WithMany()
+                        .HasForeignKey("ListaPerfilId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Perfil");
+                    b.HasOne("Dominio.Entidades.Permissao", null)
+                        .WithMany()
+                        .HasForeignKey("ListaPermissaoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

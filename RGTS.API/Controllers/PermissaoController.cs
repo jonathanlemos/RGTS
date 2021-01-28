@@ -1,26 +1,41 @@
-﻿using Dominio.Interfaces.Servicos;
-using Microsoft.AspNetCore.Http;
+﻿using Dominio.Entidades;
+using Dominio.Interfaces.Servicos;
+using Dominio.ValueType;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace RGTS.API.Controllers
 {
-    public class PermissaoController
+    [ApiController]
+    [Route("api/[controller]")]
+    public class PermissaoController : ControllerBase
     {
-        IUsuarioServico _usuarioServico;
+        IPermissaoServico _permissaoServico;
 
-        public PermissaoController(IUsuarioServico usuarioServico)
+        public PermissaoController(IPermissaoServico permissaoServico)
         {
-            _usuarioServico = usuarioServico;
+            _permissaoServico = permissaoServico;
         }
 
+        [HttpGet]
         public IActionResult Get(int id)
         {
             //return Request. _usuarioServico.GetById(id);
             return null;
+        }
+
+        [HttpPost]
+        public ActionResult<NotificacaoPost> Post(Permissao perfil)
+        {
+            try
+            {
+                _permissaoServico.SalvarPermissao(perfil);
+                return new NotificacaoPost();
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
         }
     }
 }

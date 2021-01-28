@@ -6,9 +6,10 @@ using System.Text;
 
 namespace Dominio.Entidades
 {
+    [Table("Permissao")]
     public class Permissao
     {
-        [Column("Id", TypeName = "int")]
+        [Column("PermissaoId", TypeName = "int")]
         [Key]
         [Required]
         public int Id { get; set; }
@@ -23,11 +24,15 @@ namespace Dominio.Entidades
         [Required]
         public string Descricao { get; set; }
 
-        //[Column("PerfilId", TypeName = "int")]
+        //[ForeignKey("Perfil")]
+        //public int? PerfilId { get; set; }
+
+        //[Column("Perfil", TypeName = "int")]
         //[ForeignKey("Perfil")]
         //public Perfil Perfil { get; set; }
 
-        [NotMapped]
+        //[NotMapped]
+        //[ForeignKey("Perfil")]
         public ICollection<Perfil> ListaPerfil { get; set; }
     }
 }

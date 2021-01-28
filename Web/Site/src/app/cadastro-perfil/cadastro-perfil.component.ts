@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { PerfilService } from '../Servicos/Perfil/perfil-service';
+import { PerfilService } from '../Servicos/Perfil/perfil.service';
 
 @Component({
   selector: 'app-cadastro-perfil',

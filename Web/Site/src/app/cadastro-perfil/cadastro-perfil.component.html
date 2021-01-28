@@ -6,7 +6,7 @@
       </div>
       <div class="col-md-6">
         <label for="DescricaoId" class="form-label">Descrição</label>
-        <input type="text" formControlName="Descricao" class="form-control" id="DescricaoId">
+        <textarea class="form-control" formControlName="Descricao" class="form-control" id="DescricaoId" rows="3"></textarea>
       </div>
       <div class="col-12">
         <button type="submit" [disabled]="!perfilFormulario.valid" class="btn btn-primary">Salvar</button>

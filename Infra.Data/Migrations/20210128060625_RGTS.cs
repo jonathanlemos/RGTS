@@ -37,14 +37,28 @@ namespace Infra.Data.Migrations
                 name: "Perfil",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    PerfilId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Nome = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Descricao = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Perfil", x => x.Id);
+                    table.PrimaryKey("PK_Perfil", x => x.PerfilId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Permissao",
+                columns: table => new
+                {
+                    PermissaoId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Nome = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Descricao = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Permissao", x => x.PermissaoId);
                 });
 
             migrationBuilder.CreateTable(
@@ -61,10 +75,34 @@ namespace Infra.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "PerfilPermissao",
+                columns: table => new
+                {
+                    ListaPerfilId = table.Column<int>(type: "int", nullable: false),
+                    ListaPermissaoId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PerfilPermissao", x => new { x.ListaPerfilId, x.ListaPermissaoId });
+                    table.ForeignKey(
+                        name: "FK_PerfilPermissao_Perfil_ListaPerfilId",
+                        column: x => x.ListaPerfilId,
+                        principalTable: "Perfil",
+                        principalColumn: "PerfilId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_PerfilPermissao_Permissao_ListaPermissaoId",
+                        column: x => x.ListaPermissaoId,
+                        principalTable: "Permissao",
+                        principalColumn: "PermissaoId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Usuario",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    UsuarioId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Email = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Senha = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
@@ -78,31 +116,41 @@ namespace Infra.Data.Migrations
                     Cep = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: true),
                     SexoId = table.Column<int>(type: "int", nullable: false),
                     DtCadastro = table.Column<DateTime>(type: "datetime", nullable: false),
-                    Ativo = table.Column<bool>(type: "bit", nullable: false)
+                    Ativo = table.Column<bool>(type: "bit", nullable: false),
+                    PerfilId = table.Column<int>(type: "int", nullable: true),
+                    PermissaoId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Usuario", x => x.Id);
+                    table.PrimaryKey("PK_Usuario", x => x.UsuarioId);
+                    table.ForeignKey(
+                        name: "FK_Usuario_Perfil_PerfilId",
+                        column: x => x.PerfilId,
+                        principalTable: "Perfil",
+                        principalColumn: "PerfilId",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Usuario_Permissao_PermissaoId",
+                        column: x => x.PermissaoId,
+                        principalTable: "Permissao",
+                        principalColumn: "PermissaoId",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
-            migrationBuilder.CreateTable(
-                name: "Permissao",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false),
-                    Nome = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    Descricao = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Permissao", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Permissao_Perfil_Id",
-                        column: x => x.Id,
-                        principalTable: "Perfil",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
+            migrationBuilder.CreateIndex(
+                name: "IX_PerfilPermissao_ListaPermissaoId",
+                table: "PerfilPermissao",
+                column: "ListaPermissaoId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Usuario_PerfilId",
+                table: "Usuario",
+                column: "PerfilId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Usuario_PermissaoId",
+                table: "Usuario",
+                column: "PermissaoId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -114,7 +162,7 @@ namespace Infra.Data.Migrations
                 name: "Estado");
 
             migrationBuilder.DropTable(
-                name: "Permissao");
+                name: "PerfilPermissao");
 
             migrationBuilder.DropTable(
                 name: "Sexo");
@@ -124,6 +172,9 @@ namespace Infra.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "Perfil");
+
+            migrationBuilder.DropTable(
+                name: "Permissao");
         }
     }
 }

@@ -7,6 +7,6 @@ namespace Dominio.Interfaces.Servicos
 {
     public interface IPermissaoServico : IServicoBase<Permissao>
     {
-
+        void SalvarPermissao(Permissao perfil);
     }
 }

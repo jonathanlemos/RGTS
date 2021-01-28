@@ -9,13 +9,15 @@ import { CadastroUsuarioComponent } from './cadastro-usuario/cadastro-usuario.co
 import { MenuSuperiorComponent } from './menu-superior/menu-superior.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CadastroPerfilComponent } from './cadastro-perfil/cadastro-perfil.component';
+import { CadastroPermissaoComponent } from './cadastro-permissao/cadastro-permissao.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     CadastroUsuarioComponent,
     MenuSuperiorComponent,
-    CadastroPerfilComponent
+    CadastroPerfilComponent,
+    CadastroPermissaoComponent
   ],
   imports: [
     BrowserModule,

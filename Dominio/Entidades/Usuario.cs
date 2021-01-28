@@ -41,7 +41,7 @@ namespace Dominio.Entidades
             this.SexoId = sexoId;
         }
 
-        [Column("Id", TypeName = "int")]
+        [Column("UsuarioId", TypeName = "int")]
         [Key]
         [Required]
         public int Id { get; set; }
@@ -108,15 +108,16 @@ namespace Dominio.Entidades
         [Required]
         public Boolean Ativo { get; set; }
 
-        //[NotMapped]
+        //[ForeignKey("Perfil")]
         //public List<Perfil> ListaPerfil { get; set; }
 
-        //[NotMapped]
+        //[ForeignKey("Perfil")]
+        public Perfil Perfil { get; set; }
+
+        //[ForeignKey("Permissao")]
         //public List<Permissao> ListaPermissao { get; set; }
 
-        //public Boolean UsuarioAtivoUltimoAno(Usuario usuario)
-        //{            
-        //    return (usuario.Ativo && (usuario.DataCadastro.Year <= DateTime.Now.Year - 1));
-        //}
+        //[ForeignKey("Permissao")]
+        public Permissao Permissao { get; set; }
     }
 }

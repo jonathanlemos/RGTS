@@ -9,7 +9,7 @@ namespace Dominio.Entidades
     [Table("Perfil")]
     public class Perfil
     {
-        [Column("Id", TypeName = "int")]
+        [Column("PerfilId", TypeName = "int")]
         [Key]
         [Required]
         public int Id { get; set; }
@@ -24,7 +24,8 @@ namespace Dominio.Entidades
         [Required]
         public string Descricao { get; set; }
 
-        [NotMapped]
+        //[NotMapped]
+        //[ForeignKey("Permissao")]
         public ICollection<Permissao> ListaPermissao { get; set; }
     }
 }

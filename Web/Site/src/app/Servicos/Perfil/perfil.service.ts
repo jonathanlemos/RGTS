@@ -2,10 +2,10 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
-import { NotificacaoDelete } from '../../Entidades/notificacao-delete';
-import { NotificacaoPost } from '../../Entidades/notificacao-post';
-import { NotificacaoPut } from '../../Entidades/notificacao-put';
-import { Perfil } from '../../Entidades/Perfil';
+import { NotificacaoDelete } from '../../Models/notificacao-delete';
+import { NotificacaoPost } from '../../Models/notificacao-post';
+import { NotificacaoPut } from '../../Models/notificacao-put';
+import { Perfil } from '../../Models/Perfil';
 
 @Injectable({
   providedIn: 'root'

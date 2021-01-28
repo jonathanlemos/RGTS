@@ -16,5 +16,10 @@ namespace Dominio.Serviços
         {
             _permissaoRepositorio = permissaoRepositorio;
         }
+
+        public void SalvarPermissao(Permissao perfil)
+        {
+            _permissaoRepositorio.Add(perfil);
+        } 
     }
 }
