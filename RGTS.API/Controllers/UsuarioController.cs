@@ -1,5 +1,6 @@
 ﻿using Dominio.Entidades;
 using Dominio.Interfaces.Repositorios;
+using Dominio.Interfaces.Servicos;
 using Dominio.ValueType;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -15,20 +16,19 @@ namespace RGTS.API.Controllers
     [Route("api/[controller]")]
     public class UsuarioController : ControllerBase
     {
-        IUsuarioRepositorio _usuarioRepositorio;
+        IUsuarioServico _usuarioServico;
 
-        public UsuarioController(IUsuarioRepositorio usuarioRepositorio)
+        public UsuarioController(IUsuarioServico usuarioServico)
         {
-            _usuarioRepositorio = usuarioRepositorio;
+            _usuarioServico = usuarioServico;
         }
 
-        [HttpGet("usuario/Get/{id}")]
+        [HttpGet("{id}")]
         public ActionResult<Usuario> Get(int id)
         {
             try
             {
-                //return Ok(_usuarioRepositorio.GetById(id));
-                return _usuarioRepositorio.GetById(id);
+                return _usuarioServico.GetById(id);
             }
             catch(Exception e)
             {
@@ -37,15 +37,27 @@ namespace RGTS.API.Controllers
             
         }
 
+        [HttpGet]
+        public Usuario[] Get()
+        {
+            try
+            {
+                //return Ok(_usuarioRepositorio.GetById(id));
+                return _usuarioServico.GetAll().ToArray();
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
+
+        }
+
         public ActionResult<NotificacaoPost> Post(Usuario usuario)
         {
             NotificacaoPost notificacaoPost = new NotificacaoPost();
             try
             {
-                _usuarioRepositorio.CadastrarNovoUsuario(usuario);
-                
-                notificacaoPost.Sucesso = true;
-                notificacaoPost.Mensagem = "Salvo com sucesso.";
+                _usuarioServico.CadastrarNovoUsuario(usuario);                
                 return notificacaoPost;
             }
             catch(Exception e)
@@ -55,5 +67,7 @@ namespace RGTS.API.Controllers
                 return notificacaoPost;
             }
         }
+
+
     }
 }

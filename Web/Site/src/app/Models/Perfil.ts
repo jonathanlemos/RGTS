@@ -1,8 +1,8 @@
 import { Permissao } from "./Permissao";
 
 export class Perfil {
-    Id: number | undefined;
-    Nome: string | undefined;
-    Descricao: string | undefined;
-    ListaPermissao: Permissao[] | undefined;
+    id: number | undefined;
+    nome: string | undefined;
+    descricao: string | undefined;
+    listaPermissao: Permissao[] | undefined;
   }

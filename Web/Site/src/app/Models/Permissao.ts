@@ -1,9 +1,9 @@
 import { Perfil } from "./Perfil";
 
 export class Permissao {
-    Id: number | undefined;
-    Nome: string | undefined;
-    Descricao: string | undefined;
-    Perfil: Perfil | undefined;
-    ListaPerfil: Perfil[] | undefined;
+    id: number | undefined;
+    nome: string | undefined;
+    descricao: string | undefined;
+    perfil: Perfil | undefined;
+    listaPerfil: Perfil[] | undefined;
   } 

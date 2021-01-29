@@ -16,5 +16,10 @@ namespace Dominio.Serviços
         {
             _usuarioRepositorio = usuarioRepositorio;
         }
+
+        public void CadastrarNovoUsuario(Usuario usuario)
+        {
+            _usuarioRepositorio.CadastrarNovoUsuario(usuario);
+        }
     }
 }

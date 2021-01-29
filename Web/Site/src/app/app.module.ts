@@ -5,19 +5,19 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { CadastroUsuarioComponent } from './cadastro-usuario/cadastro-usuario.component';
+import { UsuarioComponent } from './usuario/usuario.component';
 import { MenuSuperiorComponent } from './menu-superior/menu-superior.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { CadastroPerfilComponent } from './cadastro-perfil/cadastro-perfil.component';
-import { CadastroPermissaoComponent } from './cadastro-permissao/cadastro-permissao.component';
+import { PerfilComponent } from './perfil/perfil.component';
+import { PermissaoComponent } from './permissao/permissao.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    CadastroUsuarioComponent,
+    UsuarioComponent,
     MenuSuperiorComponent,
-    CadastroPerfilComponent,
-    CadastroPermissaoComponent
+    PerfilComponent,
+    PermissaoComponent
   ],
   imports: [
     BrowserModule,

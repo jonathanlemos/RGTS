@@ -17,11 +17,11 @@ export class UsuarioService {
   constructor(private http: HttpClient) { }
 
   getAll() : Observable<Usuario[]> {
-    return this.http.get<Usuario[]>(this.urlBase + '/GetAll');
+    return this.http.get<Usuario[]>(this.urlBase);
   }
 
   getId(id: number) : Observable<Usuario>{
-    return this.http.get<Usuario>(this.urlBase + '/GetId/'+ id);
+    return this.http.get<Usuario>(this.urlBase + '/'+ id);
   }
 
   //salvar

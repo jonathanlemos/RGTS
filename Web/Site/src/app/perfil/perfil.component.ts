@@ -4,10 +4,10 @@ import { PerfilService } from '../Servicos/Perfil/perfil.service';
 
 @Component({
   selector: 'app-cadastro-perfil',
-  templateUrl: './cadastro-perfil.component.html',
-  styleUrls: ['./cadastro-perfil.component.css']
+  templateUrl: './perfil.component.html',
+  styleUrls: ['./perfil.component.css']
 })
-export class CadastroPerfilComponent implements OnInit {
+export class PerfilComponent implements OnInit {
 
   constructor(private fb: FormBuilder, private perfilService:PerfilService ) { 
     this.Formulario();

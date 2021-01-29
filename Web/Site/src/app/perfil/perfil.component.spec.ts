@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CadastroPerfilComponent } from './cadastro-perfil.component';
+import { PerfilComponent } from './perfil.component';
 
-describe('CadastroPerfilComponent', () => {
-  let component: CadastroPerfilComponent;
-  let fixture: ComponentFixture<CadastroPerfilComponent>;
+describe('PerfilComponent', () => {
+  let component: PerfilComponent;
+  let fixture: ComponentFixture<PerfilComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ CadastroPerfilComponent ]
+      declarations: [ PerfilComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CadastroPerfilComponent);
+    fixture = TestBed.createComponent(PerfilComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

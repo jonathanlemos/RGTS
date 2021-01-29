@@ -1,16 +1,17 @@
 export class Usuario {
-  Id: number | undefined;
-  Email: string | undefined;
-  Senha: string | undefined;
-  PrimeiroNome: string | undefined;
-  NomeCompleto: string | undefined;
-  Endereco: string | undefined;
-  Complemento: string | undefined;
-  Numero: number | undefined;
-  CidadeId: number | undefined;
-  EstadoId: number | undefined;
-  Cep: string | undefined;
-  SexoId: number | undefined;
-  DataCadastro: Date | undefined;
-  Ativo: Boolean | undefined;
+  id: number | undefined;
+  email: string | undefined;
+  senha: string | undefined;
+  primeiroNome: string | undefined;
+  nomeCompleto: string | undefined;
+  endereco: string | undefined;
+  complemento: string | undefined;
+  numero: number | undefined;
+  cidadeId: number | undefined;
+  estadoId: number | undefined;
+  cep: string | undefined;
+  sexoId: number | undefined;
+  dataCadastro: Date | undefined;
+  ativo: Boolean | undefined;
+  tipoPessoa: string | undefined;
 }
