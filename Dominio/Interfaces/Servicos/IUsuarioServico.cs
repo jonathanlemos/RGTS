@@ -7,6 +7,8 @@ namespace Dominio.Interfaces.Servicos
 {
     public interface IUsuarioServico : IServicoBase<Usuario>
     {
-        public void CadastrarNovoUsuario(Usuario usuario);
+        public void CadastrarUsuario(Usuario usuario);
+
+        public void AtualizarUsuarios(Usuario[] usuario);
     }
 }

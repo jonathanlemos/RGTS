@@ -1,9 +1,14 @@
-import { Component, OnInit, ElementRef, HostListener, Input } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router'
 
 import { Usuario } from '../Models/Usuario';
 import { UsuarioService } from '../Servicos/Usuario/usuario.service';
-import { ActivatedRoute } from '@angular/router'
+
+import { Table } from 'primeng/table';
+
+import jsPDF from 'jspdf';
+import autoTable from 'jspdf-autotable';
 
 @Component({
   selector: 'app-usuario',
@@ -12,55 +17,53 @@ import { ActivatedRoute } from '@angular/router'
 })
 export class UsuarioComponent implements OnInit {
 
-  constructor(private fb: FormBuilder, private usuarioService: UsuarioService, private _route: ActivatedRoute, private eRef: ElementRef)
-  {
+  constructor(private fb: FormBuilder, private usuarioService: UsuarioService,
+    private _route: ActivatedRoute) {
     this.Formulario();
+
   }
 
   ngOnInit(): void {
-    
+
     this._route.queryParams.subscribe(params => {
-        this.tipoTela = params['tipoTela'];
+      this.tipoTela = params['tipoTela'];
     });
 
-    if(this.tipoTela == "consulta") this.CarregarUsuarios();
+    if (this.tipoTela == "consultar" || this.tipoTela == "editar") this.CarregarUsuarios();
 
   }
 
-  public usuarioFormulario: FormGroup;
-  public _usuarios : Usuario[];
-  public usuarioEditado : Usuario;
-  public tipoTela : string;
-  public editar: boolean = true;
-  public editarIndex: number;
+  @ViewChild('primeNgTabelaConsultaUsuarios') pTableRef: Table;
+  ngAfterViewInit() {
+    
+    if (this.tipoTela == "consultar" || this.tipoTela == "editar"){
+      const table = this.pTableRef.el.nativeElement.querySelector('table');
+      table.setAttribute('id', 'tabelaConsultaUsuarios');
+    }
+  }
+
+  usuarioFormulario: FormGroup;
+  usuarios: Usuario[];
+  tipoTela: string;
+  loading: boolean = true;
+  _primeiroNomes: Usuario[];
+  _primeiroNomesSelecionado: Usuario[];
 
   CarregarUsuarios() {
+
     this.usuarioService.getAll().subscribe(
       (usuarios: Usuario[]) => {
-        this._usuarios = usuarios;
+        this.loading = false;
+
+        this.usuarios = usuarios;
       },
       (erro: any) => {
-        console.log("Erro ao carregar os alunos.");
+        console.log("Erro ao carregar os usuarios. Erro: " + erro);
       }
     );
   }
 
-  EditarUsuario($event, i){
-    debugger
-    this.editar = !this.editar;
-    this.editarIndex = i;
-    // this.usuarioService.getId(id).subscribe(
-    //   (usuario: Usuario) => {
-    //     debugger
-    //     this._usuario = usuario;
-    //   },
-    //   (erro: any) => {
-    //     console.log("Erro ao carregar os alunos.");
-    //   }
-    // );  
-  }
-
-  Formulario() {
+  Formulario(): void {
     this.usuarioFormulario = this.fb.group(
       {
         Id: [0],
@@ -78,45 +81,55 @@ export class UsuarioComponent implements OnInit {
       });
   }
 
-  SalvarUsuarioEditado() {
-    debugger
-    this.usuarioService.post(this.usuarioEditado).subscribe(
-      (success) => {
-        console.log("Ok.");
-      },
-      (erro: any) => {
-        console.log("Erro ao carregar os alunos.");
-      }
-    );
-  }
-
   SalvarUsuarioFormularioCadastro() {
-
     this.usuarioService.post(this.usuarioFormulario.value).subscribe(
       (success) => {
         console.log("Ok.");
       },
       (erro: any) => {
-        console.log("Erro ao carregar os alunos.");
+        console.log("Erro ao carregar os usuarios.");
       }
     );
   }
 
-  Teste(){
-    debugger
+  SalvarUsuarioEditado() {
+    this.usuarioService.postUsuarios(this.usuarios).subscribe(
+      (success) => {
+        console.log("Ok.");
+      },
+      (erro: any) => {
+        console.log("Erro ao carregar os usuarios.");
+      }
+    );
   }
 
-  @HostListener('document:click', ['$event'])
-  clickout(event) {
-    
-    //
-    if(this.eRef.nativeElement.contains(event.target)) {
-      //debugger
-      //this.editar = true;
-    } else {
-      debugger
-      //this.SalvarUsuarioEditado();
-    }
+  clear(table: Table) {
+    table.clear();
   }
 
+  exportPdf() {
+    const doc = new jsPDF()
+    autoTable(doc, { html: '#tabelaConsultaUsuarios' })
+    doc.save('table.pdf')
+  }
+
+  exportExcel() {
+    import("xlsx").then(xlsx => {
+      const worksheet = xlsx.utils.json_to_sheet(this.usuarios);
+      const workbook = { Sheets: { 'data': worksheet }, SheetNames: ['data'] };
+      const excelBuffer: any = xlsx.write(workbook, { bookType: 'xlsx', type: 'array' });
+      this.saveAsExcelFile(excelBuffer, "usuarios");
+    });
+  }
+
+  saveAsExcelFile(buffer: any, fileName: string): void {
+    import("file-saver").then(FileSaver => {
+      let EXCEL_TYPE = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
+      let EXCEL_EXTENSION = '.xlsx';
+      const data: Blob = new Blob([buffer], {
+        type: EXCEL_TYPE
+      });
+      FileSaver.saveAs(data, fileName + '_export_' + new Date().getTime() + EXCEL_EXTENSION);
+    });
+  }
 }

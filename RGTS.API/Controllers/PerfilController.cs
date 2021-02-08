@@ -1,5 +1,6 @@
 ﻿using Dominio.Entidades;
 using Dominio.Interfaces.Repositorios;
+using Dominio.Interfaces.Servicos;
 using Dominio.ValueType;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -15,24 +16,23 @@ namespace RGTS.API.Controllers
     [Route("api/[controller]")]
     public class PerfilController : ControllerBase
     {
-        IPerfilRepositorio _perfilRepositorio;
+        IPerfilServico _perfilServico;
 
-        public PerfilController(IPerfilRepositorio perfilRepositorio)
+        public PerfilController(IPerfilServico perfilServico)
         {
-            _perfilRepositorio = perfilRepositorio;
+            _perfilServico = perfilServico;
         }
 
         [HttpGet]
-        public ActionResult<List<Perfil>> Get()
+        public Perfil[] Get()
         {
             try
             {
-                //return new List<Perfil>() { new Perfil() { Id = 1, Descricao = "Teste" } };
-                return _perfilRepositorio.GetAll().ToList();
+                return _perfilServico.GetAll().ToArray();
             }
             catch (Exception e)
             {
-                return BadRequest(e.Message);
+                return null;
             }
         }
 
@@ -42,7 +42,7 @@ namespace RGTS.API.Controllers
             NotificacaoPost notificacaoPost = new NotificacaoPost();
             try
             {
-                _perfilRepositorio.Add(perfil);
+                _perfilServico.Add(perfil);
                 return notificacaoPost;
             }
             catch (Exception e)

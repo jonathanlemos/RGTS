@@ -1,0 +1,68 @@
+<!-- <nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container">
+    <div class="container-fluid">
+      <a class="navbar-brand" routerLink="dashboard">RGTS</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item">
+            <a class="nav-link" aria-current="page" routerLinkActive="active" routerLink="login">Login</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" aria-current="page" routerLinkActive="active" routerLink="usuario" [queryParams]="{tipoTela: 'cadastro'}" >Cadastrar pessoa</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" aria-current="page" routerLinkActive="active" routerLink="usuario" [queryParams]="{tipoTela: 'consultar'}" >Consultar pessoas</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" aria-current="page" routerLinkActive="active" routerLink="usuario" [queryParams]="{tipoTela: 'editar'}" >Editar pessoas</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" aria-current="page" routerLinkActive="active" routerLink="perfil">Cadastro perfil</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" aria-current="page" routerLinkActive="active" routerLink="permissao">Cadastro permissão</a>
+          </li>
+        </ul>
+        <ul class="navbar-nav" dropdown>
+          <li class="nav-item dropdown show">
+            <a id="navbarDropdownMenuLink" dropdownToggle class="nav-link dropdown-toggle"
+               role="button" style="cursor: pointer;" data-bs-toggle="dropdown" aria-expanded="false">
+              Sergio
+            </a>
+            <div id="dropdown-basic" *dropdownMenu class="dropdown-menu class show" aria-labelledby="navbarDropdownMenuLink">
+              <a class="dropdown-item" href="#">Perfil</a>
+              <a class="dropdown-item" href="#">Sair</a>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</nav> -->
+
+
+ <nav ngbNav #nav="ngbNav" class="nav-tabs">
+    <ng-container ngbNavItem>
+        <a class="navbar-brand" routerLink="dashboard">RGTS</a>
+        <a ngbNavLink>Usuario</a>
+        <ng-template ngbNavContent>
+          <app-usuario-menu></app-usuario-menu>
+        </ng-template>
+    </ng-container>
+    <ng-container ngbNavItem>
+        <a ngbNavLink>Perfil</a>
+        <ng-template ngbNavContent>
+          <app-perfil-menu></app-perfil-menu>
+        </ng-template>
+    </ng-container>
+    <ng-container ngbNavItem>
+        <a ngbNavLink>Permissão</a>
+        <ng-template ngbNavContent>
+          <a class="nav-link" aria-current="page" routerLinkActive="active" routerLink="permissao">Cadastro permissão</a>
+        </ng-template>
+    </ng-container>
+</nav>
+<div [ngbNavOutlet]="nav" class="mt-2"></div>

@@ -3,6 +3,7 @@ using Dominio.Interfaces.Servicos;
 using Dominio.ValueType;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Linq;
 
 namespace RGTS.API.Controllers
 {
@@ -18,10 +19,15 @@ namespace RGTS.API.Controllers
         }
 
         [HttpGet]
-        public IActionResult Get(int id)
+        public Permissao Get(int id)
         {
-            //return Request. _usuarioServico.GetById(id);
-            return null;
+            return _permissaoServico.GetById(id);
+        }
+
+        [HttpGet]
+        public Permissao[] Get()
+        {
+            return _permissaoServico.GetAll().ToArray();
         }
 
         [HttpPost]

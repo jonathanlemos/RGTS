@@ -17,9 +17,17 @@ namespace Dominio.Serviços
             _usuarioRepositorio = usuarioRepositorio;
         }
 
-        public void CadastrarNovoUsuario(Usuario usuario)
+        public void CadastrarUsuario(Usuario usuario)
         {
             _usuarioRepositorio.CadastrarNovoUsuario(usuario);
+        }
+
+        public void AtualizarUsuarios(Usuario[] usuarios)
+        {
+            for (var i=0; i< usuarios.Length; i++)
+            {
+                _usuarioRepositorio.Update(usuarios[i]);
+            }
         }
     }
 }

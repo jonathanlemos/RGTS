@@ -49,7 +49,6 @@ namespace RGTS.API.Controllers
             {
                 return null;
             }
-
         }
 
         public ActionResult<NotificacaoPost> Post(Usuario usuario)
@@ -57,10 +56,28 @@ namespace RGTS.API.Controllers
             NotificacaoPost notificacaoPost = new NotificacaoPost();
             try
             {
-                _usuarioServico.CadastrarNovoUsuario(usuario);                
+                _usuarioServico.CadastrarUsuario(usuario);                
                 return notificacaoPost;
             }
             catch(Exception e)
+            {
+                notificacaoPost.Sucesso = false;
+                notificacaoPost.Mensagem = "Erro ao salvar o usuário. Erro: " + e.Message;
+                return notificacaoPost;
+            }
+        }
+
+        //[HttpPost]
+        [Route("postUsuarios")]
+        public ActionResult<NotificacaoPost> postUsuarios(Usuario[] usuario)
+        {
+            NotificacaoPost notificacaoPost = new NotificacaoPost();
+            try
+            {
+                _usuarioServico.AtualizarUsuarios(usuario);
+                return notificacaoPost;
+            }
+            catch (Exception e)
             {
                 notificacaoPost.Sucesso = false;
                 notificacaoPost.Mensagem = "Erro ao salvar o usuário. Erro: " + e.Message;

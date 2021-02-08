@@ -18,7 +18,7 @@ export class PerfilService {
 
   //obter todos
   getAll() : Observable<Perfil[]> {
-    return this.http.get<Perfil[]>(this.urlBase + '/GetAll');
+    return this.http.get<Perfil[]>(this.urlBase);
   }
 
   //obter pelo id

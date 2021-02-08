@@ -1,0 +1,24 @@
+
+teste
+
+
+
+Escolha o perfil
+<p-listbox [options]="perfis" [(ngModel)]="perfilSelecionado" [metaKeySelection]="false" [checkbox]="true" [filter]="true" [multiple]="true" optionLabel="name" [listStyle]="{'max-height':'250px'}" [style]="{'width':'15rem'}">
+    <ng-template let-perfil pTemplate="item">
+        <div>
+            <div>{{perfil.nome}}</div>
+        </div>
+    </ng-template>
+</p-listbox>
+
+<br><br><br>
+
+Escolha o usuário
+<p-listbox [options]="usuarios" [(ngModel)]="usuarioSelecionado" [metaKeySelection]="false" [checkbox]="true" [filter]="true" [multiple]="true" optionLabel="name" [listStyle]="{'max-height':'250px'}" [style]="{'width':'15rem'}">
+    <ng-template let-usuario pTemplate="item">
+        <div>
+            <div>{{usuario.primeiroNome}}</div>
+        </div>
+    </ng-template>
+</p-listbox>

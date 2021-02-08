@@ -18,7 +18,7 @@ export class PermissaoServiceService {
 
   //obter todos
   getAll() : Observable<Permissao[]> {
-    return this.http.get<Permissao[]>(this.urlBase + '/GetAll');
+    return this.http.get<Permissao[]>(this.urlBase);
   }
 
   //obter pelo id

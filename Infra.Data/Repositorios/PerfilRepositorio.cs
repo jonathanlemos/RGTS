@@ -10,14 +10,6 @@ namespace Infra.Data.Repositorios
 {
     public class PerfilRepositorio : RepositorioBase<Perfil>, IPerfilRepositorio
     {
-        public IEnumerable<Perfil> GetAll()
-        {
-            return GetAll();
-        }
 
-        //public IEnumerable<Perfil> ObterPerfisUsuario(Usuario usuario)
-        //{
-        //    return contexto.Usuario.Where(i => i.Id == usuario.Id).SelectMany(i => i.ListaPerfil).ToList();
-        //}
     }
 }
