@@ -1,0 +1,47 @@
+<mat-toolbar style="background-color: #084d6e;">
+    <span>RGTS</span>
+
+    <a mat-button [mat-menu-trigger-for]="appMenuUsuario">Usuario</a>
+    <mat-menu #appMenuUsuario="matMenu">
+        <ul>
+            <li> <a mat-button routerLink="usuario" [queryParams]="{tipoTela: 'cadastro'}">Cadastrar</a></li>
+            <li> <a mat-button routerLink="usuario" [queryParams]="{tipoTela: 'editar'}">Consultar</a></li>
+        </ul>
+    </mat-menu>
+
+    <a mat-button [mat-menu-trigger-for]="appMenuPerfil">Perfil</a>
+    <mat-menu #appMenuPerfil="matMenu">
+        <a mat-button routerLink="perfil" [queryParams]="{tipoTela: 'cadastro'}">Cadastrar</a>
+        <a mat-button routerLink="perfil" [queryParams]="{tipoTela: 'editar'}">Consultar</a>
+    </mat-menu>
+
+    <a mat-button [mat-menu-trigger-for]="appMenuPermissao">Permissão</a>
+    <mat-menu #appMenuPermissao="matMenu">
+        <a mat-button routerLink="permissao" [queryParams]="{tipoTela: 'cadastro'}">Cadastrar</a>
+        <a mat-button routerLink="permissao" [queryParams]="{tipoTela: 'editar'}">Consultar</a>
+    </mat-menu>
+</mat-toolbar>
+
+<style>
+    ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+    }
+
+    li {
+        float: left;
+    }
+
+    a {
+        display: block;
+        color: white;
+        text-align: center;
+        text-decoration: none;
+    }
+
+    a:hover {
+        background-color: #111111;
+    }
+</style>

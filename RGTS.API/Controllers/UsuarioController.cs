@@ -42,7 +42,6 @@ namespace RGTS.API.Controllers
         {
             try
             {
-                //return Ok(_usuarioRepositorio.GetById(id));
                 return _usuarioServico.GetAll().ToArray();
             }
             catch (Exception e)
@@ -67,7 +66,6 @@ namespace RGTS.API.Controllers
             }
         }
 
-        //[HttpPost]
         [Route("postUsuarios")]
         public ActionResult<NotificacaoPost> postUsuarios(Usuario[] usuario)
         {

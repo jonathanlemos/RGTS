@@ -17,6 +17,5 @@ namespace Dominio.Serviços
             _perfilRepositorio = perfilRepositorio;
         }
 
-
     }
 }
