@@ -1,12 +1,12 @@
-<mat-toolbar style="background-color: #084d6e;">
-    <span>RGTS</span>
+<mat-toolbar class="mx-center" >
+
+    <!-- <div style="margin-left: 100px;"></div> -->
 
     <a mat-button [mat-menu-trigger-for]="appMenuUsuario">Usuario</a>
     <mat-menu #appMenuUsuario="matMenu">
-        <ul>
-            <li> <a mat-button routerLink="usuario" [queryParams]="{tipoTela: 'cadastro'}">Cadastrar</a></li>
-            <li> <a mat-button routerLink="usuario" [queryParams]="{tipoTela: 'editar'}">Consultar</a></li>
-        </ul>
+        <a mat-button routerLink="usuario" [queryParams]="{tipoTela: 'cadastrar'}">Cadastrar</a>
+        <a mat-button routerLink="usuario" [queryParams]="{tipoTela: 'consultar'}">Consultar</a>
+        <a mat-button routerLink="usuario" [queryParams]="{tipoTela: 'editar'}">Editar</a>
     </mat-menu>
 
     <a mat-button [mat-menu-trigger-for]="appMenuPerfil">Perfil</a>
@@ -20,9 +20,17 @@
         <a mat-button routerLink="permissao" [queryParams]="{tipoTela: 'cadastro'}">Cadastrar</a>
         <a mat-button routerLink="permissao" [queryParams]="{tipoTela: 'editar'}">Consultar</a>
     </mat-menu>
+
+    <a mat-button [mat-menu-trigger-for]="appMenuContratoLocacao">Contrato Locação</a>
+    <mat-menu #appMenuContratoLocacao="matMenu">
+        <a mat-button routerLink="contratoLocacao" [queryParams]="{tipoTela: 'cadastrar'}">Cadastrar</a>
+        <a mat-button routerLink="contratoLocacao" [queryParams]="{tipoTela: 'consultar'}">Consultar</a>
+        <a mat-button routerLink="contratoLocacao" [q ueryParams]="{tipoTela: 'editar'}">Editar</a>
+    </mat-menu>
+
 </mat-toolbar>
 
-<style>
+<!-- <style>
     ul {
         list-style-type: none;
         margin: 0;
@@ -44,4 +52,4 @@
     a:hover {
         background-color: #111111;
     }
-</style>
+</style> -->

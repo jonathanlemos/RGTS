@@ -24,6 +24,7 @@ import { ButtonModule } from 'primeng/button';
 import { TableModule } from 'primeng/table';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { ListboxModule } from 'primeng/listbox';
+import { CascadeSelectModule } from 'primeng/cascadeselect';
 
 //components
 import { AppRoutingModule } from './app-routing.module';
@@ -39,6 +40,18 @@ import { ConfigurarPerfilComponent } from './configurar-perfil/configurar-perfil
 import { ConfigurarPermissaoComponent } from './configurar-permissao/configurar-permissao.component';
 import { PerfilMenuComponent } from './dashboard/perfil-menu/perfil-menu.component';
 import { MenuComponent } from './menu/menu.component';
+import { CabecalhoComponent } from './cabecalho/cabecalho.component';
+import { ContratoComponent } from './contrato/contrato.component';
+import { ContratoLocacaoComponent } from './contrato-locacao/contrato-locacao.component';
+
+const primeng = [
+    AccordionModule,
+    TableModule,
+    ButtonModule,
+    MultiSelectModule,
+    ListboxModule,
+    CascadeSelectModule
+];
 
 const material = [ 
   MatBadgeModule,
@@ -62,7 +75,10 @@ const material = [
     ConfigurarPerfilComponent,
     ConfigurarPermissaoComponent,
     PerfilMenuComponent,
-    MenuComponent
+    MenuComponent,
+    CabecalhoComponent,
+    ContratoComponent,
+    ContratoLocacaoComponent
   ],
   imports: [
     BrowserModule,
@@ -72,11 +88,7 @@ const material = [
     NgbModule,
     FormsModule,
     ReactiveFormsModule,
-    AccordionModule,
-    TableModule,
-    ButtonModule,
-    MultiSelectModule,
-    ListboxModule,
+    primeng,
     material
   ],
   providers: [],

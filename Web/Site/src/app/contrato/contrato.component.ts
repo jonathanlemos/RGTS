@@ -1,37 +1,50 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router'
+import {
+  trigger,
+  state,
+  style,
+  transition,
+  animate
+} from "@angular/animations";
 
-import { Usuario } from '../Models/Usuario';
-import { UsuarioService } from '../Servicos/Usuario/usuario.service';
+//models
+import { Contrato } from '../Models/Contrato';
+import { Unidade } from '../Models/Unidade';
 
-import { Table } from 'primeng/table';
+//services
+import { ContratoService } from '../Servicos/Contrato/contrato.service';
 
+//exportar excel/pdf
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 
-import { Estado } from '../Models/Estado';
-import { EstadoService } from '../Servicos/Util/Estado.service';
+//primeng
+import {MultiSelectModule} from 'primeng/multiselect';
+import { Table } from 'primeng/table';
+import { SelectItem, PrimeNGConfig } from "primeng/api";
 
 @Component({
-  selector: 'app-usuario',
-  templateUrl: './usuario.component.html',
-  styleUrls: ['./usuario.component.css']
+  selector: 'app-contrato',
+  templateUrl: './contrato.component.html',
+  styleUrls: ['./contrato.component.css']
 })
-export class UsuarioComponent implements OnInit {
+export class ContratoComponent implements OnInit {
 
-  usuarioFormulario: FormGroup;
-  usuarios: Usuario[];
-  _estados: Estado[];
+  contratoFormulario: FormGroup;
+  contratos: Contrato[];
   tipoTela: string;
-  loading: boolean = true;
-  _primeiroNomes: Usuario[];
-  _primeiroNomesSelecionado: Usuario[];
+  unidades: string;
+  unidadesSelecionadas: string[];
+  classificacoesSelecionadas: string[];
+  tipoLocacaoSelecionada: string[];
+  nomeFantasiaSelecionada: string[];
+  faseSelecionada: string[];
+  formaCalculoSelecionado: string[];
 
-  constructor(private fb: FormBuilder, private usuarioService: UsuarioService, private estadoService: EstadoService,
-    private _route: ActivatedRoute) {
+  constructor(private fb: FormBuilder, private contratoService: ContratoService, private _route: ActivatedRoute) {
     this.Formulario();
-
   }
 
   ngOnInit(): void {
@@ -40,46 +53,33 @@ export class UsuarioComponent implements OnInit {
       this.tipoTela = params['tipoTela'];
     });
 
-    if (this.tipoTela == "consultar" || this.tipoTela == "editar") this.CarregarUsuarios();
+    if (this.tipoTela == "consultar" || this.tipoTela == "editar") this.CarregarContratos();
 
   }
 
-  @ViewChild('primeNgTabelaConsultaUsuarios') pTableRef: Table;
+  @ViewChild('primeNgTabelaConsultaContratos') pTableRef: Table;
   ngAfterViewInit() {
     
     if (this.tipoTela == "consultar" || this.tipoTela == "editar"){
       const table = this.pTableRef.el.nativeElement.querySelector('table');
-      table.setAttribute('id', 'tabelaConsultaUsuarios');
+      table.setAttribute('id', 'tabelaConsultaContratos');
     }
   }
 
-  carregarEstados(){
-    this.estadoService.getAll().subscribe(
-      (estados:Estado[])=>{
-        this.loading = false;
-        this._estados = estados;
+  CarregarContratos() {
+
+    this.contratoService.getAll().subscribe(
+      (contratos: Contrato[]) => {
+        this.contratos = contratos;
       },
       (erro: any) => {
-        console.log("Erro ao carregar os estados. Erro: " + erro);
-      }
-    )
-  }
-
-  CarregarUsuarios() {
-
-    this.usuarioService.getAll().subscribe(
-      (usuarios: Usuario[]) => {
-        this.loading = false;
-        this.usuarios = usuarios;
-      },
-      (erro: any) => {
-        console.log("Erro ao carregar os usuarios. Erro: " + erro);
+        console.log("Erro ao carregar os contratos. Erro: " + erro);
       }
     );
   }
 
   Formulario(): void {
-    this.usuarioFormulario = this.fb.group(
+    this.contratoFormulario = this.fb.group(
       {
         Id: [0],
         Email: ['', Validators.required],
@@ -96,24 +96,24 @@ export class UsuarioComponent implements OnInit {
       });
   }
 
-  SalvarUsuarioFormularioCadastro() {
-    this.usuarioService.post(this.usuarioFormulario.value).subscribe(
+  SalvarContratoFormularioCadastro() {
+    this.contratoService.post(this.contratoFormulario.value).subscribe(
       (success) => {
         console.log("Ok.");
       },
       (erro: any) => {
-        console.log("Erro ao carregar os usuarios.");
+        console.log("Erro ao carregar os contratos.");
       }
     );
   }
 
-  SalvarUsuarioEditado() {
-    this.usuarioService.postUsuarios(this.usuarios).subscribe(
+  SalvarContratoEditado() {
+    this.contratoService.postContratos(this.contratos).subscribe(
       (success) => {
         console.log("Ok.");
       },
       (erro: any) => {
-        console.log("Erro ao carregar os usuarios.");
+        console.log("Erro ao carregar os contratos.");
       }
     );
   }
@@ -124,16 +124,16 @@ export class UsuarioComponent implements OnInit {
 
   exportPdf() {
     const doc = new jsPDF()
-    autoTable(doc, { html: '#tabelaConsultaUsuarios' })
+    autoTable(doc, { html: '#tabelaConsultaContratos' })
     doc.save('table.pdf')
   }
 
   exportExcel() {
     import("xlsx").then(xlsx => {
-      const worksheet = xlsx.utils.json_to_sheet(this.usuarios);
+      const worksheet = xlsx.utils.json_to_sheet(this.contratos);
       const workbook = { Sheets: { 'data': worksheet }, SheetNames: ['data'] };
       const excelBuffer: any = xlsx.write(workbook, { bookType: 'xlsx', type: 'array' });
-      this.saveAsExcelFile(excelBuffer, "usuarios");
+      this.saveAsExcelFile(excelBuffer, "contratos");
     });
   }
 

@@ -4,6 +4,7 @@ import { UsuarioComponent } from './usuario/usuario.component';
 import { PerfilComponent } from './perfil/perfil.component';
 import { PermissaoComponent } from './permissao/permissao.component';
 import { ConfigurarPerfilComponent } from './configurar-perfil/configurar-perfil.component';
+import { ContratoLocacaoComponent } from './contrato-locacao/contrato-locacao.component';
 
 //dashboard
 import { MenuSuperiorComponent } from './dashboard/menu-superior/menu-superior.component';
@@ -13,7 +14,8 @@ const routes: Routes = [
   { path: 'usuario', component: UsuarioComponent },
   { path: 'perfil', component: PerfilComponent },
   { path: 'permissao', component: PermissaoComponent },
-  { path: 'configurarPerfil', component: ConfigurarPerfilComponent }
+  { path: 'configurarPerfil', component: ConfigurarPerfilComponent },
+  { path: 'contratoLocacao', component: ContratoLocacaoComponent }
 ];
 
 @NgModule({

@@ -22,7 +22,9 @@ namespace Infra.Data.Contexto
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Server=.\SQLEXPRESS;Database=RGTS;Trusted_Connection=True;");
+            //optionsBuilder.UseSqlServer(@"Server=.\SQLEXPRESS;Database=RGTS;Trusted_Connection=True;"); rgtsdb
+            string serverrgts = "rgtsdb.ch0sy8hf0okh.us-east-2.rds.amazonaws.com";
+            optionsBuilder.UseSqlServer(@"Server="+ serverrgts+ ",1433; Database=rgtsdb; User Id=admin; Password=qW7Su3aQ;");
         }
 
         protected override void OnModelCreating(Microsoft.EntityFrameworkCore.ModelBuilder modelBuilder)
