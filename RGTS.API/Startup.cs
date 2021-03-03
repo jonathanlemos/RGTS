@@ -23,6 +23,8 @@ namespace RGTS.API
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+
+            
         }
 
         public IConfiguration Configuration { get; }
@@ -31,6 +33,12 @@ namespace RGTS.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+
+            // In production, the Angular files will be served from this directory
+            services.AddSpaStaticFiles(configuration =>
+            {
+                configuration.RootPath = "ClientApp/dist";
+            });
 
             AdicinarInjecaoDeDependenciaServico(services);
 
@@ -56,7 +64,7 @@ namespace RGTS.API
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
-            });            
+            });
         }
         
         private void AdicinarInjecaoDeDependenciaServico(IServiceCollection services)
@@ -65,6 +73,8 @@ namespace RGTS.API
             services.AddScoped<IUsuarioServico, UsuarioServico>();
             services.AddScoped<IPerfilServico, PerfilServico>();
             services.AddScoped<IPermissaoServico, PermissaoServico>();
+            services.AddScoped<IEstadoServico, EstadoServico>();
+            services.AddScoped<IMunicipioServico, MunicipioServico>();
         }
 
         private void AdicinarInjecaoDeDependenciaRepositorio(IServiceCollection services)
@@ -73,6 +83,8 @@ namespace RGTS.API
             services.AddScoped<IUsuarioRepositorio, UsuarioRepositorio>();
             services.AddScoped<IPerfilRepositorio, PerfilRepositorio>();
             services.AddScoped<IPermissaoRepositorio, PermissaoRepositorio>();
+            services.AddScoped<IEstadoRepositorio, EstadoRepositorio>();
+            services.AddScoped<IMunicipioRepositorio, MunicipioRepositorio>();
         }
     }
 }

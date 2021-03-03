@@ -4,76 +4,85 @@
   <div *ngSwitchCase="'cadastrar'">
     <div class="container mt-5">
       <form class="row g-3" [formGroup]="usuarioFormulario" (submit)="SalvarUsuarioFormularioCadastro()">
-        <div class="col-md-6">
+
+        <div class="col-md-4">
           <label for="emailId" class="form-label">Email</label>
           <input type="text" formControlName="Email" class="form-control" id="emailId" placeholder="E-mail">
         </div>
-        <div class="col-md-6">
-          <label for="senhaId" class="form-label">Password</label>
+
+        <div class="col-md-4">
+          <label for="senhaId" class="form-label">Senha</label>
           <input type="password" formControlName="Senha" class="form-control" id="senhaId" placeholder="Senha">
         </div>
-
-        <div class="col-mb-3 mt-4">
-          <legend class="col-form-label col-sm-2 pt-0">Sexo</legend>
-          <!-- <div class="col-sm-10"> -->
-            <div class="form-check form-check-inline">
-              <input formControlName="Sexo" class="form-check-input" type="radio" name="Sexo" id="sexoIdM" value="1">
-                <label class="form-check-label" for="sexoIdM">
-                  Masculino
-                </label>
+        
+        <div class="col-md-4">
+          <label for="login">Login de acesso</label>
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="inputGroupPrepend2">@</span>
             </div>
-            <div class="form-check form-check-inline">
-              <input formControlName="Sexo" class="form-check-input" type="radio" name="Sexo" id="sexoIdF" value="2">
-              <label class="form-check-label" for="sexoIdF">
-                Feminino
-              </label>
-            </div>
-          <!-- </div> -->
+            <input formControlName="Login" type="text" class="form-control" id="login" placeholder="Login" aria-describedby="inputGroupPrepend2" required>
+          </div>
         </div>
 
-        <div class="col-3 mt-4">
-          <label for="primeiroNomeId" class="form-label">Primeiro nome</label>
-          <input type="text" formControlName="PrimeiroNome" class="form-control" id="primeiroNomeId"
-            placeholder="Primeiro nome">
-        </div>
-
-        <div class="col-6 mt-4 ms-5">
+        <div class="col-4 mt-4 ms-5">
           <label for="nomeCompletoId" class="form-label">Nome completo</label>
           <input type="text" formControlName="NomeCompleto" class="form-control" id="nomeCompletoId"
-            placeholder="Nome completo">
-        </div>
-
-        <div class="col-12 mt-4">
-          <label for="enderecoId" class="form-label">Endereço</label>
-          <input type="text" formControlName="Endereco" class="form-control" id="enderecoId" placeholder="Endereço">
-        </div>
-
-        <div class="col-10 mt-4">
-          <label for="complementoId" class="form-label">Complemento</label>
-          <input type="text" formControlName="Complemento" class="form-control" id="complementoId"
-            placeholder="Complemento">
+                 placeholder="Nome completo">
         </div>
 
         <div class="col-2 mt-4">
-          <label for="numeroId" class="form-label">Número</label>
-          <input type="number" formControlName="Numero" class="form-control" id="numeroId" placeholder="Número">
+          <label for="primeiroNomeId" class="form-label">Como quer ser chamado</label>
+          <input type="text" formControlName="PrimeiroNome" class="form-control" id="primeiroNomeId"
+                 placeholder="Digite o nome..">
         </div>
 
-        <div class="col-md-6 mt-4">
-          <label for="cidadeId" class="form-label">Cidade</label>
-          <input type="text" formControlName="Cidade" value="1" class="form-control" id="cidadeId">
-        </div>
-
-        <div class="col-md-4 mt-5">
-          <label for="estadoId" class="form-label">Estado</label>
-          <p-cascadeSelect formControlName="Estado" [(ngModel)]="cidadeSelecionada" [options]="Estado" 
-          optionGroupLabel="nome" [style]="{'minWidth': '14rem'}" >
-          </p-cascadeSelect>
+        <div class="col-2 mt-4">
+          <label for="sexoId" class="form-label">Sexo</label>
+          <select formControlName="Sexo" class="form-control" id="sexoId" placeholder="Escolha seu sexo">
+            <option *ngFor="let sexo of sexos" [ngValue]="sexo">
+              {{sexo.nome}}
+            </option>
+          </select>
         </div>
 
         <div class="col-md-2 mt-4">
           <label for="cepId" class="form-label">CEP</label>
           <input type="text" formControlName="Cep" class="form-control" id="cepId">
+        </div>
+
+        <div class="col-2 mt-4">
+          <label for="estadoId" class="form-label">Estado</label>
+          <select formControlName="Estado" class="form-control" id="estadoId" placeholder="Estado">
+            <option *ngFor="let estado of Estados" [ngValue]="estado">
+              {{estado.nomeEstado}}
+            </option>
+          </select>
+        </div>
+
+        <div class="col-2 mt-4">
+          <label for="cidadeId" class="form-label">Cidade</label>
+          <select formControlName="Cidade" class="form-control" id="cidadeId" placeholder="Cidade">
+            <option *ngFor="let cidade of Cidades" [ngValue]="cidade">
+              {{cidade.nomeMunicipio}}
+            </option>
+          </select>
+        </div>
+
+        <div class="col-6 mt-4">
+          <label for="enderecoId" class="form-label">Endereço</label>
+          <input type="text" formControlName="Endereco" class="form-control" id="enderecoId" placeholder="Endereço">
+        </div>
+
+        <div class="col-4 mt-4">
+          <label for="complementoId" class="form-label">Complemento</label>
+          <input type="text" formControlName="Complemento" class="form-control" id="complementoId"
+                 placeholder="Complemento">
+        </div>
+
+        <div class="col-2 mt-4">
+          <label for="numeroId" class="form-label">Número</label>
+          <input type="number" formControlName="Numero" class="form-control" id="numeroId" placeholder="Número">
         </div>
 
         <div class="col-12 mt-4">

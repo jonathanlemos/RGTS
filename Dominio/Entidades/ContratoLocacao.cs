@@ -2,159 +2,84 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Text;
+using Microsoft.EntityFrameworkCore;
+
+#nullable disable
 
 namespace Dominio.Entidades
 {
-    [Table("Cidade")]
-    public class ContratoLocacao
+    [Table("ContratoLocacao")]
+    public partial class ContratoLocacao
     {
-        [Column("Id", TypeName = "int")]
         [Key]
-        [Required]
         public int Id { get; set; }
-
-        [Column("IdShopping", TypeName = "int")]
-        public int IdShopping { get; set; }
-
-        [Column("IdInstrumento", TypeName = "int")]
-        public int IdInstrumento { get; set; }
-
-        [Column("IdMarca", TypeName = "int")]
-        public int IdMarca { get; set; }
-
-        [Column("DataInicioVigencia", TypeName = "DateTime")]
-        public DateTime DataInicioVigencia { get; set; }
-
-        [Column("DataFimVigencia", TypeName = "DateTime")]
-        public DateTime DataFimVigencia { get; set; }
-
-        [Column("IdFormaCorrecao", TypeName = "int")]
-        public int IdFormaCorrecao { get; set; }
-
-        [Column("IdTipoJuros", TypeName = "int")]
-        public int IdTipoJuros { get; set; }
-
-        [Column("IdTipoContrato", TypeName = "int")]
-        public int IdTipoContrato { get; set; }
-
-        [Column("IdPrazoContrato", TypeName = "int")]
-        public int IdPrazoContrato { get; set; }
-
-        [Column("IdEmpreendimento", TypeName = "int")]
-        public int IdEmpreendimento { get; set; }
-
-        [Column("Observacao", TypeName = "varchar")]
+        public int? IdShopping { get; set; }
+        public int? IdInstrumento { get; set; }
+        public int? IdMarca { get; set; }
+        [Column(TypeName = "date")]
+        public DateTime? DataInicioVigencia { get; set; }
+        [Column(TypeName = "date")]
+        public DateTime? DataFimVigencia { get; set; }
+        public int? IdFormaCorrecao { get; set; }
+        public int? IdTipoJuros { get; set; }
+        public int? IdTipoContrato { get; set; }
+        public int? IdPrazoContrato { get; set; }
+        public int? IdEmpreendimento { get; set; }
         public string Observacao { get; set; }
-
-        [Column("IdIndicador", TypeName = "int")]
-        public int IdIndicador { get; set; }
-
-        [Column("PercentualMulta", TypeName = "numeric")]
-        [Range(2, 17, ErrorMessage = "Erro no range.")]
-        public double PercentualMulta { get; set; }
-
-        [Column("PercentualJuros", TypeName = "numeric")]
-        [Range(2, 17, ErrorMessage = "Erro no range.")]
-        public double PercentualJuros { get; set; }
-
-        [Column("IdPeriodicidadeReajuste", TypeName = "int")]
-        public int IdPeriodicidadeReajuste { get; set; }
-
-        [Column("DataBaseReajuste", TypeName = "DateTime")]
-        public DateTime DataBaseReajuste { get; set; }
-
-        [Column("eDeclaraVenda", TypeName = "bit")]
-        public bool eDeclaraVenda { get; set; }
-
-        [Column("eDeclaraVendaAuditada", TypeName = "bit")]
-        public bool eDeclaraVendaAuditada { get; set; }
-
-        [Column("IdFormaCalculoAluguel", TypeName = "int")]
-        public int IdFormaCalculoAluguel { get; set; }
-
-        [Column("IdTipoReajusteAluguel", TypeName = "int")]
-        public int IdTipoReajusteAluguel { get; set; }
-
-        [Column("DataInicioCarenciaAluguel", TypeName = "DateTime")]
-        public DateTime DataInicioCarenciaAluguel { get; set; }
-
-        [Column("DataFimCarenciaAluguel", TypeName = "DateTime")]
-        public DateTime DataFimCarenciaAluguel { get; set; }
-
-        [Column("IdItemRubricaAluguel", TypeName = "int")]
-        public int IdItemRubricaAluguel { get; set; }
-
-        [Column("IdItemRubricaDescontoAluguel", TypeName = "int")]
-        public int IdItemRubricaDescontoAluguel { get; set; }
-
-        [Column("IdItemRubricaCondominio", TypeName = "int")]
-        public int IdItemRubricaCondominio { get; set; }
-
-        [Column("CRD", TypeName = "numeric")]
-        [Range(4,12, ErrorMessage = "Erro no range.")]
-        public double CRD { get; set; }
-
-        [Column("FancoilTR", TypeName = "numeric")]
-        [Range(4, 12, ErrorMessage = "Erro no range.")]
-        public int FancoilTR { get; set; }
-
-        [Column("DataInicioCarenciaCondominio", TypeName = "DateTime")]
-        public DateTime DataInicioCarenciaCondominio { get; set; }
-
-        [Column("DataFimCarenciaCondominio", TypeName = "DateTime")]
-        public DateTime DataFimCarenciaCondominio { get; set; }
-
-        [Column("IdItemRubricaAluguelPercentual", TypeName = "int")]
-        public int IdItemRubricaAluguelPercentual { get; set; }
-
-        [Column("IdItemRubricaDescontoAluguelPercentual", TypeName = "int")]
-        public int IdItemRubricaDescontoAluguelPercentual { get; set; }
-
-        [Column("IdTipoVendaInformada", TypeName = "int")]
-        public int IdTipoVendaInformada { get; set; }
-
-        [Column("IdTipoVendaCalculo", TypeName = "int")]
-        public int IdTipoVendaCalculo { get; set; }
-
-        [Column("IdPeriodicidadeInformativoVenda", TypeName = "int")]
-        public int IdPeriodicidadeInformativoVenda { get; set; }
-
-        [Column("DataInicioCarenciaAluguelPercentual", TypeName = "DateTime")]
-        public DateTime DataInicioCarenciaAluguelPercentual { get; set; }
-
-        [Column("DataFimCarenciaAluguelPercentual", TypeName = "DateTime")]
-        public DateTime DataFimCarenciaAluguelPercentual { get; set; }
-
-        [Column("IdMesCompetenciaAluguelAntecipado", TypeName = "int")]
-        public int IdMesCompetenciaAluguelAntecipado { get; set; }
-
-        [Column("IdVencimentoAluguelAntecipado", TypeName = "int")]
-        public int IdVencimentoAluguelAntecipado { get; set; }
-
-        [Column("IdItemRubricaCotaOrdinaria", TypeName = "int")]
-        public int IdItemRubricaCotaOrdinaria { get; set; }
-
-        [Column("IdItemRubricaCotaExtraordinaria", TypeName = "int")]
-        public int IdItemRubricaCotaExtraordinaria { get; set; }
-
-        [Column("DataInicioCarenciaFundo", TypeName = "DateTime")]
-        public DateTime DataInicioCarenciaFundo { get; set; }
-
-        [Column("IdMesCompetencDataFimCarenciaFundoiaAluguelAntecipado", TypeName = "DateTime")]
-        public DateTime DataFimCarenciaFundo { get; set; }
-
-        [Column("ePercentualSobreAMMLiquido", TypeName = "bit")]
-        public bool ePercentualSobreAMMLiquido { get; set; }
-
-        [Column("ePercenutalSobreAMMBruto", TypeName = "bit")]
-        public bool ePercenutalSobreAMMBruto { get; set; }
-
-        [Column("ePercentualSobreAluguelPercentual", TypeName = "bit")]
-        public bool ePercentualSobreAluguelPercentual { get; set; }
-
-        [Column("eAtivo", TypeName = "bit")]
-        public bool eAtivo { get; set; }
+        public int? IdIndicador { get; set; }
+        [Column(TypeName = "numeric(17, 2)")]
+        public decimal? PercentualMulta { get; set; }
+        [Column(TypeName = "numeric(17, 2)")]
+        public decimal? PercentualJuros { get; set; }
+        public int? IdPeriodicidadeReajuste { get; set; }
+        [Column(TypeName = "date")]
+        public DateTime? DataBaseReajuste { get; set; }
+        [Column("eDeclaraVenda")]
+        public bool? EDeclaraVenda { get; set; }
+        [Column("eDeclaraVendaAuditada")]
+        public bool? EDeclaraVendaAuditada { get; set; }
+        public int? IdFormaCalculoAluguel { get; set; }
+        public int? IdTipoReajusteAluguel { get; set; }
+        [Column(TypeName = "date")]
+        public DateTime? DataInicioCarenciaAluguel { get; set; }
+        [Column(TypeName = "date")]
+        public DateTime? DataFimCarenciaAluguel { get; set; }
+        public int? IdItemRubricaAluguel { get; set; }
+        public int? IdItemRubricaDescontoAluguel { get; set; }
+        public int? IdItemRubricaCondominio { get; set; }
+        [Column("CRD", TypeName = "numeric(12, 4)")]
+        public decimal? Crd { get; set; }
+        [Column("FancoilTR", TypeName = "numeric(12, 4)")]
+        public decimal? FancoilTr { get; set; }
+        [Column(TypeName = "datetime")]
+        public DateTime? DataInicioCarenciaCondominio { get; set; }
+        [Column(TypeName = "datetime")]
+        public DateTime? DataFimCarenciaCondominio { get; set; }
+        [StringLength(10)]
+        public string IdItemRubricaAluguelPercentual { get; set; }
+        public int? IdItemRubricaDescontoAluguelPercentual { get; set; }
+        public int? IdTipoVendaInformada { get; set; }
+        public int? IdTipoVendaCalculo { get; set; }
+        public int? IdPeriodicidadeInformativoVenda { get; set; }
+        [Column(TypeName = "date")]
+        public DateTime? DataInicioCarenciaAluguelPercentual { get; set; }
+        [Column(TypeName = "date")]
+        public DateTime? DataFimCarenciaAluguelPercentual { get; set; }
+        public int? IdMesCompetenciaAluguelAntecipado { get; set; }
+        public int? IdVencimentoAluguelAntecipado { get; set; }
+        public int? IdItemRubricaCotaOrdinaria { get; set; }
+        public int? IdItemRubricaCotaExtraordinaria { get; set; }
+        [Column(TypeName = "date")]
+        public DateTime? DataInicioCarenciaFundo { get; set; }
+        [Column(TypeName = "date")]
+        public DateTime? DataFimCarenciaFundo { get; set; }
+        [Column("ePercentualSobreAMMLiquido")]
+        public bool? EPercentualSobreAmmliquido { get; set; }
+        [Column("ePercenutalSobreAMMBruto")]
+        public bool? EPercenutalSobreAmmbruto { get; set; }
+        [Column("ePercentualSobreAluguelPercentual")]
+        public bool? EPercentualSobreAluguelPercentual { get; set; }
+        [Column("eAtivo")]
+        public bool? EAtivo { get; set; }
     }
 }
-

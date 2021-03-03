@@ -2,16 +2,20 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router'
 
-import { Usuario } from '../Models/Usuario';
-import { UsuarioService } from '../Servicos/Usuario/usuario.service';
-
 import { Table } from 'primeng/table';
 
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 
+//models
+import { Usuario } from '../Models/Usuario';
 import { Estado } from '../Models/Estado';
+import { Cidade } from '../Models/Cidade';
+
+//serviços
 import { EstadoService } from '../Servicos/Util/Estado.service';
+import { CidadeService } from '../Servicos/Cidade/cidade.service';
+import { UsuarioService } from '../Servicos/Usuario/usuario.service';
 
 @Component({
   selector: 'app-usuario',
@@ -22,16 +26,16 @@ export class UsuarioComponent implements OnInit {
 
   usuarioFormulario: FormGroup;
   usuarios: Usuario[];
-  _estados: Estado[];
+  Estados: Estado[];
+  Cidades: Cidade[];
   tipoTela: string;
   loading: boolean = true;
   _primeiroNomes: Usuario[];
   _primeiroNomesSelecionado: Usuario[];
 
   constructor(private fb: FormBuilder, private usuarioService: UsuarioService, private estadoService: EstadoService,
-    private _route: ActivatedRoute) {
+    private _route: ActivatedRoute, private cidadeService: CidadeService) {
     this.Formulario();
-
   }
 
   ngOnInit(): void {
@@ -42,6 +46,8 @@ export class UsuarioComponent implements OnInit {
 
     if (this.tipoTela == "consultar" || this.tipoTela == "editar") this.CarregarUsuarios();
 
+    this.CarregarEstados();
+    this.CarregarCidades();
   }
 
   @ViewChild('primeNgTabelaConsultaUsuarios') pTableRef: Table;
@@ -53,11 +59,21 @@ export class UsuarioComponent implements OnInit {
     }
   }
 
-  carregarEstados(){
+  CarregarEstados(){
     this.estadoService.getAll().subscribe(
-      (estados:Estado[])=>{
-        this.loading = false;
-        this._estados = estados;
+      (estados: Estado[]) => {
+        this.Estados = estados;
+      },
+      (erro: any) => {
+        console.log("Erro ao carregar os estados. Erro: " + erro);
+      }
+    )
+  }
+
+  CarregarCidades(){
+    this.cidadeService.getAll().subscribe(
+      (cidades: Cidade[]) => {
+        this.Cidades = cidades;
       },
       (erro: any) => {
         console.log("Erro ao carregar os estados. Erro: " + erro);

@@ -11,7 +11,6 @@ import {
 
 //models
 import { Contrato } from '../Models/Contrato';
-//import { Unidade } from '../Models/Unidade';
 
 //services
 import { ContratoService } from '../Servicos/Contrato/contrato.service';
@@ -21,7 +20,7 @@ import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 
 //primeng
-import { MultiSelectModule } from 'primeng/multiselect';
+//import { MultiSelectModule } from 'primeng/multiselect';
 import { Table } from 'primeng/table';
 import { SelectItem, PrimeNGConfig } from "primeng/api";
 
@@ -32,7 +31,7 @@ import { SelectItem, PrimeNGConfig } from "primeng/api";
 })
 export class ContratoLocacaoComponent implements OnInit {
 
-  contratoFormulario: FormGroup;
+  contratoLocacaoFormulario: FormGroup;
   contratos: Contrato[];
   tipoTela: string;
   unidades: string;
@@ -42,9 +41,45 @@ export class ContratoLocacaoComponent implements OnInit {
   nomeFantasiaSelecionada: string[];
   faseSelecionada: string[];
   formaCalculoSelecionado: string[];
+  virtuais: any[];
+  vigentes: any[];
+  cobrados: any[];
+  excecoes: any[];
+  assinados: any[];
+  stateOptions: any[];
+  value1: string = "off";
 
-  constructor(private fb: FormBuilder, private contratoService: ContratoService, private _route: ActivatedRoute) {
+  constructor(private primeNGConfig: PrimeNGConfig, private fb: FormBuilder, private contratoService: ContratoService, private _route: ActivatedRoute) {
     this.Formulario();
+    this.CombosPraCarregar();
+  }
+
+  CombosPraCarregar() {
+    this.virtuais = [
+      { name: "Virtuais", value: 1 },
+      { name: "Não Virtuais", value: 2 }
+    ];
+
+    this.vigentes = [
+      { name: "Vigentes", value: 1 },
+      { name: "Não Vigentes", value: 2 }
+    ];
+
+    this.assinados = [
+      { name: "Assinados", value: 1 },
+      { name: "Não Assinados", value: 2 }
+    ];
+
+    this.cobrados = [
+      { name: "Cobrados", value: 1 },
+      { name: "Não Cobrados", value: 2 }
+    ];
+
+    this.excecoes = [
+      { name: "Contrato com Exceção", value: 1 },
+      { name: "Contrato sem Exceção", value: 2 }
+    ];
+
   }
 
   ngOnInit(): void {
@@ -53,17 +88,17 @@ export class ContratoLocacaoComponent implements OnInit {
       this.tipoTela = params['tipoTela'];
     });
 
-    if (this.tipoTela == "consultar" || this.tipoTela == "editar") this.CarregarContratos();
+    //if (this.tipoTela == "consultar" || this.tipoTela == "editar") this.CarregarContratos();
 
   }
 
   @ViewChild('primeNgTabelaConsultaContratos') pTableRef: Table;
   ngAfterViewInit() {
-    
-    // if (this.tipoTela == "consultar" || this.tipoTela == "editar"){
-    //   const table = this.pTableRef.el.nativeElement.querySelector('table');
-    //   table.setAttribute('id', 'tabelaConsultaContratos');
-    // }
+
+    if (this.tipoTela == "consultar" || this.tipoTela == "editar") {
+      const table = this.pTableRef.el.nativeElement.querySelector('table');
+      table.setAttribute('id', 'tabelaConsultaContratos');
+    }
   }
 
   CarregarContratos() {
@@ -79,25 +114,25 @@ export class ContratoLocacaoComponent implements OnInit {
   }
 
   Formulario(): void {
-    this.contratoFormulario = this.fb.group(
+    this.contratoLocacaoFormulario = this.fb.group(
       {
         Id: [0],
-        Email: ['', Validators.required],
-        Senha: ['', Validators.required],
-        PrimeiroNome: ['', Validators.required],
-        NomeCompleto: ['', Validators.required],
-        Endereco: [''],
-        Complemento: [''],
-        Numero: [0],
-        Cidade: ['', Validators.required],
-        Estado: ['', Validators.required],
-        Cep: [''],
-        Sexo: [0, Validators.required]
+        unidades: ['', Validators.required],
+        classificacao: ['', Validators.required],
+        tipoLocacao: ['', Validators.required],
+        nomeFantasia: ['', Validators.required],
+        fase: ['', Validators.required],
+        formaCalculo: ['', Validators.required],
+        virtual: ['', Validators.required],
+        vigente: ['', Validators.required],
+        cobrado: ['', Validators.required],
+        excecao: ['', Validators.required], 
+        assinado: ['', Validators.required]
       });
   }
 
   SalvarContratoFormularioCadastro() {
-    this.contratoService.post(this.contratoFormulario.value).subscribe(
+    this.contratoService.post(this.contratoLocacaoFormulario.value).subscribe(
       (success) => {
         console.log("Ok.");
       },
@@ -107,44 +142,44 @@ export class ContratoLocacaoComponent implements OnInit {
     );
   }
 
-  SalvarContratoEditado() {
-    this.contratoService.postContratos(this.contratos).subscribe(
-      (success) => {
-        console.log("Ok.");
-      },
-      (erro: any) => {
-        console.log("Erro ao carregar os contratos.");
-      }
-    );
-  }
+  // SalvarContratoEditado() {
+  //   this.contratoService.postContratos(this.contratos).subscribe(
+  //     (success) => {
+  //       console.log("Ok.");
+  //     },
+  //     (erro: any) => {
+  //       console.log("Erro ao carregar os contratos.");
+  //     }
+  //   );
+  // }
 
-  clear(table: Table) {
-    table.clear();
-  }
+  // clear(table: Table) {
+  //   table.clear();
+  // }
 
-  exportPdf() {
-    const doc = new jsPDF()
-    autoTable(doc, { html: '#tabelaConsultaContratos' })
-    doc.save('table.pdf')
-  }
+  // exportPdf() {
+  //   const doc = new jsPDF()
+  //   autoTable(doc, { html: '#tabelaConsultaContratos' })
+  //   doc.save('table.pdf')
+  // }
 
-  exportExcel() {
-    import("xlsx").then(xlsx => {
-      const worksheet = xlsx.utils.json_to_sheet(this.contratos);
-      const workbook = { Sheets: { 'data': worksheet }, SheetNames: ['data'] };
-      const excelBuffer: any = xlsx.write(workbook, { bookType: 'xlsx', type: 'array' });
-      this.saveAsExcelFile(excelBuffer, "contratos");
-    });
-  }
+  // exportExcel() {
+  //   import("xlsx").then(xlsx => {
+  //     const worksheet = xlsx.utils.json_to_sheet(this.contratos);
+  //     const workbook = { Sheets: { 'data': worksheet }, SheetNames: ['data'] };
+  //     const excelBuffer: any = xlsx.write(workbook, { bookType: 'xlsx', type: 'array' });
+  //     this.saveAsExcelFile(excelBuffer, "contratos");
+  //   });
+  // }
 
-  saveAsExcelFile(buffer: any, fileName: string): void {
-    import("file-saver").then(FileSaver => {
-      let EXCEL_TYPE = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
-      let EXCEL_EXTENSION = '.xlsx';
-      const data: Blob = new Blob([buffer], {
-        type: EXCEL_TYPE
-      });
-      FileSaver.saveAs(data, fileName + '_export_' + new Date().getTime() + EXCEL_EXTENSION);
-    });
-  }
+  // saveAsExcelFile(buffer: any, fileName: string): void {
+  //   import("file-saver").then(FileSaver => {
+  //     let EXCEL_TYPE = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
+  //     let EXCEL_EXTENSION = '.xlsx';
+  //     const data: Blob = new Blob([buffer], {
+  //       type: EXCEL_TYPE
+  //     });
+  //     FileSaver.saveAs(data, fileName + '_export_' + new Date().getTime() + EXCEL_EXTENSION);
+  //   });
+  // }
 }

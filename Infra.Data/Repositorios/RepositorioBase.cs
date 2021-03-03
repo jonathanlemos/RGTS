@@ -11,7 +11,8 @@ namespace Infra.Data.Repositorios
 {
     public class RepositorioBase<TEntity> : IDisposable, IRepositorioBase<TEntity> where TEntity : class
     {
-        protected RGTSContext contexto = new RGTSContext();
+        //protected RGTSContext contexto = new RGTSContext();
+        protected RGTSDbContext contexto = new RGTSDbContext();
 
         public void Add(TEntity entidade)
         {

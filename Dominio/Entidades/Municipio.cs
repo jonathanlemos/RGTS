@@ -8,13 +8,15 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Dominio.Entidades
 {
-    [Table("Estado")]
-    public partial class Estado
+    [Table("Municipio")]
+    public partial class Municipio
     {
         [Key]
         [StringLength(2)]
         public string SiglaEstado { get; set; }
-        [StringLength(50)]
-        public string NomeEstado { get; set; }
+        [Key]
+        public int Id { get; set; }
+        [StringLength(100)]
+        public string NomeMunicipio { get; set; }
     }
 }

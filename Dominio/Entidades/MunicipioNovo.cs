@@ -8,19 +8,18 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Dominio.Entidades
 {
-    [Table("Cidade")]
-    public partial class Cidade
+    [Table("Municipio_novo")]
+    public partial class MunicipioNovo
     {
         [Key]
         public int Id { get; set; }
-        [Required]
         [StringLength(50)]
         public string Nome { get; set; }
-        [Column("Estado_Id")]
-        public int EstadoId { get; set; }
+        [Column("Estado_id")]
+        public int? EstadoId { get; set; }
 
         [ForeignKey(nameof(EstadoId))]
-        [InverseProperty(nameof(EstadoNovo.Cidades))]
+        [InverseProperty(nameof(EstadoNovo.MunicipioNovos))]
         public virtual EstadoNovo Estado { get; set; }
     }
 }

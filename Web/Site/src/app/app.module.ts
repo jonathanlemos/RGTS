@@ -2,7 +2,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 //angular material https://material.angular.io
@@ -25,6 +25,7 @@ import { TableModule } from 'primeng/table';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { ListboxModule } from 'primeng/listbox';
 import { CascadeSelectModule } from 'primeng/cascadeselect';
+import { SelectButtonModule } from 'primeng/selectbutton';
 
 //components
 import { AppRoutingModule } from './app-routing.module';
@@ -45,15 +46,16 @@ import { ContratoComponent } from './contrato/contrato.component';
 import { ContratoLocacaoComponent } from './contrato-locacao/contrato-locacao.component';
 
 const primeng = [
-    AccordionModule,
-    TableModule,
-    ButtonModule,
-    MultiSelectModule,
-    ListboxModule,
-    CascadeSelectModule
+  AccordionModule,
+  TableModule,
+  ButtonModule,
+  MultiSelectModule,
+  ListboxModule,
+  CascadeSelectModule,
+  SelectButtonModule
 ];
 
-const material = [ 
+const material = [
   MatBadgeModule,
   MatButtonModule,
   MatButtonToggleModule,
