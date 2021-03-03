@@ -48,6 +48,7 @@ export class ContratoLocacaoComponent implements OnInit {
   assinados: any[];
   stateOptions: any[];
   value1: string = "off";
+  date: Date;
 
   constructor(private primeNGConfig: PrimeNGConfig, private fb: FormBuilder, private contratoService: ContratoService, private _route: ActivatedRoute) {
     this.Formulario();

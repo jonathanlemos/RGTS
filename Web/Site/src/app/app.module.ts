@@ -26,6 +26,7 @@ import { MultiSelectModule } from 'primeng/multiselect';
 import { ListboxModule } from 'primeng/listbox';
 import { CascadeSelectModule } from 'primeng/cascadeselect';
 import { SelectButtonModule } from 'primeng/selectbutton';
+import { CalendarModule } from 'primeng/calendar';
 
 //components
 import { AppRoutingModule } from './app-routing.module';
@@ -45,6 +46,7 @@ import { CabecalhoComponent } from './cabecalho/cabecalho.component';
 import { ContratoComponent } from './contrato/contrato.component';
 import { ContratoLocacaoComponent } from './contrato-locacao/contrato-locacao.component';
 import { UnidadeComponent } from './unidade/unidade.component';
+import { ImportacaoDeValoresComponent } from './importacao-de-valores/importacao-de-valores.component';
 
 const primeng = [
   AccordionModule,
@@ -53,7 +55,8 @@ const primeng = [
   MultiSelectModule,
   ListboxModule,
   CascadeSelectModule,
-  SelectButtonModule
+  SelectButtonModule,
+  CalendarModule
 ];
 
 const material = [
@@ -82,7 +85,8 @@ const material = [
     CabecalhoComponent,
     ContratoComponent,
     ContratoLocacaoComponent,
-    UnidadeComponent
+    UnidadeComponent,
+    ImportacaoDeValoresComponent
   ],
   imports: [
     BrowserModule,
