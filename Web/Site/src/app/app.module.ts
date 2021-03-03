@@ -44,6 +44,7 @@ import { MenuComponent } from './menu/menu.component';
 import { CabecalhoComponent } from './cabecalho/cabecalho.component';
 import { ContratoComponent } from './contrato/contrato.component';
 import { ContratoLocacaoComponent } from './contrato-locacao/contrato-locacao.component';
+import { UnidadeComponent } from './unidade/unidade.component';
 
 const primeng = [
   AccordionModule,
@@ -80,7 +81,8 @@ const material = [
     MenuComponent,
     CabecalhoComponent,
     ContratoComponent,
-    ContratoLocacaoComponent
+    ContratoLocacaoComponent,
+    UnidadeComponent
   ],
   imports: [
     BrowserModule,
