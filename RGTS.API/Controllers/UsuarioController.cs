@@ -1,14 +1,10 @@
 ﻿using Dominio.Entidades;
-using Dominio.Interfaces.Repositorios;
 using Dominio.Interfaces.Servicos;
 using Dominio.ValueType;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Threading.Tasks;
 
 namespace RGTS.API.Controllers
 {
@@ -24,6 +20,8 @@ namespace RGTS.API.Controllers
         }
 
         [HttpGet("{id}")]
+        [ProducesResponseType(typeof(Usuario), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
         public ActionResult<Usuario> Get(int id)
         {
             try
@@ -38,18 +36,22 @@ namespace RGTS.API.Controllers
         }
 
         [HttpGet]
-        public Usuario[] Get()
+        [ProducesResponseType(typeof(IEnumerable<Usuario>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
+        public ActionResult<IEnumerable<Usuario>> Get()
         {
             try
             {
-                return _usuarioServico.GetAll().ToArray();
+                return Ok(_usuarioServico.GetAll());
             }
             catch (Exception e)
             {
-                return null;
+                return BadRequest(e.Message);
             }
         }
 
+        [HttpPost]
+        [ProducesResponseType(typeof(NotificacaoPost), StatusCodes.Status200OK)]
         public ActionResult<NotificacaoPost> Post(Usuario usuario)
         {
             NotificacaoPost notificacaoPost = new NotificacaoPost();
@@ -66,7 +68,8 @@ namespace RGTS.API.Controllers
             }
         }
 
-        [Route("postUsuarios")]
+        [HttpPost("postUsuarios")]
+        [ProducesResponseType(typeof(NotificacaoPost), StatusCodes.Status200OK)]
         public ActionResult<NotificacaoPost> postUsuarios(Usuario[] usuario)
         {
             NotificacaoPost notificacaoPost = new NotificacaoPost();

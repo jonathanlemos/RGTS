@@ -1,14 +1,10 @@
 ﻿using Dominio.Entidades;
-using Dominio.Interfaces.Repositorios;
 using Dominio.Interfaces.Servicos;
 using Dominio.ValueType;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Threading.Tasks;
 
 namespace RGTS.API.Controllers
 {
@@ -24,19 +20,22 @@ namespace RGTS.API.Controllers
         }
 
         [HttpGet]
-        public Perfil[] Get()
+        [ProducesResponseType(typeof(IEnumerable<Perfil>), StatusCodes.Status200OK)]
+        public ActionResult<IEnumerable<Perfil>> Get()
         {
             try
             {
-                return _perfilServico.GetAll().ToArray();
+                return Ok( _perfilServico.GetAll());
             }
             catch (Exception e)
             {
-                return null;
+                return BadRequest(e.Message);
             }
         }
 
         [HttpPost]
+        [ProducesResponseType(typeof(NotificacaoPost), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
         public ActionResult<NotificacaoPost> Post(Perfil perfil)
         {
             NotificacaoPost notificacaoPost = new NotificacaoPost();
