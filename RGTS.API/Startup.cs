@@ -67,6 +67,7 @@ namespace RGTS.API
             services.AddScoped<IPermissaoServico, PermissaoServico>();
             services.AddScoped<IEstadoServico, EstadoServico>();
             services.AddScoped<IMunicipioServico, MunicipioServico>();
+            services.AddScoped<IItensNdServico, ItensNdServico>();
         }
 
         private void AdicinarInjecaoDeDependenciaRepositorio(IServiceCollection services)
@@ -77,6 +78,7 @@ namespace RGTS.API
             services.AddScoped<IPermissaoRepositorio, PermissaoRepositorio>();
             services.AddScoped<IEstadoRepositorio, EstadoRepositorio>();
             services.AddScoped<IMunicipioRepositorio, MunicipioRepositorio>();
+            services.AddScoped<IItensNdRepositorio, ItensNdRepositorio>();
         }
     }
 }

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-
+import { LocalStorageService } from '../Servicos/LocalStorage/local-storage.service';
+ 
 @Component({
   selector: 'app-cabecalho',
   templateUrl: './cabecalho.component.html',
@@ -7,9 +8,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CabecalhoComponent implements OnInit {
 
-  constructor() { }
+  public MesAnoReferencia: string;
+
+  constructor(private localStorageService: LocalStorageService)
+  {
+
+  }
 
   ngOnInit(): void {
+    this.localStorageService.CarregarMesAnoReferencia();
+    this.MesAnoReferencia = this.localStorageService.get("MesAnoReferencia");
   }
 
 }
