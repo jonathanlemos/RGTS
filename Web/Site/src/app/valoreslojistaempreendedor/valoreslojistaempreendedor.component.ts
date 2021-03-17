@@ -22,6 +22,7 @@ import autoTable from 'jspdf-autotable';
 //primeng
 //import { MultiSelectModule } from 'primeng/multiselect';
 import { Table } from 'primeng/table';
+import { InputMaskModule } from 'primeng/inputmask';
 import { SelectItem, PrimeNGConfig } from "primeng/api";
 
 @Component({
@@ -38,6 +39,7 @@ export class ValoreslojistaempreendedorComponent implements OnInit {
   tipoLocacaoSelecionada: string[];
   unidadesSelecionadas: string[];
   nomeFantasiaSelecionada: string[];
+  val3: string;
 
   constructor(private primeNGConfig: PrimeNGConfig, private fb: FormBuilder, private valoresFaturadosService: ValoresFaturadosService, private _route: ActivatedRoute) {
     this.Formulario();
@@ -55,7 +57,8 @@ export class ValoreslojistaempreendedorComponent implements OnInit {
         Id: [0],
         unidades: ['', Validators.required],
         tipoLocacao: ['', Validators.required],
-        nomeFantasia: ['', Validators.required]
+        nomeFantasia: ['', Validators.required],
+        mesAnoProcDe: ['', Validators.required]
       });
   }
 }
