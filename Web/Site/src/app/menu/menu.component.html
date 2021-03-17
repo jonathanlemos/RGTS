@@ -1,55 +1,60 @@
-<mat-toolbar class="mx-center" >
+<mat-toolbar class="mx-center">
 
-    <!-- <div style="margin-left: 100px;"></div> -->
+  <!-- <div style="margin-left: 100px;"></div> -->
 
-    <a mat-button [mat-menu-trigger-for]="appMenuUsuario">Usuario</a>
-    <mat-menu #appMenuUsuario="matMenu">
-        <a mat-button routerLink="usuario" [queryParams]="{tipoTela: 'cadastrar'}">Cadastrar</a>
-        <a mat-button routerLink="usuario" [queryParams]="{tipoTela: 'consultar'}">Consultar</a>
-        <a mat-button routerLink="usuario" [queryParams]="{tipoTela: 'editar'}">Editar</a>
-    </mat-menu>
+  <a mat-button [mat-menu-trigger-for]="appMenuUsuario">Usuario</a>
+  <mat-menu #appMenuUsuario="matMenu">
+    <a mat-button routerLink="usuario" [queryParams]="{tipoTela: 'cadastrar'}">Cadastrar</a>
+    <a mat-button routerLink="usuario" [queryParams]="{tipoTela: 'consultar'}">Consultar</a>
+    <a mat-button routerLink="usuario" [queryParams]="{tipoTela: 'editar'}">Editar</a>
+  </mat-menu>
 
-    <a mat-button [mat-menu-trigger-for]="appMenuPerfil">Perfil</a>
-    <mat-menu #appMenuPerfil="matMenu">
-        <a mat-button routerLink="perfil" [queryParams]="{tipoTela: 'cadastro'}">Cadastrar</a>
-        <a mat-button routerLink="perfil" [queryParams]="{tipoTela: 'editar'}">Consultar</a>
-    </mat-menu>
+  <a mat-button [mat-menu-trigger-for]="appMenuPerfil">Perfil</a>
+  <mat-menu #appMenuPerfil="matMenu">
+    <a mat-button routerLink="perfil" [queryParams]="{tipoTela: 'cadastro'}">Cadastrar</a>
+    <a mat-button routerLink="perfil" [queryParams]="{tipoTela: 'editar'}">Consultar</a>
+  </mat-menu>
 
-    <a mat-button [mat-menu-trigger-for]="appMenuPermissao">Permissão</a>
-    <mat-menu #appMenuPermissao="matMenu">
-        <a mat-button routerLink="permissao" [queryParams]="{tipoTela: 'cadastro'}">Cadastrar</a>
-        <a mat-button routerLink="permissao" [queryParams]="{tipoTela: 'editar'}">Consultar</a>
-    </mat-menu>
+  <a mat-button [mat-menu-trigger-for]="appMenuPermissao">Permissão</a>
+  <mat-menu #appMenuPermissao="matMenu">
+    <a mat-button routerLink="permissao" [queryParams]="{tipoTela: 'cadastro'}">Cadastrar</a>
+    <a mat-button routerLink="permissao" [queryParams]="{tipoTela: 'editar'}">Consultar</a>
+  </mat-menu>
 
-    <a mat-button [mat-menu-trigger-for]="appMenuContratoLocacao">Contrato Locação</a>
-    <mat-menu #appMenuContratoLocacao="matMenu">
-        <a mat-button routerLink="contratoLocacao" [queryParams]="{tipoTela: 'cadastrar'}">Cadastrar</a>
-        <a mat-button routerLink="contratoLocacao" [queryParams]="{tipoTela: 'consultar'}">Consultar</a>
-        <a mat-button routerLink="contratoLocacao" [queryParams]="{tipoTela: 'editar'}">Editar</a>
-    </mat-menu>
+  <a mat-button [mat-menu-trigger-for]="appMenuContratoLocacao">Contrato Locação</a>
+  <mat-menu #appMenuContratoLocacao="matMenu">
+    <a mat-button routerLink="contratoLocacao" [queryParams]="{tipoTela: 'cadastrar'}">Cadastrar</a>
+    <a mat-button routerLink="contratoLocacao" [queryParams]="{tipoTela: 'consultar'}">Consultar</a>
+    <a mat-button routerLink="contratoLocacao" [queryParams]="{tipoTela: 'editar'}">Editar</a>
+  </mat-menu>
+
+  <a mat-button [mat-menu-trigger-for]="appMenuCalculos">Cálculos</a>
+  <mat-menu #appMenuCalculos="matMenu">
+    <a mat-button routerLink="valoresFaturados" [queryParams]="{tipoTela: 'consultar'}">Valores Faturados</a>
+  </mat-menu>
 
 </mat-toolbar>
 
 <style>
-    ul {
-        list-style-type: none;
-        margin: 0;
-        padding: 0;
-        overflow: hidden;
-    }
+  ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+  }
 
-    li {
-        float: left;
-    }
+  li {
+    float: left;
+  }
 
-    a {
-        display: block;
-        color: white;
-        text-align: center;
-        text-decoration: none;
-    }
+  a {
+    display: block;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+  }
 
     a:hover {
-        background-color: #111111;
+      background-color: #111111;
     }
 </style>

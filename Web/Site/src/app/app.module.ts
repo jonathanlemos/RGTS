@@ -47,6 +47,7 @@ import { ContratoComponent } from './contrato/contrato.component';
 import { ContratoLocacaoComponent } from './contrato-locacao/contrato-locacao.component';
 import { UnidadeComponent } from './unidade/unidade.component';
 import { ImportacaoDeValoresComponent } from './importacao-de-valores/importacao-de-valores.component';
+import { ValoreslojistaempreendedorComponent } from './valoreslojistaempreendedor/valoreslojistaempreendedor.component';
 
 const primeng = [
   AccordionModule,
@@ -86,7 +87,8 @@ const material = [
     ContratoComponent,
     ContratoLocacaoComponent,
     UnidadeComponent,
-    ImportacaoDeValoresComponent
+    ImportacaoDeValoresComponent,
+    ValoreslojistaempreendedorComponent
   ],
   imports: [
     BrowserModule,

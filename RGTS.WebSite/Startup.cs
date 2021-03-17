@@ -19,7 +19,7 @@ namespace RGTS.WebSite
         {
             services.AddSpaStaticFiles(configuration =>
             {
-                configuration.RootPath = @"C:\Users\jonat\source\repos\jonathanlemos\RGTS\Web\Site\dist"; //"ClientApp /dist";
+                configuration.RootPath = @"C:\Fabio\RTG\Web\Site\dist"; //"ClientApp /dist";
             });
         }
 
@@ -41,7 +41,7 @@ namespace RGTS.WebSite
 
             app.UseSpa(spa =>
             {
-                spa.Options.SourcePath = @"C:\Users\jonat\source\repos\jonathanlemos\RGTS\Web\Site"; //"ClientApp";
+                spa.Options.SourcePath = @"C:\Fabio\RTG\Web\Site\dist"; //"ClientApp";
 
                 if (env.IsDevelopment())
                 {

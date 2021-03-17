@@ -1,0 +1,44 @@
+<div class="container mt-5">
+
+  <div class="row mb-5"><h3>Valores Faturados</h3></div>
+
+  <div [ngSwitch]="tipoTela">
+
+    <div *ngSwitchCase="'consultar'">
+
+      <form class="row g-2" (submit)="ConsultarValoresFaturados()" [formGroup]="valoresFaturadosFormulario">
+
+        <div class="col-md-4">
+          <label for="multiselectUnidade"
+                 class="form-label">Unidade</label><br>
+          <p-multiSelect formControlName="unidades" name="unidades" [options]="unidades" id="multiselectUnidade" class="form-select"
+                         [(ngModel)]="unidadesSelecionadas" defaultLabel="Selecione uma unidade" optionLabel="nome"
+                         display="chip">
+          </p-multiSelect>
+        </div>
+
+        <div class="col-md-4">
+          <label for="multiselectNomeFantasia" class="form-label">Nome Fantasia</label><br>
+          <p-multiSelect name="nomeFantasia" formControlName="nomeFantasia" [options]="nomeFantasia" class="form-select"
+                         id="multiselectNomeFantasia" [(ngModel)]="nomeFantasiaSelecionada"
+                         defaultLabel="Selecione um Nome Fantasia" optionLabel="nome" display="chip">
+          </p-multiSelect>
+        </div>
+
+        <div class="col-md-4">
+          <label for="multiselectTipoLocacao" class="form-label">Tipo Locação</label><br>
+          <p-multiSelect name="tipoLocacao" formControlName="tipoLocacao" [options]="tipoLocacao" class="form-select"
+                         id="multiselectTipoLocacao" [(ngModel)]="tipoLocacaoSelecionada"
+                         defaultLabel="Selecione uma Tipo Locação" optionLabel="nome" display="chip">
+          </p-multiSelect>
+        </div>
+
+        <div class="col-12 mt-4">
+          <button type="submit" [disabled]="!valoresFaturadosFormulario.valid" class="btn btn-primary">Pesquisar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+
+</div>

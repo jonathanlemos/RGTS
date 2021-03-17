@@ -5,6 +5,7 @@ import { PerfilComponent } from './perfil/perfil.component';
 import { PermissaoComponent } from './permissao/permissao.component';
 import { ConfigurarPerfilComponent } from './configurar-perfil/configurar-perfil.component';
 import { ContratoLocacaoComponent } from './contrato-locacao/contrato-locacao.component';
+import { ValoreslojistaempreendedorComponent } from './valoreslojistaempreendedor/valoreslojistaempreendedor.component'
 
 //dashboard
 import { MenuSuperiorComponent } from './dashboard/menu-superior/menu-superior.component';
@@ -15,7 +16,8 @@ const routes: Routes = [
   { path: 'perfil', component: PerfilComponent },
   { path: 'permissao', component: PermissaoComponent },
   { path: 'configurarPerfil', component: ConfigurarPerfilComponent },
-  { path: 'contratoLocacao', component: ContratoLocacaoComponent }
+  { path: 'contratoLocacao', component: ContratoLocacaoComponent },
+  { path: 'valoresFaturados', component: ValoreslojistaempreendedorComponent }
 ];
 
 @NgModule({
