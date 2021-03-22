@@ -34,17 +34,29 @@
         </div>
 
         <div class="col-md-4">
-          <label for="mesAnoProcTXT" class="form-label">Mês Processamento de:</label><br>
-          <p-inputMask name="mesAnoProcDe" formControlName="mesAnoProcDe" [options]="mesAnoProcDe" class="form-text" id="mesAnoProcTXT" mask="99/9999" [(ngModel)]="val3" placeholder="99/9999" slotChar="mm/yyyy"></p-inputMask>
+          <label for="mesAnoProcTXTde" class="form-label">Mês Processamento de:</label><br>
+          <p-inputMask name="mesAnoProcDe" formControlName="mesAnoProcDe" [options]="mesAnoProcDe" class="form-text" id="mesAnoProcTXTde" mask="99/9999" [(ngModel)]="valmesAnoProcDe" placeholder="__/____" slotChar="mm/yyyy"></p-inputMask>
+        </div>
+
+        <div class="col-md-4">
+          <label for="mesAnoProcTXTate" class="form-label">Mês Processamento até:</label><br>
+          <p-inputMask name="mesAnoProcAte" formControlName="mesAnoProcAte" [options]="mesAnoProcAte" class="form-text" id="mesAnoProcTXTate" mask="99/9999" [(ngModel)]="valmesAnoProcAte" placeholder="__/____" slotChar="mm/yyyy"></p-inputMask>
+        </div>
+
+        <div class="col-md-4">
+          <label for="vencimentoDetxt" class="form-label">Vencimento de:</label><br>
+          <p-calendar [(ngModel)]="vencimentoDe" formControlName="vencimentoDe" [showIcon]="true" dateFormat="dd/mm/yy"></p-calendar>
+        </div>
+
+        <div class="col-md-4">
+          <label for="vencimentoAtetxt" class="form-label">Vencimento até:</label><br>
+          <p-calendar [(ngModel)]="vencimentoAte" formControlName="vencimentoAte" [showIcon]="true" dateFormat="dd/mm/yy"></p-calendar>
         </div>
 
         <div class="col-12 mt-4">
           <button type="submit" [disabled]="!valoresFaturadosFormulario.valid" class="btn btn-primary">Pesquisar</button>
         </div>
       </form>
-      <div class="col-md-4">
-        <p-inputMask mask="99/9999" [(ngModel)]="val3" placeholder="99/9999" slotChar="mm/yyyy"></p-inputMask>
-      </div>
     </div>
   </div>
 </div>

@@ -27,6 +27,7 @@ import { ListboxModule } from 'primeng/listbox';
 import { CascadeSelectModule } from 'primeng/cascadeselect';
 import { SelectButtonModule } from 'primeng/selectbutton';
 import { CalendarModule } from 'primeng/calendar';
+import { InputMaskModule } from 'primeng/inputmask';
 
 //components
 import { AppRoutingModule } from './app-routing.module';
@@ -57,7 +58,8 @@ const primeng = [
   ListboxModule,
   CascadeSelectModule,
   SelectButtonModule,
-  CalendarModule
+  CalendarModule,
+  InputMaskModule
 ];
 
 const material = [
