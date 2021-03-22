@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using Dominio.Entidades;
 using Dominio.Interfaces.Repositorios;
 using Microsoft.EntityFrameworkCore;
@@ -9,14 +11,15 @@ namespace Infra.Data.Repositorios
 {
     public class ItensNdRepositorio : RepositorioBase<ItensNd>, IItensNdRepositorio
     {
-        public IEnumerable<ItensNd> GetIdItensNdEDescricaoAlternativa()
+        public async Task<dynamic> GetIdItensNdEDescricaoAlternativa()
         {
-            string consulta = @"select da.id, da.NomeDescricaAlternativa from [dbo].[ItensND] ind --itens cobrança
-                                inner join [dbo].[DescricaoAlternativaRubrica]  da on da.Id = ind.IdDescricaoAlternativa;";
+            var consulta = contexto
+                .ItensNds
+                .Include(i => i.DescricaoAlternativaRubrica)
+                .Select(i => new { i.Id, i.DescricaoAlternativaRubrica.NomeDescricaAlternativa })
+                .ToListAsync();
 
-            var teste = contexto.ItensNds.FromSqlRaw(consulta).ToListAsync();
-            
-            return contexto.ItensNds.FromSqlRaw(consulta);
+            return await consulta;
         }
     }
 }

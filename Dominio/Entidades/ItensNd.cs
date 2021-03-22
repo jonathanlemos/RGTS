@@ -34,5 +34,8 @@ namespace Dominio.Entidades
         public string UsuarioAlteracao { get; set; }
         [Column(TypeName = "datetime")]
         public DateTime? DataAlteracao { get; set; }
+
+        [ForeignKey(nameof(IdDescricaoAlternativa))]
+        public virtual DescricaoAlternativaRubrica DescricaoAlternativaRubrica { get; set; }
     }
 }

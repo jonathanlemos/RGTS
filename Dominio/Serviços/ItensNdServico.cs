@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 using Dominio.Entidades;
 using Dominio.Interfaces.Repositorios;
 using Dominio.Interfaces.Servicos;
@@ -17,9 +18,8 @@ namespace Dominio.Serviços
             this.itensNdRepositorio = itensNdRepositorio;
         }
 
-        public IEnumerable<ItensNd> GetIdItensNdEDescricaoAlternativa()
+        public Task<dynamic> GetIdItensNdEDescricaoAlternativa()
         {
-
             return itensNdRepositorio.GetIdItensNdEDescricaoAlternativa();
         }
     }

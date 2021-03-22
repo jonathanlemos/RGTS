@@ -20,6 +20,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 //primeNG https://primefaces.org/primeng
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { AccordionModule } from 'primeng/accordion';
 import { ButtonModule } from 'primeng/button';
 import { TableModule } from 'primeng/table';
@@ -31,6 +32,7 @@ import { CalendarModule } from 'primeng/calendar';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ToolbarModule } from 'primeng/toolbar';
 import { FileUploadModule } from 'primeng/fileupload';
+import { DialogModule } from 'primeng/dialog';
 
 //components
 import { AppRoutingModule } from './app-routing.module';
@@ -57,7 +59,8 @@ const primeng = [
   CalendarModule,
   ConfirmDialogModule,
   ToolbarModule,
-  FileUploadModule
+  FileUploadModule,
+  DialogModule  
 ];
 
 const material = [
@@ -101,7 +104,7 @@ const angularImport = [
     material,
     angularImport
   ],
-  providers: [],
+  providers: [ConfirmationService, MessageService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
