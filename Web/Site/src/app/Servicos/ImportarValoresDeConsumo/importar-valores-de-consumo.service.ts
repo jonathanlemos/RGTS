@@ -1,11 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { environment } from '../../environments/environment';
-import { NotificacaoDelete } from '../Models/notificacao-delete';
-import { NotificacaoPost } from '../Models/notificacao-post';
-import { NotificacaoPut } from '../Models/notificacao-put';
-import { Usuario } from '../Models/Usuario';
+import { environment } from '../../../environments/environment';
+import { NotificacaoDelete } from '../../Models/notificacao-delete';
+import { NotificacaoPost } from '../../Models/notificacao-post';
+import { NotificacaoPut } from '../../Models/notificacao-put';
+import { Unidade } from '../../Models/Unidade';
 
 @Injectable({
   providedIn: 'root'
@@ -24,10 +24,10 @@ export class ImportarValoresDeConsumoService {
   //  return this.http.get<Usuario>(this.urlBase + '/' + id);
   //};
 
-  ////salvar
-  //post(usuario: Usuario): Observable<NotificacaoPost> {
-  //  return this.http.post<NotificacaoPost>(this.urlBase, usuario);
-  //};
+  //salvar
+  post(unidade: Unidade): Observable<NotificacaoPost> {
+    return this.http.post<NotificacaoPost>(this.urlBase, unidade);
+  };
 
   ////salvar
   //postUsuarios(usuarios: Usuario[]): Observable<NotificacaoPost> {

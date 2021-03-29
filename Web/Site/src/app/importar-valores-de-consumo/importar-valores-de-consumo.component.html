@@ -4,19 +4,19 @@
 
   <div class="col-md-12 mt-5"></div>
 
-  <div class="col-md-6 mt-5">
-    <label for="multiselectTipoConsumoImportar" class="form-label">Tipo de Consumo</label><br>
-    <p-multiSelect name="tipoConsumoImportar" id="multiselectTipoConsumoImportar" class="form-select w-25"
-                   defaultLabel="Selecione um tipo de consumo" [(ngModel)]="unidade.tipoDeConsumoSelecionado"
-                   [options]="tiposDeConsumos" optionLabel="nomeDescricaAlternativa" optionValue="id"
-                   display="chip">
-    </p-multiSelect>
-  </div>
-
   <div class="col-md-12 mt-5">
 
     <div class="col-md-6 mt-5">
-      <p-fileUpload name="arquivos" url="{{urlBase}}" multiple="multiple" (uploadHandler)="Upload($event)"
+      <label for="multiselectTipoConsumoImportar" class="form-label">Tipo de Consumo</label><br>
+      <p-multiSelect name="rubricaImportar" id="multiselectTipoConsumoImportar" class="form-select w-25"
+                     defaultLabel="Selecione um tipo de consumo" [(ngModel)]="unidade.rubrica"
+                     [options]="tiposDeConsumos" optionLabel="nomeRubrica" optionValue="id"
+                     display="chip">
+      </p-multiSelect>
+    </div>
+
+    <div class="col-md-6 mt-5">
+      <p-fileUpload name="arquivos" multiple="multiple" (uploadHandler)="Upload($event)"
                     accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
                     customUpload="true" class="col-md-6 mt-5" (onUpload)="onUpload($event)"
                     chooseLabel="Buscar arquivo" uploadLabel="Carregar" cancelLabel="Cancelar">
@@ -27,17 +27,17 @@
         </ng-template>
       </p-fileUpload>
       <!--<p-fileUpload mode="basic" customUpload="true" name="arquivos" [auto]="true" chooseLabel="Buscar arquivo"
-                    accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
-                    (uploadHandler)="Upload($event)"></p-fileUpload>-->
+                  accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+                  (uploadHandler)="Upload($event)"></p-fileUpload>-->
     </div>
 
     <div class="col-md-12 mt-5">
       <div class="card ">
         <p-toolbar styleClass="p-mb-4">
           <ng-template pTemplate="left">
-            ft
-            <button pButton pRipple label="Novo" icon="pi pi-plus" class="p-button-success p-mr-2" (click)="AbrirModalNovaUnidade()"></button>
-            <button pButton pRipple [label]="Deletar" icon="pi pi-trash" class="p-button-danger ml-3" style="height:38px;" (click)="DeletarUnidadesSelecionadas()" [disabled]="!unidadesSelecionadas || !unidadesSelecionadas.length"></button>
+            <button pButton pRipple label="Novo" icon="pi pi-plus" class="p-button-success p-mr-2" (click)="AbrirModalNovaUnidade();"></button>
+            <button pButton pRipple [label]="Deletar" icon="pi pi-trash" class="p-button-danger ml-3" style="height:38px;" (click)="DeletarUnidadesSelecionadas();" [disabled]="!unidadesSelecionadas || !unidadesSelecionadas.length"></button>
+            <button pButton pRipple label="Salvar" icon="pi pi-save" class="p-button-success" (click)="SalvarValoresImportados();"></button>
           </ng-template>
         </p-toolbar>
       </div>
@@ -53,9 +53,9 @@
 
         <div class="col-md-6 mt-5">
           <label for="multiselectTipoConsumo" class="form-label">Tipo de Consumo</label><br>
-          <p-multiSelect name="tipoConsumo" id="multiselectTipoConsumo" class="form-select w-25"
-                         defaultLabel="Selecione um tipo de consumo" [(ngModel)]="unidade.tipoDeConsumoSelecionado"
-                         [options]="tiposDeConsumos" optionLabel="nomeDescricaAlternativa" optionValue="id"
+          <p-multiSelect name="rubrica" id="multiselectTipoConsumo" class="form-select w-25"
+                         defaultLabel="Selecione um tipo de consumo" [(ngModel)]="unidade.rubrica"
+                         [options]="tiposDeConsumos" optionLabel="nomeRubrica" optionValue="id"
                          display="chip">
           </p-multiSelect>
         </div>
@@ -66,8 +66,8 @@
         </div>-->
         <div class="col-md-6 mt-5">
           <label for="valorId" class="form-label">Valor</label>
-          <input type="text" pInputText class="form-control" id="valorId" [(ngModel)]="unidade.valor" required />
-          <small class="p-error" *ngIf="submitted && !unidade.valor">Valor da Unidade é obrigatório.</small>
+          <input type="text" pInputText class="form-control" id="valorId" [(ngModel)]="unidade.valorPrincipalRubrica" required />
+          <small class="p-error" *ngIf="submitted && !unidade.valorPrincipalRubrica">Valor da Unidade é obrigatório.</small>
         </div>
       </ng-template>
 
@@ -98,8 +98,8 @@
               <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
             </th>
             <th pSortableColumn="nome">Unidade <p-sortIcon field="nome"></p-sortIcon></th>
-            <th pSortableColumn="valor">Valor <p-sortIcon field="valor"></p-sortIcon></th>
-            <th pSortableColumn="nomeDescricaAlternativa">Tipo de consumo<p-sortIcon field="nomeDescricaAlternativa"></p-sortIcon></th>
+            <th pSortableColumn="valorPrincipalRubrica">Valor <p-sortIcon field="valorPrincipalRubrica"></p-sortIcon></th>
+            <th pSortableColumn="nomeRubrica">Tipo de consumo<p-sortIcon field="nomeRubrica"></p-sortIcon></th>
             <th></th>
           </tr>
         </ng-template>
@@ -109,8 +109,8 @@
               <p-tableCheckbox [value]="unidade"></p-tableCheckbox>
             </td>
             <td>{{unidade.nome}}</td>
-            <td>{{unidade.valor | currency:'BRL'}}</td>
-            <td>{{unidade.tipoDeConsumoSelecionado.nomeDescricaAlternativa}}</td>
+            <td>{{unidade.valorPrincipalRubrica | currency:'BRL'}}</td>
+            <td>{{unidade.rubrica.nomeRubrica}}</td>
             <td>
               <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success p-mr-2" (click)="EditarUnidade(unidade)"></button>
               <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="DeletarUnidade(unidade)"></button>
@@ -126,4 +126,5 @@
     </div>
 
   </div>
+
 </div>

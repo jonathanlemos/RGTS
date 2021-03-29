@@ -1,4 +1,6 @@
-﻿using Dominio.Interfaces.Servicos;
+﻿using Dominio.Entidades;
+using Dominio.Interfaces.Servicos;
+using Dominio.ValueType;
 using ExcelDataReader;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -107,6 +109,28 @@ namespace RGTS.API.Controllers
             catch (Exception e)
             {
                 return BadRequest(e.Message);
+            }
+        }
+
+        [HttpPost]
+        public ActionResult<NotificacaoPost> Post(ItensNd[] itensNd)
+        {
+            NotificacaoPost notificacaoPost = new NotificacaoPost();
+
+            try
+            {
+                
+                notificacaoPost.Sucesso = true;
+                notificacaoPost.Mensagem = "Unidades cadastradas com sucesso.";
+
+                return Ok();
+            }
+            catch(Exception e)
+            {
+                notificacaoPost.Sucesso = false;
+                notificacaoPost.Mensagem = "Erro: " + e.Message;
+
+                return notificacaoPost;
             }
         }
     }
