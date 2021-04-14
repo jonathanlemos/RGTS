@@ -3,6 +3,7 @@ using Dominio.Interfaces.Repositorios;
 using Dominio.Interfaces.Servicos;
 using Dominio.ValueType;
 using Microsoft.AspNetCore.Mvc;
+using RGTS.API.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,19 +17,19 @@ namespace RGTS.API.Controllers
     [Route("api/[controller]")]
     public class UsuarioController : ControllerBase
     {
-        IUsuarioServico _usuarioServico;
+        IPessoaServico _pessoaServico;
 
-        public UsuarioController(IUsuarioServico usuarioServico)
+        public UsuarioController(IPessoaServico usuarioServico)
         {
-            _usuarioServico = usuarioServico;
+            _pessoaServico = usuarioServico;
         }
 
         [HttpGet("{id}")]
-        public ActionResult<Usuario> Get(int id)
+        public ActionResult<Pessoa> Get(int id)
         {
             try
             {
-                return _usuarioServico.GetById(id);
+                return _pessoaServico.GetById(id);
             }
             catch(Exception e)
             {
@@ -38,11 +39,12 @@ namespace RGTS.API.Controllers
         }
 
         [HttpGet]
-        public Usuario[] Get()
+        public Pessoa[] Get()
         {
             try
             {
-                return _usuarioServico.GetAll().ToArray();
+                var _pessoas= _pessoaServico.GetAll().ToArray();
+                return _pessoas;
             }
             catch (Exception e)
             {
@@ -50,12 +52,21 @@ namespace RGTS.API.Controllers
             }
         }
 
-        public ActionResult<NotificacaoPost> Post(Usuario usuario)
+        public ActionResult<NotificacaoPost> Post(CadastroDeUsuario Usuario)
         {
             NotificacaoPost notificacaoPost = new NotificacaoPost();
             try
             {
-                _usuarioServico.CadastrarUsuario(usuario);                
+                Pessoa pessoa = new Pessoa();
+                pessoa.EstadoId = Usuario.Estado.Id;
+                pessoa.CidadeId = Usuario.Cidade.Id;
+                pessoa.Nome = Usuario.NomeCompleto;
+                pessoa.PrimeiroNome = Usuario.PrimeiroNome;
+                pessoa.Senha = Usuario.Senha;
+                pessoa.SexoId = Usuario.Sexo.Id;
+                pessoa.Email = Usuario.Email;
+
+                _pessoaServico.CadastrarPessoa(pessoa);                
                 return notificacaoPost;
             }
             catch(Exception e)
@@ -67,12 +78,12 @@ namespace RGTS.API.Controllers
         }
 
         [Route("postUsuarios")]
-        public ActionResult<NotificacaoPost> postUsuarios(Usuario[] usuario)
+        public ActionResult<NotificacaoPost> postUsuarios(Pessoa[] Pessoa)
         {
             NotificacaoPost notificacaoPost = new NotificacaoPost();
             try
             {
-                _usuarioServico.AtualizarUsuarios(usuario);
+                _pessoaServico.AtualizarPessoas(Pessoa);
                 return notificacaoPost;
             }
             catch (Exception e)
@@ -83,6 +94,24 @@ namespace RGTS.API.Controllers
             }
         }
 
+        [Route("putUsuarios")]
+        public ActionResult<NotificacaoPost> putUsuarios(Pessoa[] Pessoa)
+        {
+            NotificacaoPost notificacaoPost = new NotificacaoPost();
+            try
+            {
+                _pessoaServico.AtualizarPessoas(Pessoa);
+                notificacaoPost.Mensagem = "Usuários editados com sucesso.";
+                return notificacaoPost;
+            }
+            catch (Exception e)
+            {
+                notificacaoPost.Sucesso = false;
+                notificacaoPost.Sucesso = false;
+                notificacaoPost.Mensagem = "Erro ao editar os usuário. Erro: " + e.Message;
+                return notificacaoPost;
+            }
+        }
 
     }
 }

@@ -1,4 +1,5 @@
 export class Estado {
-  siglaEstado: String;
-  nomeEstado: String;
+  id: number;
+  sigla: String;
+  nome: String;
 }

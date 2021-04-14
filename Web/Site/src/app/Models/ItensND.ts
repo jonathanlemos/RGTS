@@ -1,9 +1,8 @@
 import { Rubrica } from './rubrica';
 
 export class ItensND {
-  id: number;
-  valorPrincipalRubrica: number;
-
-  nome: string;
+  id: number | undefined;
+  valorPrincipalRubrica: number | undefined;
+  nome: string | undefined;
   rubrica: Rubrica;
 }

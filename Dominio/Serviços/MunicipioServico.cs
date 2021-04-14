@@ -8,13 +8,13 @@ using System.Text;
 
 namespace Dominio.Serviços
 {
-    public class MunicipioServico : ServicoBase<Municipio>, IMunicipioServico
+    public class CidadeServico : ServicoBase<Cidade>, ICidadeServico
     {
-        private readonly IMunicipioRepositorio municipioRepositorio;
+        private readonly ICidadeRepositorio cidadeRepositorio;
 
-        public MunicipioServico(IMunicipioRepositorio _municipioRepositorio) : base(_municipioRepositorio)
+        public CidadeServico(ICidadeRepositorio _cidadeRepositorio) : base(_cidadeRepositorio)
         {
-            this.municipioRepositorio = _municipioRepositorio;
+            this.cidadeRepositorio = _cidadeRepositorio;
         }
     }
 }

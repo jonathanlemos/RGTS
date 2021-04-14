@@ -1,8 +1,7 @@
 ﻿using System;
+using Dominio.Entidades;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Dominio;
-using Dominio.Entidades;
 
 #nullable disable
 
@@ -27,11 +26,12 @@ namespace Infra.Data.Contexto
         public virtual DbSet<ContaCorrente> ContaCorrentes { get; set; }
         public virtual DbSet<ContratoFaixasAluguel> ContratoFaixasAluguels { get; set; }
         public virtual DbSet<ContratoLocacao> ContratoLocacaos { get; set; }
-        public virtual DbSet<ContratoUnidade> ContratoUnidades { get; set; }
+        public virtual DbSet<ContratoLuc> ContratoLucs { get; set; }
         public virtual DbSet<DescricaoAlternativaRubrica> DescricaoAlternativaRubricas { get; set; }
+        public virtual DbSet<EmailsPessoa> EmailsPessoas { get; set; }
         public virtual DbSet<Empreendimento> Empreendimentos { get; set; }
+        public virtual DbSet<Endereco> Enderecos { get; set; }
         public virtual DbSet<Estado> Estados { get; set; }
-        public virtual DbSet<EstadoNovo> EstadoNovos { get; set; }
         public virtual DbSet<Fase> Fases { get; set; }
         public virtual DbSet<Formula> Formulas { get; set; }
         public virtual DbSet<GrupoRubrica> GrupoRubricas { get; set; }
@@ -42,12 +42,13 @@ namespace Infra.Data.Contexto
         public virtual DbSet<Localizacao> Localizacaos { get; set; }
         public virtual DbSet<Luc> Lucs { get; set; }
         public virtual DbSet<Marca> Marcas { get; set; }
-        public virtual DbSet<Municipio> Municipios { get; set; }
-        public virtual DbSet<MunicipioNovo> MunicipioNovos { get; set; }
         public virtual DbSet<Nd> Nds { get; set; }
         public virtual DbSet<Nivel> Nivels { get; set; }
         public virtual DbSet<ParametrosShopping> ParametrosShoppings { get; set; }
         public virtual DbSet<PartilhaRubricaContaCorrente> PartilhaRubricaContaCorrentes { get; set; }
+        public virtual DbSet<Perfil> Perfils { get; set; }
+        public virtual DbSet<PerfilPermissao> PerfilPermissaos { get; set; }
+        public virtual DbSet<Permissao> Permissaos { get; set; }
         public virtual DbSet<Pessoa> Pessoas { get; set; }
         public virtual DbSet<PessoaShopping> PessoaShoppings { get; set; }
         public virtual DbSet<Ramo> Ramos { get; set; }
@@ -58,6 +59,8 @@ namespace Infra.Data.Contexto
         public virtual DbSet<Serie> Series { get; set; }
         public virtual DbSet<SerieBeneficiario> SerieBeneficiarios { get; set; }
         public virtual DbSet<ServicoCobranca> ServicoCobrancas { get; set; }
+        public virtual DbSet<Sexo> Sexos { get; set; }
+        public virtual DbSet<Telefone> Telefones { get; set; }
         public virtual DbSet<TipoInstrumento> TipoInstrumentos { get; set; }
         public virtual DbSet<ValoresFaturado> ValoresFaturados { get; set; }
 
@@ -157,10 +160,13 @@ namespace Infra.Data.Contexto
                 entity.Property(e => e.UsuarioInsercao).IsUnicode(false);
             });
 
+            modelBuilder.Entity<EmailsPessoa>(entity =>
+            {
+                entity.Property(e => e.Email).IsUnicode(false);
+            });
+
             modelBuilder.Entity<Empreendimento>(entity =>
             {
-                entity.Property(e => e.Id).ValueGeneratedNever();
-
                 entity.Property(e => e.NomeEmpreendimento).IsUnicode(false);
 
                 entity.Property(e => e.UsuarioAlteracao).IsUnicode(false);
@@ -168,14 +174,22 @@ namespace Infra.Data.Contexto
                 entity.Property(e => e.UsuarioInsercao).IsUnicode(false);
             });
 
-            modelBuilder.Entity<Estado>(entity =>
+            modelBuilder.Entity<Endereco>(entity =>
             {
-                entity.Property(e => e.SiglaEstado).IsUnicode(false);
+                entity.Property(e => e.Bairro).IsFixedLength(true);
 
-                entity.Property(e => e.NomeEstado).IsUnicode(false);
+                entity.Property(e => e.Cep).IsFixedLength(true);
+
+                entity.Property(e => e.Complemento).IsFixedLength(true);
+
+                entity.Property(e => e.Descricao).IsFixedLength(true);
+
+                entity.Property(e => e.Pais).IsFixedLength(true);
+
+                entity.Property(e => e.Principal).HasDefaultValueSql("((1))");
             });
 
-            modelBuilder.Entity<EstadoNovo>(entity =>
+            modelBuilder.Entity<Estado>(entity =>
             {
                 entity.Property(e => e.Id).ValueGeneratedNever();
 
@@ -244,27 +258,6 @@ namespace Infra.Data.Contexto
                 entity.Property(e => e.Usuario).IsUnicode(false);
             });
 
-            modelBuilder.Entity<Municipio>(entity =>
-            {
-                entity.HasKey(e => new { e.SiglaEstado, e.Id });
-
-                entity.Property(e => e.SiglaEstado).IsUnicode(false);
-
-                entity.Property(e => e.NomeMunicipio).IsUnicode(false);
-            });
-
-            modelBuilder.Entity<MunicipioNovo>(entity =>
-            {
-                entity.Property(e => e.Id).ValueGeneratedNever();
-
-                entity.Property(e => e.Nome).IsFixedLength(true);
-
-                entity.HasOne(d => d.Estado)
-                    .WithMany(p => p.MunicipioNovos)
-                    .HasForeignKey(d => d.EstadoId)
-                    .HasConstraintName("FK_Municipio_Estado1");
-            });
-
             modelBuilder.Entity<Nd>(entity =>
             {
                 entity.Property(e => e.ArquivoRemessa).IsUnicode(false);
@@ -317,8 +310,41 @@ namespace Infra.Data.Contexto
                 entity.Property(e => e.UsuarioAlteracao).IsUnicode(false);
             });
 
+            modelBuilder.Entity<Perfil>(entity =>
+            {
+                entity.Property(e => e.Id).ValueGeneratedNever();
+
+                entity.Property(e => e.Descricao).IsFixedLength(true);
+            });
+
+            modelBuilder.Entity<PerfilPermissao>(entity =>
+            {
+                entity.Property(e => e.Id).IsFixedLength(true);
+
+                entity.HasOne(d => d.Perfil)
+                    .WithMany(p => p.PerfilPermissaos)
+                    .HasForeignKey(d => d.PerfilId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_PerfilPermissao_Perfil");
+
+                entity.HasOne(d => d.Permissao)
+                    .WithMany(p => p.PerfilPermissaos)
+                    .HasForeignKey(d => d.PermissaoId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_PerfilPermissao_Permissao");
+            });
+
+            modelBuilder.Entity<Permissao>(entity =>
+            {
+                entity.Property(e => e.Id).ValueGeneratedNever();
+
+                entity.Property(e => e.Descricao).IsFixedLength(true);
+            });
+
             modelBuilder.Entity<Pessoa>(entity =>
             {
+                entity.Property(e => e.Ativo).HasDefaultValueSql("((1))");
+
                 entity.Property(e => e.Bairro).IsUnicode(false);
 
                 entity.Property(e => e.Celular1).IsUnicode(false);
@@ -329,29 +355,39 @@ namespace Infra.Data.Contexto
 
                 entity.Property(e => e.Cep).IsUnicode(false);
 
-                entity.Property(e => e.Cidade).IsUnicode(false);
-
                 entity.Property(e => e.Complemento).IsUnicode(false);
 
-                entity.Property(e => e.CpfCnpj).IsUnicode(false);
+                entity.Property(e => e.CpfCnpj).IsFixedLength(true);
 
-                entity.Property(e => e.Endereco).IsUnicode(false);
+                entity.Property(e => e.Email).IsFixedLength(true);
 
-                entity.Property(e => e.InscricaoEstadual).IsUnicode(false);
+                entity.Property(e => e.EstadoCivil).IsFixedLength(true);
 
-                entity.Property(e => e.InscricaoMunicipal).IsUnicode(false);
+                entity.Property(e => e.InscricaoEstadual).IsFixedLength(true);
 
-                entity.Property(e => e.Nacionalidade).IsUnicode(false);
+                entity.Property(e => e.InscricaoMunicipal).IsFixedLength(true);
 
-                entity.Property(e => e.NomeCliente).IsUnicode(false);
+                entity.Property(e => e.Logradouro).IsUnicode(false);
+
+                entity.Property(e => e.Marca).IsFixedLength(true);
+
+                entity.Property(e => e.Nacionalidade).IsFixedLength(true);
+
+                entity.Property(e => e.Nome).IsFixedLength(true);
 
                 entity.Property(e => e.Numero).IsUnicode(false);
 
-                entity.Property(e => e.OrgaoEmissor).IsUnicode(false);
+                entity.Property(e => e.OrgaoEmissor).IsFixedLength(true);
 
-                entity.Property(e => e.Rg).IsUnicode(false);
+                entity.Property(e => e.PrimeiroNome).IsFixedLength(true);
 
-                entity.Property(e => e.SiglaEstado).IsUnicode(false);
+                entity.Property(e => e.RazaoSocial).IsFixedLength(true);
+
+                entity.Property(e => e.RegimeCasamento).IsFixedLength(true);
+
+                entity.Property(e => e.Rg).IsFixedLength(true);
+
+                entity.Property(e => e.Senha).IsFixedLength(true);
 
                 entity.Property(e => e.Telefone1).IsUnicode(false);
 
@@ -359,9 +395,25 @@ namespace Infra.Data.Contexto
 
                 entity.Property(e => e.Telefone3).IsUnicode(false);
 
-                entity.Property(e => e.UsuarioAlteracao).IsUnicode(false);
+                entity.HasOne(d => d.NumeroNavigation)
+                    .WithMany(p => p.Pessoas)
+                    .HasForeignKey(d => d.Numero)
+                    .HasConstraintName("FK_Pessoa_Telefone");
 
-                entity.Property(e => e.UsuarioInsercao).IsUnicode(false);
+                entity.HasOne(d => d.TipoPessoaNavigation)
+                    .WithMany(p => p.Pessoas)
+                    .HasForeignKey(d => d.TipoPessoa)
+                    .HasConstraintName("FK_Pessoa_Sexo");
+
+                entity.HasOne(d => d.UsuarioAlteracao)
+                    .WithMany(p => p.InverseUsuarioAlteracao)
+                    .HasForeignKey(d => d.UsuarioAlteracaoId)
+                    .HasConstraintName("FK_Pessoa_PessoaUsuarioAlteracao");
+
+                entity.HasOne(d => d.UsuarioInsercao)
+                    .WithMany(p => p.InverseUsuarioInsercao)
+                    .HasForeignKey(d => d.UsuarioInsercaoId)
+                    .HasConstraintName("FK_Pessoa_Pessoausuarioinsercao");
             });
 
             modelBuilder.Entity<PessoaShopping>(entity =>
@@ -431,6 +483,26 @@ namespace Infra.Data.Contexto
                 entity.Property(e => e.Variacao).IsUnicode(false);
             });
 
+            modelBuilder.Entity<Sexo>(entity =>
+            {
+                entity.Property(e => e.Id).ValueGeneratedNever();
+
+                entity.Property(e => e.Descricao).IsFixedLength(true);
+            });
+
+            modelBuilder.Entity<Telefone>(entity =>
+            {
+                entity.Property(e => e.Id).IsUnicode(false);
+
+                entity.Property(e => e.Telefone1).IsFixedLength(true);
+
+                entity.Property(e => e.Telefone2).IsFixedLength(true);
+
+                entity.Property(e => e.Telefone3).IsFixedLength(true);
+
+                entity.Property(e => e.TelefonePrincipal).IsFixedLength(true);
+            });
+
             modelBuilder.Entity<TipoInstrumento>(entity =>
             {
                 entity.Property(e => e.NomeInstrumento).IsUnicode(false);
@@ -438,8 +510,6 @@ namespace Infra.Data.Contexto
 
             modelBuilder.Entity<ValoresFaturado>(entity =>
             {
-                entity.Property(e => e.AnoProcessamento).IsFixedLength(true);
-
                 entity.Property(e => e.Documento).IsUnicode(false);
 
                 entity.Property(e => e.UsuarioAlteracao).IsUnicode(false);
@@ -451,25 +521,5 @@ namespace Infra.Data.Contexto
         }
 
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
-
-        public override int SaveChanges()
-        {
-            foreach (var entry in ChangeTracker.Entries())
-            {
-                if (entry.GetType().GetProperty("DataCadastro") != null)
-                {
-                    if (entry.State == EntityState.Added)
-                    {
-                        entry.Property("DataCadastro").CurrentValue = DateTime.Now;
-                    }
-
-                    if (entry.State == EntityState.Modified)
-                    {
-                        entry.Property("DataCadastro").IsModified = false;
-                    }
-                }
-            }
-            return base.SaveChanges();
-        }
     }
 }

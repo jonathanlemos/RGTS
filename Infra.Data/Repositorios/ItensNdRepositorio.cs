@@ -11,15 +11,12 @@ namespace Infra.Data.Repositorios
 {
     public class ItensNdRepositorio : RepositorioBase<ItensNd>, IItensNdRepositorio
     {
-        public async Task<dynamic> GetIdItensNdEDescricaoAlternativa()
+        public async Task<List<ItensNd>> GetIdItensNdEDescricaoAlternativa()
         {
-            var consulta = contexto
+            return await contexto
                 .ItensNds
-                .Include(i => i.DescricaoAlternativaRubrica)
-                .Select(i => new { i.Id, i.DescricaoAlternativaRubrica.NomeDescricaAlternativa })
+                //.Include(i => i.DescricaoAlternativaRubrica)
                 .ToListAsync();
-
-            return await consulta;
         }
     }
 }

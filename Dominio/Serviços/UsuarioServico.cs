@@ -8,25 +8,25 @@ using System.Text;
 
 namespace Dominio.Serviços
 {
-    public class UsuarioServico : ServicoBase<Usuario>, IUsuarioServico
+    public class PessoaServico : ServicoBase<Pessoa>, IPessoaServico
     {
-        private readonly IUsuarioRepositorio _usuarioRepositorio;
+        private readonly IPessoaRepositorio _PessoaRepositorio;
 
-        public UsuarioServico(IUsuarioRepositorio usuarioRepositorio) : base(usuarioRepositorio)
+        public PessoaServico(IPessoaRepositorio PessoaRepositorio) : base(PessoaRepositorio)
         {
-            _usuarioRepositorio = usuarioRepositorio;
+            _PessoaRepositorio = PessoaRepositorio;
         }
 
-        public void CadastrarUsuario(Usuario usuario)
+        public void CadastrarPessoa(Pessoa Pessoa)
         {
-            _usuarioRepositorio.CadastrarNovoUsuario(usuario);
+            _PessoaRepositorio.CadastrarNovoUsuario(Pessoa);
         }
 
-        public void AtualizarUsuarios(Usuario[] usuarios)
+        public void AtualizarPessoas(Pessoa[] Pessoas)
         {
-            for (var i=0; i< usuarios.Length; i++)
+            for (var i=0; i< Pessoas.Length; i++)
             {
-                _usuarioRepositorio.Update(usuarios[i]);
+                _PessoaRepositorio.Update(Pessoas[i]);
             }
         }
     }

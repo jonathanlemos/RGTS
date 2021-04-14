@@ -16,11 +16,10 @@ namespace Dominio.Entidades
         [Required]
         [StringLength(50)]
         public string Nome { get; set; }
-        [Column("Estado_Id")]
         public int EstadoId { get; set; }
 
         [ForeignKey(nameof(EstadoId))]
-        [InverseProperty(nameof(EstadoNovo.Cidades))]
-        public virtual EstadoNovo Estado { get; set; }
+        [InverseProperty("Cidades")]
+        public virtual Estado Estado { get; set; }
     }
 }

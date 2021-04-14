@@ -112,26 +112,5 @@ namespace RGTS.API.Controllers
             }
         }
 
-        [HttpPost]
-        public ActionResult<NotificacaoPost> Post(ItensNd[] itensNd)
-        {
-            NotificacaoPost notificacaoPost = new NotificacaoPost();
-
-            try
-            {
-                
-                notificacaoPost.Sucesso = true;
-                notificacaoPost.Mensagem = "Unidades cadastradas com sucesso.";
-
-                return Ok();
-            }
-            catch(Exception e)
-            {
-                notificacaoPost.Sucesso = false;
-                notificacaoPost.Mensagem = "Erro: " + e.Message;
-
-                return notificacaoPost;
-            }
-        }
     }
 }

@@ -2,46 +2,63 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router'
 
+//primeng
 import { Table } from 'primeng/table';
+import { MessageService } from 'primeng/api';
 
 import jsPDF from 'jspdf';
-import autoTable from 'jspdf-autotable';
+import "jspdf-autotable";
 
 //models
 import { Usuario } from '../Models/Usuario';
 import { Estado } from '../Models/Estado';
 import { Cidade } from '../Models/Cidade';
+import { Sexo } from '../Models/Sexo';
 
 //serviços
 import { EstadoService } from '../Servicos/Util/Estado.service';
 import { CidadeService } from '../Servicos/Cidade/cidade.service';
 import { UsuarioService } from '../Servicos/Usuario/usuario.service';
+import { SexoService } from '../Servicos/Sexo/sexo.service';
+import autoTable from 'jspdf-autotable';
+
+
 
 @Component({
   selector: 'app-usuario',
   templateUrl: './usuario.component.html',
-  styleUrls: ['./usuario.component.css']
+  styleUrls: ['./usuario.component.css'],
+  providers: [MessageService],
 })
 export class UsuarioComponent implements OnInit {
 
   usuarioFormulario: FormGroup;
   usuarios: Usuario[];
   Estados: Estado[];
-  Cidades: Cidade[];  
+  Cidades: Cidade[];
+  Sexos: Sexo[];
   _primeiroNomes: Usuario[];
   _primeiroNomesSelecionado: Usuario[];
 
   //configuração tipo de tela
   tipoTela: any[];
-  tipoTelaValue: string = "cadastrar"; //valor default
+  tipoTelaValue: string = "consultar"; //valor default
+    
+  UsuariosClonados: { [s: string]: Usuario; } = {};
 
   loading: boolean = true;
 
-  constructor(private fb: FormBuilder, private usuarioService: UsuarioService, private estadoService: EstadoService,
-    private cidadeService: CidadeService) {
+  constructor(
+    private fb: FormBuilder,
+    private usuarioService: UsuarioService,
+    private estadoService: EstadoService,
+    private cidadeService: CidadeService,
+    private sexoService: SexoService,
+    private messageService: MessageService
+  ) {
     this.Formulario();
     this.tipoTela = [
-      { label: 'Consultar', value: 'consultar' },
+      { label: 'Consultar/Exportar', value: 'consultar' },
       { label: 'Cadastrar', value: 'cadastrar' },
       { label: 'Editar', value: 'editar' }
     ];
@@ -49,10 +66,9 @@ export class UsuarioComponent implements OnInit {
 
   ngOnInit(): void {
 
-    //if (this.tipoTela == "consultar" || this.tipoTela == "editar") this.CarregarUsuarios();
-
     this.CarregarEstados();
-    this.CarregarCidades();
+    this.CarregarSexos();
+    this.CarregarUsuarios();
   }
 
   CarregarEstados(){
@@ -67,12 +83,23 @@ export class UsuarioComponent implements OnInit {
   }
 
   CarregarCidades(){
-    this.cidadeService.getAll().subscribe(
+    this.cidadeService.getId(this.usuarioFormulario.value.Estado.id).subscribe(
       (cidades: Cidade[]) => {
         this.Cidades = cidades;
       },
       (erro: any) => {
-        console.log("Erro ao carregar os estados. Erro: " + erro);
+        console.log("Erro ao carregar as cidades. Erro: " + erro);
+      }
+    )
+  }
+
+  CarregarSexos() {
+    this.sexoService.getAll().subscribe(
+      (sexos: Sexo[]) => {
+        this.Sexos = sexos;
+      },
+      (erro: any) => {
+        console.log("Erro ao carregar as cidades. Erro: " + erro);
       }
     )
   }
@@ -104,7 +131,7 @@ export class UsuarioComponent implements OnInit {
         Cidade: ['', Validators.required],
         Estado: ['', Validators.required],
         Cep: [''],
-        Sexo: [0, Validators.required]
+        Sexo: ['', Validators.required]
       });
   }
 
@@ -135,9 +162,9 @@ export class UsuarioComponent implements OnInit {
   }
 
   exportPdf() {
-    const doc = new jsPDF()
-    autoTable(doc, { html: '#tabelaConsultaUsuarios' })
-    doc.save('table.pdf')
+    const doc = new jsPDF();
+    autoTable(doc, { html: '#TabelaConsultaUsuarios' });
+    doc.save('table.pdf');
   }
 
   exportExcel() {
@@ -158,5 +185,37 @@ export class UsuarioComponent implements OnInit {
       });
       FileSaver.saveAs(data, fileName + '_export_' + new Date().getTime() + EXCEL_EXTENSION);
     });
+  }
+
+  onRowEditInit(usuario: Usuario) {
+    this.UsuariosClonados[usuario.id] = { ...usuario };
+  }
+
+  onRowEditSave(usuario: Usuario, index: number) {
+    if (usuario.primeiroNome) {
+      delete this.UsuariosClonados[usuario.id];
+      this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Usuario editado.' });
+    }
+    else {
+      this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Nome de usuario não encontrado.' });
+    }
+  }
+
+  onRowEditCancel(usuario: Usuario, index: number) {
+    this.usuarios[index] = this.UsuariosClonados[usuario.id];
+    delete this.UsuariosClonados[usuario.id];
+  }
+
+  EditarUsuarios(usuarios: Usuario) {
+    this.usuarioService.putUsuarios(this.usuarios).subscribe(
+      (msg) => {
+        debugger
+        this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Usuário editado com sucesso.' });
+        console.log("Usuário editado com sucesso.");
+      },
+      (erro: any) => {
+        console.log("Erro ao editar o usuário.");
+      }
+    );
   }
 }

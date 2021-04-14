@@ -2,21 +2,27 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Text;
+using Microsoft.EntityFrameworkCore;
+
+#nullable disable
 
 namespace Dominio.Entidades
 {
     [Table("Sexo")]
-    public class Sexo
+    public partial class Sexo
     {
-        [Column("Id", TypeName = "int")]
-        [Key]
-        [Required]
-        public int Id { get; set; }
+        public Sexo()
+        {
+            Pessoas = new HashSet<Pessoa>();
+        }
 
-        [Column("Nome", TypeName = "nvarchar")]
-        [MaxLength(50)]
+        [Key]
+        public int Id { get; set; }
         [Required]
-        public string Nome { get; set; }
+        [StringLength(30)]
+        public string Descricao { get; set; }
+
+        [InverseProperty(nameof(Pessoa.TipoPessoaNavigation))]
+        public virtual ICollection<Pessoa> Pessoas { get; set; }
     }
 }

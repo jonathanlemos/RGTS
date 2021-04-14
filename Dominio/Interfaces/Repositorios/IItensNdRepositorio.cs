@@ -8,6 +8,6 @@ namespace Dominio.Interfaces.Repositorios
 {
     public interface IItensNdRepositorio : IRepositorioBase<ItensNd>
     {
-        public Task<dynamic> GetIdItensNdEDescricaoAlternativa();
+        public Task<List<ItensNd>> GetIdItensNdEDescricaoAlternativa();
     }
 }

@@ -6,8 +6,7 @@ using Dominio.Interfaces.Repositorios;
 
 namespace Infra.Data.Repositorios
 {
-    public class MunicipioRepositorio : RepositorioBase<Municipio>, IMunicipioRepositorio
+    public class SexoRepositorio : RepositorioBase<Sexo>, ISexoRepositorio
     {
-
     }
 }

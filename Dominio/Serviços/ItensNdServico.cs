@@ -12,13 +12,15 @@ namespace Dominio.Serviços
     public class ItensNdServico : ServicoBase<ItensNd>, IItensNdServico
     {
         private readonly IItensNdRepositorio itensNdRepositorio;
+        private readonly ILucRepositorio lucRepositorio;
 
-        public ItensNdServico(IItensNdRepositorio itensNdRepositorio) : base(itensNdRepositorio)
+        public ItensNdServico(IItensNdRepositorio itensNdRepositorio, ILucRepositorio lucRepositorio) : base(itensNdRepositorio)
         {
             this.itensNdRepositorio = itensNdRepositorio;
+            this.lucRepositorio = lucRepositorio;
         }
 
-        public Task<dynamic> GetIdItensNdEDescricaoAlternativa()
+        public Task<List<ItensNd>> GetIdItensNdEDescricaoAlternativa()
         {
             return itensNdRepositorio.GetIdItensNdEDescricaoAlternativa();
         }

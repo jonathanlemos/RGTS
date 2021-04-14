@@ -32,8 +32,15 @@ namespace Infra.Data.Repositorios
 
         public IEnumerable<TEntity> GetAll()
         {
-            //AsNoTracking=retorna os dados sem carregamento
-            return contexto.Set<TEntity>().AsNoTracking().ToList();
+            try
+            {
+                //AsNoTracking=retorna os dados sem carregamento
+                return contexto.Set<TEntity>().AsNoTracking().ToList();
+            }
+            catch(Exception e)
+            {
+                throw;
+            }
         }
 
         public void Remove(TEntity entidade)

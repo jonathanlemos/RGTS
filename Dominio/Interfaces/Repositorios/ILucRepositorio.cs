@@ -2,11 +2,12 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Dominio.Interfaces.Repositorios
 {
-    public interface IMunicipioRepositorio : IRepositorioBase<Municipio>
+    public interface ILucRepositorio : IRepositorioBase<Luc>
     {
-
+        public Task<Luc> GetPorNome(string nome);
     }
 }

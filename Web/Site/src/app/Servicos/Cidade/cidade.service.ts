@@ -12,7 +12,7 @@ import { Cidade } from '../../Models/Cidade';
 })
 export class CidadeService {
 
-  urlBase = `${environment.urlBase}/api/municipio`;
+  urlBase = `${environment.urlBase}/api/cidade`;
 
   constructor(private http: HttpClient) { }
 
@@ -20,7 +20,8 @@ export class CidadeService {
     return this.http.get<Cidade[]>(this.urlBase);
   };
 
-  getId(id: number): Observable<Cidade> {
-    return this.http.get<Cidade>(this.urlBase + '/' + id);
+  getId(id: number): Observable<Cidade[]> {
+    debugger
+    return this.http.get<Cidade[]>(this.urlBase + '/' + id);
   };
 }

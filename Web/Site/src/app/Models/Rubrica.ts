@@ -1,4 +1,4 @@
 export class Rubrica {
-  id: number;
-  nomeRubrica: string
+  id: number | undefined;
+  nomeRubrica: string | undefined;
 }

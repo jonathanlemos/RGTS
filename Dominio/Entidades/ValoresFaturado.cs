@@ -20,8 +20,7 @@ namespace Dominio.Entidades
         public int? MesCompetencia { get; set; }
         public int? AnoCompetencia { get; set; }
         public int? MesProcessamento { get; set; }
-        [StringLength(10)]
-        public string AnoProcessamento { get; set; }
+        public int? AnoProcessamento { get; set; }
         public double? ValorCalculado { get; set; }
         public double? ValorFaturado { get; set; }
         [Column("VencimentoND", TypeName = "date")]

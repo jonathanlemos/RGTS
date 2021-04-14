@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
+import { ImportarValoresDeConsumoModel } from '../../Models/importar-valores-de-consumo-model';
 import { NotificacaoDelete } from '../../Models/notificacao-delete';
 import { NotificacaoPost } from '../../Models/notificacao-post';
 import { NotificacaoPut } from '../../Models/notificacao-put';
@@ -25,7 +26,8 @@ export class ImportarValoresDeConsumoService {
   //};
 
   //salvar
-  post(unidade: Unidade): Observable<NotificacaoPost> {
+  post(unidade: ImportarValoresDeConsumoModel): Observable<NotificacaoPost> {
+    debugger
     return this.http.post<NotificacaoPost>(this.urlBase, unidade);
   };
 

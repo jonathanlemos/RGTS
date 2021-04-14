@@ -1,4 +1,4 @@
-export class ListaExcel {
+export class ListaExcelImportarValoresDeConsumo {
   Unidade: string;
   Valor: number;
 }

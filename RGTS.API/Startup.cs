@@ -62,25 +62,32 @@ namespace RGTS.API
         private void AdicinarInjecaoDeDependenciaServico(IServiceCollection services)
         {
             services.AddScoped(typeof(IServicoBase<>), typeof(ServicoBase<>));
-            services.AddScoped<IUsuarioServico, UsuarioServico>();
+            services.AddScoped<IPessoaServico, PessoaServico>();
             services.AddScoped<IPerfilServico, PerfilServico>();
             services.AddScoped<IPermissaoServico, PermissaoServico>();
             services.AddScoped<IEstadoServico, EstadoServico>();
-            services.AddScoped<IMunicipioServico, MunicipioServico>();
+            services.AddScoped<ICidadeServico, CidadeServico>();
             services.AddScoped<IItensNdServico, ItensNdServico>();
             services.AddScoped<IRubricaServico, RubricaServico>();
+            services.AddScoped<ILucServico, LucServico>();
+            services.AddScoped<IContratoUnidadeServico, ContratoUnidadeServico>();
+            services.AddScoped<IContratoLocacaoServico, ContratoLocacaoServico>();
         }
 
         private void AdicinarInjecaoDeDependenciaRepositorio(IServiceCollection services)
         {
             services.AddScoped(typeof(IRepositorioBase<>), typeof(RepositorioBase<>));
-            services.AddScoped<IUsuarioRepositorio, UsuarioRepositorio>();
+            services.AddScoped<IPessoaRepositorio, PessoaRepositorio>();
             services.AddScoped<IPerfilRepositorio, PerfilRepositorio>();
             services.AddScoped<IPermissaoRepositorio, PermissaoRepositorio>();
             services.AddScoped<IEstadoRepositorio, EstadoRepositorio>();
-            services.AddScoped<IMunicipioRepositorio, MunicipioRepositorio>();
+            services.AddScoped<ICidadeRepositorio, CidadeRepositorio>();
             services.AddScoped<IItensNdRepositorio, ItensNdRepositorio>();
             services.AddScoped<IRubricaRepositorio, RubricaRepositorio>();
+            services.AddScoped<ILucRepositorio, LucRepositorio>();
+            services.AddScoped<IContratoLocacaoRepositorio, ContratoLocacaoRepositorio>();
+            services.AddScoped<IContratoUnidadeRepositorio, ContratoUnidadeRepositorio>();
+            services.AddScoped<ISexoRepositorio, SexoRepositorio>();
         }
     }
 }

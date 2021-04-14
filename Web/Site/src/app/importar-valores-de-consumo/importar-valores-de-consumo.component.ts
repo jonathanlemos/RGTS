@@ -7,10 +7,13 @@ import { ItensNDService } from '../Servicos/ItensNd/itens-nd.service';
 import { RubricaService } from '../Servicos/Rubrica/rubrica.service';
 import { HttpHeaders } from '@angular/common/http';
 import * as XLSX from 'xlsx';
-import { ListaExcel } from '../Models/Excel';
+import { ListaExcelImportarValoresDeConsumo } from '../Models/Excel';
 import { Rubrica } from '../Models/rubrica';
 import { ItensND } from '../Models/ItensND';
 import { NotificacaoPost } from '../Models/notificacao-post';
+import { Luc } from '../Models/luc';
+import { ValoresFaturado } from '../Models/valores-faturado';
+import { ImportarValoresDeConsumoModel } from '../Models/importar-valores-de-consumo-model';
 
 @Component({
   selector: 'app-importar-valores-de-consumo',
@@ -23,7 +26,7 @@ export class ImportarValoresDeConsumoComponent implements OnInit {
   file: File;
   arrayBuffer: any;
   filelist: any;
-  arraylist: ListaExcel[];
+  arraylist: ListaExcelImportarValoresDeConsumo[];
 
   //url para importar
   //urlBase = `${environment.urlBase}/api/ItensNd/Upload`;
@@ -31,20 +34,27 @@ export class ImportarValoresDeConsumoComponent implements OnInit {
 
   rubrica: Rubrica = new Rubrica();
   rubricaImportar: Rubrica = new Rubrica();
-  unidade: ItensND = new ItensND();
+  unidade: ImportarValoresDeConsumoModel;
 
   //selected unidade
-  unidadesSelecionadas: string[];
-  unidades: any[];
+  unidadesSelecionadas: ImportarValoresDeConsumoModel[];
+  unidades: ImportarValoresDeConsumoModel[];
   valoresDeConsumos: any[];
   valorDeConsumoSelecionado: any[];
-  tiposDeConsumos: any[];
-
+  tiposDeConsumos: Rubrica[];
+  idTipoDeConsumoSelecionadoNaImportacao: number;
+  adicionarValorFaturado: boolean;
   submitted: boolean;
   ModalUnidade: boolean;
   TituloModal: string;
   tipoDeConsumoSelecionado: any;
-  
+
+  //variaveis da modal
+  unidadeModalNomeLuc: string;
+  unidadeModalValorFaturado: number;
+  //unidadeModalTipoDeConsumo: number;
+  unidadeModalTipoDeConsumo: number[] = [];
+
   constructor(private fb: FormBuilder,
     private itensNDService: ItensNDService,
     private messageService: MessageService,
@@ -87,20 +97,29 @@ export class ImportarValoresDeConsumoComponent implements OnInit {
       var worksheet = workbook.Sheets[first_sheet_name];
       //console.log(XLSX.utils.sheet_to_json(worksheet, { raw: true }));
       this.arraylist = XLSX.utils.sheet_to_json(worksheet, { raw: true });
-      debugger
+      
       for (let j = 0; j < this.arraylist.length; j++) {
         console.log("unidade:" + this.arraylist[j].Unidade);
         console.log("valor:" + this.arraylist[j].Valor);
 
-        let unidade = new ItensND();
+        let unidade = new Luc();
         let rubrica = new Rubrica();
+        let valoresFaturado = new ValoresFaturado();
+        let importarValoresDeConsumoModel = new ImportarValoresDeConsumoModel();
 
-        unidade.nome = this.arraylist[j].Unidade;
-        unidade.valorPrincipalRubrica = this.arraylist[j].Valor;
+        unidade.nomeLuc = this.arraylist[j].Unidade;
+        valoresFaturado.valorFaturado = this.arraylist[j].Valor;
 
-        rubrica = this.tiposDeConsumos.find(i=>i.id == this.unidade.rubrica);
-        unidade.rubrica = rubrica;
-        this.unidades.push(unidade);
+        if (this.idTipoDeConsumoSelecionadoNaImportacao)
+          rubrica = this.tiposDeConsumos.find(i => i.id == this.idTipoDeConsumoSelecionadoNaImportacao);
+        else
+          rubrica.nomeRubrica = "";
+
+        importarValoresDeConsumoModel.luc = unidade;
+        importarValoresDeConsumoModel.valoresFaturado = valoresFaturado;
+        importarValoresDeConsumoModel.rubrica = rubrica;
+
+        this.unidades.push(importarValoresDeConsumoModel);
       }
 
       //console.log(XLSX.utils.sheet_to_json(worksheet, { raw: true }));
@@ -111,70 +130,105 @@ export class ImportarValoresDeConsumoComponent implements OnInit {
   }
 
   AbrirModalNovaUnidade() {
-    this.unidade = new ItensND();
+    this.unidade = new ImportarValoresDeConsumoModel();
     this.submitted = false;
     this.ModalUnidade = true;
-    this.TituloModal = "Adicionar nova Unidade";
+    this.TituloModal = "Adicionar novo valor Faturado";
+    this.ResetarDadosDaModal();
   }
 
   EsconderModal() {
     this.ModalUnidade = false;
     this.submitted = false;
+    this.ResetarDadosDaModal();
   }
 
-  EncontrarIdDaUnidadeNoCrud(id: string): number {
+  ResetarDadosDaModal() {
+    this.unidadeModalNomeLuc = '';
+    this.unidadeModalValorFaturado = null;
+    this.unidadeModalTipoDeConsumo = [];
+  }
+
+  EncontrarIdDaUnidadeNoCrud(nomeLuc: string): number {
     let index = -1;
     for (let i = 0; i < this.unidades.length; i++) {
-      if (this.unidades[i].id === id) {
+      if (this.unidades[i].luc.nomeLuc === nomeLuc) {
         index = i;
         break;
       }
     }
-
     return index;
   }
 
   SalvarUnidade() {
-    
     this.submitted = true;
-
     if (!this.unidades) this.unidades = [];
 
-    if (!this.unidade.rubrica)
-      this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Tipo Consumo não encontrado.', life: 3000 });
+    //if (!this.unidadeModal.idTipoDeConsumoModal)
+    //  this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Tipo Consumo não encontrado.', life: 3000 });
+    
+    //if (this.adicionarValorFaturado) {
+    //  this.unidades[this.EncontrarIdDaUnidadeNoCrud(this.unidade.luc.id)] = this.unidade;
+    //  this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Unidade Atualizada', life: 3000 });
+    //}
+    //else {
+    //  let nmTipoCosumo = this.tiposDeConsumos.find(i => i.id == this.unidadeModal.idTipoDeConsumoModal).nomeRubrica;
+    //  this.unidade.rubrica.nomeRubrica = nmTipoCosumo;
+    //  this.unidades.push(this.unidadeModal);
+    //  this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Unidade Adicionada', life: 3000 });
+    //}
 
-    if (this.unidade.nome.trim()) {
-      if (this.unidade.id) {
-        this.unidades[this.EncontrarIdDaUnidadeNoCrud(this.unidade.id.toString())] = this.unidade;
-        this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Unidade Atualizada', life: 3000 });
-      }
-      else {
-        let nmTipoCosumo = this.tiposDeConsumos.find(i => i.id == this.unidade.rubrica).nomeRubrica;
-        this.unidade.rubrica.nomeRubrica = nmTipoCosumo;
-        this.unidades.push(this.unidade);
-        this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Unidade Adicionada', life: 3000 });
-      }
+    let unidade = new Luc();
+    let rubrica = new Rubrica();
+    let valoresFaturado = new ValoresFaturado();
+    let importarValoresDeConsumoModel = new ImportarValoresDeConsumoModel();
 
-      this.unidades = [...this.unidades];
-      this.ModalUnidade = false;
-      this.unidade = new ItensND();
+    if (this.adicionarValorFaturado) {
+
+      unidade.nomeLuc = this.unidadeModalNomeLuc;
+      valoresFaturado.valorFaturado = this.unidadeModalValorFaturado;
+      rubrica = this.tiposDeConsumos.find(i => i.id == this.unidadeModalTipoDeConsumo[0]);
+      importarValoresDeConsumoModel.luc = unidade;
+      importarValoresDeConsumoModel.valoresFaturado = valoresFaturado;
+      importarValoresDeConsumoModel.rubrica = rubrica;
+      this.unidades.push(importarValoresDeConsumoModel);
+
+    } else {
+
+      unidade.nomeLuc = this.unidadeModalNomeLuc;
+      valoresFaturado.valorFaturado = this.unidadeModalValorFaturado;
+      rubrica = this.tiposDeConsumos.find(i => i.id == this.unidadeModalTipoDeConsumo[0]);
+      importarValoresDeConsumoModel.luc = unidade;
+      importarValoresDeConsumoModel.valoresFaturado = valoresFaturado;
+      importarValoresDeConsumoModel.rubrica = rubrica;
+      this.unidades[this.EncontrarIdDaUnidadeNoCrud(this.unidade.luc.nomeLuc)] = importarValoresDeConsumoModel;
+      this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Unidade Atualizada', life: 3000 });    
     }
+    this.ModalUnidade = false;
   }
 
-  EditarUnidade(unidade: any) {
+  EditarUnidade(unidade: ImportarValoresDeConsumoModel) {
     this.unidade = { ...unidade };
+    this.TituloModal = "Editar a unidade " + unidade.luc.nomeLuc;
     this.ModalUnidade = true;
-    this.TituloModal = "Editar a unidade " + unidade.nome;
+    this.adicionarValorFaturado = false;
+    debugger
+    this.unidadeModalNomeLuc = this.unidade.luc.nomeLuc;
+
+    let rubricaId = this.tiposDeConsumos.find(i => i.id == this.unidade.rubrica.id).id;
+    this.unidadeModalTipoDeConsumo[0] = rubricaId;
+
+    this.unidadeModalValorFaturado = unidade.valoresFaturado.valorFaturado;
   }
 
-  DeletarUnidade(unidade: any) {
+  DeletarUnidade(unidade: ImportarValoresDeConsumoModel) {
     this.confirmationService.confirm({
-      message: 'Are you sure you want to delete ' + unidade.name + '?',
-      header: 'Confirm',
+      message: 'Deseja excluir o valor de importação para a unidade <label style="color:red;"><b>' + unidade.luc.nomeLuc + '</b></labe>?',
+      //header: 'Confirma',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
-        this.unidades = this.unidades.filter(val => val.id !== unidade.id);
-        this.unidade = new ItensND();
+        this.unidades = this.unidades.filter(val => val.luc.nomeLuc !== unidade.luc.nomeLuc);
+        this.unidade = new ImportarValoresDeConsumoModel();
         this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Unidade deletada', life: 3000 });
       }
     });
@@ -183,7 +237,7 @@ export class ImportarValoresDeConsumoComponent implements OnInit {
   DeletarUnidadesSelecionadas() {
     this.confirmationService.confirm({
       message: 'Deseja deletar todos?',
-      header: 'Confirm',
+      //header: 'Confirm',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
         this.unidades = this.unidades.filter(val => !this.unidadesSelecionadas.includes(val));
@@ -203,12 +257,12 @@ export class ImportarValoresDeConsumoComponent implements OnInit {
 
   SalvarValoresImportados() {
 
-    debugger
+    
 
     //unidades
     this.itensNDService.post(this.unidades).subscribe(
       (notificacaoPost: NotificacaoPost) => {
-        this.messageService.add({ severity: 'success', summary: 'Unidades cadastrada com sucesso.', detail: 'Via MessageService' });
+        this.messageService.add({ severity: 'success', summary: 'Valores de unidade cadastrado com sucesso.', detail: 'Via MessageService' });
       },
       (error: any) => {
         console.log('Erro: ' + error);

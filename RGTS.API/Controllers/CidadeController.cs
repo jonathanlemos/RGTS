@@ -14,21 +14,34 @@ namespace RGTS.API.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class MunicipioController : ControllerBase
+    public class CidadeController : ControllerBase
     {
-        IMunicipioServico _municipioServico;
+        ICidadeServico _municipioServico;
 
-        public MunicipioController(IMunicipioServico municipioServico)
+        public CidadeController(ICidadeServico municipioServico)
         {
             this._municipioServico = municipioServico;
         }
 
         [HttpGet]
-        public Municipio[] Get()
+        public Cidade[] Get()
         {
             try
             {
                 return _municipioServico.GetAll().ToArray();
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
+        }
+
+        [HttpGet("{id}")]
+        public Cidade[] Get(int id)
+        {
+            try
+            {
+                return _municipioServico.GetAll().Where(i=>i.EstadoId == id).ToArray();
             }
             catch (Exception e)
             {

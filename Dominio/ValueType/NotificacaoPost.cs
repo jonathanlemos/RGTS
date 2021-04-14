@@ -6,8 +6,13 @@ namespace Dominio.ValueType
 {
     public class NotificacaoPost
     {
-        public bool Sucesso { get { return true; } set { Sucesso = value; } }
+        private string mensagem = "Salvo com sucesso.";
+        private bool sucesso = true;
 
-        public string Mensagem { get { return "Salvo com sucesso.";  } set { Mensagem = value; } }
+        public bool Sucesso { get { return sucesso; } set { sucesso = value; } }
+
+        
+
+        public string Mensagem { get { return mensagem; } set { mensagem = value; } }
     }
 }

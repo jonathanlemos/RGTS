@@ -8,6 +8,6 @@ namespace Dominio.Interfaces.Servicos
 {
     public interface IItensNdServico : IServicoBase<ItensNd>
     {
-        public Task<dynamic> GetIdItensNdEDescricaoAlternativa();
+        public Task<List<ItensNd>> GetIdItensNdEDescricaoAlternativa();
     }
 }

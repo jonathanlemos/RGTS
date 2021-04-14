@@ -7,22 +7,22 @@ using System.Text;
 
 namespace Infra.Data.Repositorios
 {
-    public class UsuarioRepositorio : RepositorioBase<Usuario>, IUsuarioRepositorio
+    public class PessoaRepositorio : RepositorioBase<Pessoa>, IPessoaRepositorio
     {
-        public void CadastrarNovoUsuario(Usuario usuario)
+        public void CadastrarNovoUsuario(Pessoa usuario)
         {
-            usuario.DataCadastro = DateTime.Now;
+            //usuario.DataAlteracao = DateTime.Now;
+            usuario.DataInsercao = DateTime.Now;
             usuario.Ativo = true;
-
             Add(usuario);
         }
 
-        public Usuario ObterDadosUsuario(Usuario usuario)
+        public Pessoa ObterDadosUsuario(Pessoa usuario)
         {
             return GetById(usuario.Id);
         }
 
-        public IEnumerable<Usuario> ObterTodosUsuarios()
+        public IEnumerable<Pessoa> ObterTodosUsuarios()
         {
             return GetAll();
         }

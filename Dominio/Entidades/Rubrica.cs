@@ -13,9 +13,12 @@ namespace Dominio.Entidades
     {
         [Key]
         public int Id { get; set; }
+        public int? IdShopping { get; set; }
         [StringLength(100)]
         public string NomeRubrica { get; set; }
         public int? IdGrupoRubrica { get; set; }
+        public int? IdSerie { get; set; }
+        public int? DiaVencimento { get; set; }
         public int? IdTipoIsto { get; set; }
         [Column("eVencido")]
         public bool? EVencido { get; set; }
@@ -27,5 +30,13 @@ namespace Dominio.Entidades
         public string UsuarioAlteracao { get; set; }
         [Column(TypeName = "datetime")]
         public DateTime? DataAlteracao { get; set; }
+        [Column("eAtivo")]
+        public bool? EAtivo { get; set; }
+        [Column("eDesconto")]
+        public bool? EDesconto { get; set; }
+        [Column("eEncargo")]
+        public bool? EEncargo { get; set; }
+        [Column("eImportavel")]
+        public bool? EImportavel { get; set; }
     }
 }

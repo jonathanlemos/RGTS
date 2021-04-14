@@ -34,9 +34,16 @@ export class UsuarioService {
     return this.http.post<NotificacaoPost>(this.urlBase+'/postUsuarios', usuarios);
   };
 
-  //editar
+  //editar 1 usuário
   put(id: number, usuario: Usuario): Observable<NotificacaoPut> {
     return this.http.put<NotificacaoPut>(this.urlBase + '/' + id, usuario);
+  };
+
+  //editar lista de usuários
+  putUsuarios(usuarios: Usuario[]): Observable<NotificacaoPost> {
+    let Pessoa = usuarios;
+    debugger
+    return this.http.put<NotificacaoPost>(this.urlBase + '/putUsuarios', Pessoa);
   };
 
   delete(id: number): Observable<NotificacaoDelete> {

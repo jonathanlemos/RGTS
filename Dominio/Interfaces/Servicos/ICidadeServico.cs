@@ -5,7 +5,7 @@ using Dominio.Entidades;
 
 namespace Dominio.Interfaces.Servicos
 {
-    public interface IMunicipioServico : IServicoBase<Municipio>
+    public interface ICidadeServico : IServicoBase<Cidade>
     {
 
     }
