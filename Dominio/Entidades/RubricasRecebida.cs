@@ -8,9 +8,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Dominio.Entidades
 {
+    [Keyless]
     public partial class RubricasRecebida
     {
-        [Key]
         public int Id { get; set; }
         public int? IdShopping { get; set; }
         [Column("IdND")]

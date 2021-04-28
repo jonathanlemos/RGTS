@@ -25,7 +25,15 @@
             "aot": true,
             "assets": [
               "src/favicon.ico",
-              "src/assets"
+              "src/assets",
+              "src/assets/img/logo.png",
+              "src/assets/img/tapajos.png",
+              "src/assets/fonts/fontawesome-webfont.eot",
+              "src/assets/fonts/fontawesome-webfont.svg",
+              "src/assets/fonts/fontawesome-webfont.ttf",
+              "src/assets/fonts/fontawesome-webfont.woff",
+              "src/assets/fonts/fontawesome-webfont.woff2",
+              "src/assets/fonts/FontAwesome.otf"
             ],
             "styles": [
               "./node_modules/@angular/material/prebuilt-themes/pink-bluegrey.css",

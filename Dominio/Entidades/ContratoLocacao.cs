@@ -8,10 +8,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Dominio.Entidades
 {
+    [Keyless]
     [Table("ContratoLocacao")]
     public partial class ContratoLocacao
     {
-        [Key]
         public int Id { get; set; }
         public int? IdShopping { get; set; }
         public int? IdInstrumento { get; set; }
@@ -27,9 +27,9 @@ namespace Dominio.Entidades
         public int? IdEmpreendimento { get; set; }
         public string Observacao { get; set; }
         public int? IdIndicador { get; set; }
-        [Column(TypeName = "numeric(17, 2)")]
+        [Column(TypeName = "decimal(17, 2)")]
         public decimal? PercentualMulta { get; set; }
-        [Column(TypeName = "numeric(17, 2)")]
+        [Column(TypeName = "decimal(17, 2)")]
         public decimal? PercentualJuros { get; set; }
         public int? IdPeriodicidadeReajuste { get; set; }
         [Column(TypeName = "date")]
@@ -47,13 +47,13 @@ namespace Dominio.Entidades
         public int? IdItemRubricaAluguel { get; set; }
         public int? IdItemRubricaDescontoAluguel { get; set; }
         public int? IdItemRubricaCondominio { get; set; }
-        [Column("CRD", TypeName = "numeric(12, 4)")]
+        [Column("CRD", TypeName = "decimal(12, 4)")]
         public decimal? Crd { get; set; }
-        [Column("FancoilTR", TypeName = "numeric(12, 4)")]
+        [Column("FancoilTR", TypeName = "decimal(12, 4)")]
         public decimal? FancoilTr { get; set; }
-        [Column(TypeName = "datetime")]
+        [Column(TypeName = "smalldatetime")]
         public DateTime? DataInicioCarenciaCondominio { get; set; }
-        [Column(TypeName = "datetime")]
+        [Column(TypeName = "smalldatetime")]
         public DateTime? DataFimCarenciaCondominio { get; set; }
         [StringLength(10)]
         public string IdItemRubricaAluguelPercentual { get; set; }
@@ -81,5 +81,7 @@ namespace Dominio.Entidades
         public bool? EPercentualSobreAluguelPercentual { get; set; }
         [Column("eAtivo")]
         public bool? EAtivo { get; set; }
+        [Column("eEmpreendedor")]
+        public bool? EEmpreendedor { get; set; }
     }
 }

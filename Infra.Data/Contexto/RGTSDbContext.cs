@@ -41,15 +41,18 @@ namespace Infra.Data.Contexto
         public virtual DbSet<ItensNd> ItensNds { get; set; }
         public virtual DbSet<Localizacao> Localizacaos { get; set; }
         public virtual DbSet<Luc> Lucs { get; set; }
+        public virtual DbSet<LoginPessoa> Logins { get; set; }
         public virtual DbSet<Marca> Marcas { get; set; }
         public virtual DbSet<Nd> Nds { get; set; }
         public virtual DbSet<Nivel> Nivels { get; set; }
+        public virtual DbSet<Papel> Papels { get; set; }
         public virtual DbSet<ParametrosShopping> ParametrosShoppings { get; set; }
         public virtual DbSet<PartilhaRubricaContaCorrente> PartilhaRubricaContaCorrentes { get; set; }
         public virtual DbSet<Perfil> Perfils { get; set; }
         public virtual DbSet<PerfilPermissao> PerfilPermissaos { get; set; }
         public virtual DbSet<Permissao> Permissaos { get; set; }
         public virtual DbSet<Pessoa> Pessoas { get; set; }
+        public virtual DbSet<PessoaPapelInstrumento> PessoaPapelInstrumentos { get; set; }
         public virtual DbSet<PessoaShopping> PessoaShoppings { get; set; }
         public virtual DbSet<Ramo> Ramos { get; set; }
         public virtual DbSet<Recebimento> Recebimentos { get; set; }
@@ -60,6 +63,7 @@ namespace Infra.Data.Contexto
         public virtual DbSet<SerieBeneficiario> SerieBeneficiarios { get; set; }
         public virtual DbSet<ServicoCobranca> ServicoCobrancas { get; set; }
         public virtual DbSet<Sexo> Sexos { get; set; }
+        public virtual DbSet<Sysdiagram> Sysdiagrams { get; set; }
         public virtual DbSet<Telefone> Telefones { get; set; }
         public virtual DbSet<TipoInstrumento> TipoInstrumentos { get; set; }
         public virtual DbSet<ValoresFaturado> ValoresFaturados { get; set; }
@@ -69,13 +73,13 @@ namespace Infra.Data.Contexto
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Server=rgtsdb.ch0sy8hf0okh.us-east-2.rds.amazonaws.com,1433;Database=rgtsdb; User Id=admin; Password=qW7Su3aQ;");
+                optionsBuilder.UseSqlServer("Server=rgts-dev.ch0sy8hf0okh.us-east-2.rds.amazonaws.com,1433;Database=rgtdb_dev; User Id=admin; Password=h96GJYM3;");
             }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.HasAnnotation("Relational:Collation", "Latin1_General_CI_AS");
+            modelBuilder.HasAnnotation("Relational:Collation", "SQL_Latin1_General_CP1_CI_AS");
 
             modelBuilder.Entity<Atividade>(entity =>
             {
@@ -99,15 +103,7 @@ namespace Infra.Data.Contexto
 
             modelBuilder.Entity<Cidade>(entity =>
             {
-                entity.Property(e => e.Id).ValueGeneratedNever();
-
                 entity.Property(e => e.Nome).IsFixedLength(true);
-
-                entity.HasOne(d => d.Estado)
-                    .WithMany(p => p.Cidades)
-                    .HasForeignKey(d => d.EstadoId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Cidade_Estado");
             });
 
             modelBuilder.Entity<Condominio>(entity =>
@@ -139,8 +135,6 @@ namespace Infra.Data.Contexto
 
             modelBuilder.Entity<ContratoFaixasAluguel>(entity =>
             {
-                entity.Property(e => e.Id).ValueGeneratedOnAdd();
-
                 entity.Property(e => e.Usuario).IsUnicode(false);
             });
 
@@ -185,14 +179,10 @@ namespace Infra.Data.Contexto
                 entity.Property(e => e.Descricao).IsFixedLength(true);
 
                 entity.Property(e => e.Pais).IsFixedLength(true);
-
-                entity.Property(e => e.Principal).HasDefaultValueSql("((1))");
             });
 
             modelBuilder.Entity<Estado>(entity =>
             {
-                entity.Property(e => e.Id).ValueGeneratedNever();
-
                 entity.Property(e => e.Nome).IsFixedLength(true);
 
                 entity.Property(e => e.Sigla).IsFixedLength(true);
@@ -251,8 +241,17 @@ namespace Infra.Data.Contexto
                 entity.Property(e => e.Usuario).IsUnicode(false);
             });
 
+            modelBuilder.Entity<LoginPessoa>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+
+                entity.Property(e => e.LoginAcesso).IsUnicode(false);
+            });
+
             modelBuilder.Entity<Marca>(entity =>
             {
+                entity.HasKey(e => e.Id);
+
                 entity.Property(e => e.NomeMarca).IsUnicode(false);
 
                 entity.Property(e => e.Usuario).IsUnicode(false);
@@ -278,6 +277,11 @@ namespace Infra.Data.Contexto
                 entity.Property(e => e.NomeNivel).IsUnicode(false);
 
                 entity.Property(e => e.Usuario).IsUnicode(false);
+            });
+
+            modelBuilder.Entity<Papel>(entity =>
+            {
+                entity.Property(e => e.NomePapel).IsUnicode(false);
             });
 
             modelBuilder.Entity<ParametrosShopping>(entity =>
@@ -312,39 +316,21 @@ namespace Infra.Data.Contexto
 
             modelBuilder.Entity<Perfil>(entity =>
             {
-                entity.Property(e => e.Id).ValueGeneratedNever();
-
                 entity.Property(e => e.Descricao).IsFixedLength(true);
             });
 
             modelBuilder.Entity<PerfilPermissao>(entity =>
             {
                 entity.Property(e => e.Id).IsFixedLength(true);
-
-                entity.HasOne(d => d.Perfil)
-                    .WithMany(p => p.PerfilPermissaos)
-                    .HasForeignKey(d => d.PerfilId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_PerfilPermissao_Perfil");
-
-                entity.HasOne(d => d.Permissao)
-                    .WithMany(p => p.PerfilPermissaos)
-                    .HasForeignKey(d => d.PermissaoId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_PerfilPermissao_Permissao");
             });
 
             modelBuilder.Entity<Permissao>(entity =>
             {
-                entity.Property(e => e.Id).ValueGeneratedNever();
-
                 entity.Property(e => e.Descricao).IsFixedLength(true);
             });
 
             modelBuilder.Entity<Pessoa>(entity =>
             {
-                entity.Property(e => e.Ativo).HasDefaultValueSql("((1))");
-
                 entity.Property(e => e.Bairro).IsUnicode(false);
 
                 entity.Property(e => e.Celular1).IsUnicode(false);
@@ -394,26 +380,6 @@ namespace Infra.Data.Contexto
                 entity.Property(e => e.Telefone2).IsUnicode(false);
 
                 entity.Property(e => e.Telefone3).IsUnicode(false);
-
-                entity.HasOne(d => d.NumeroNavigation)
-                    .WithMany(p => p.Pessoas)
-                    .HasForeignKey(d => d.Numero)
-                    .HasConstraintName("FK_Pessoa_Telefone");
-
-                entity.HasOne(d => d.TipoPessoaNavigation)
-                    .WithMany(p => p.Pessoas)
-                    .HasForeignKey(d => d.TipoPessoa)
-                    .HasConstraintName("FK_Pessoa_Sexo");
-
-                entity.HasOne(d => d.UsuarioAlteracao)
-                    .WithMany(p => p.InverseUsuarioAlteracao)
-                    .HasForeignKey(d => d.UsuarioAlteracaoId)
-                    .HasConstraintName("FK_Pessoa_PessoaUsuarioAlteracao");
-
-                entity.HasOne(d => d.UsuarioInsercao)
-                    .WithMany(p => p.InverseUsuarioInsercao)
-                    .HasForeignKey(d => d.UsuarioInsercaoId)
-                    .HasConstraintName("FK_Pessoa_Pessoausuarioinsercao");
             });
 
             modelBuilder.Entity<PessoaShopping>(entity =>
@@ -437,6 +403,8 @@ namespace Infra.Data.Contexto
 
             modelBuilder.Entity<Rubrica>(entity =>
             {
+                entity.HasKey(e => e.Id);
+
                 entity.Property(e => e.NomeRubrica).IsUnicode(false);
 
                 entity.Property(e => e.UsuarioAlteracao).IsUnicode(false);
@@ -485,8 +453,6 @@ namespace Infra.Data.Contexto
 
             modelBuilder.Entity<Sexo>(entity =>
             {
-                entity.Property(e => e.Id).ValueGeneratedNever();
-
                 entity.Property(e => e.Descricao).IsFixedLength(true);
             });
 
@@ -510,6 +476,10 @@ namespace Infra.Data.Contexto
 
             modelBuilder.Entity<ValoresFaturado>(entity =>
             {
+                entity.HasKey(e => e.Id);
+
+                entity.Property(e => e.Id).ValueGeneratedOnAdd();
+
                 entity.Property(e => e.Documento).IsUnicode(false);
 
                 entity.Property(e => e.UsuarioAlteracao).IsUnicode(false);

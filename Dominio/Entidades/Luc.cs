@@ -8,23 +8,23 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Dominio.Entidades
 {
+    [Keyless]
     [Table("Luc")]
     public partial class Luc
     {
         public int? IdShopping { get; set; }
-        [Key]
         public int Id { get; set; }
         [Column("NomeLUC")]
         [StringLength(100)]
         public string NomeLuc { get; set; }
         public int? IdClassificacao { get; set; }
-        [Column(TypeName = "numeric(17, 2)")]
+        [Column(TypeName = "decimal(17, 2)")]
         public decimal? AreaM2 { get; set; }
         [Column("CRD")]
         public double? Crd { get; set; }
         [Column("PotenciaTR")]
         public double? PotenciaTr { get; set; }
-        [Column(TypeName = "datetime")]
+        [Column(TypeName = "smalldatetime")]
         public DateTime? DataCriacao { get; set; }
         public int? IdFase { get; set; }
         public int? IdLocalizacao { get; set; }
@@ -32,9 +32,9 @@ namespace Dominio.Entidades
         public int? IdEmpreendimento { get; set; }
         [StringLength(100)]
         public string Usuario { get; set; }
-        [Column(TypeName = "datetime")]
+        [Column(TypeName = "smalldatetime")]
         public DateTime? DataInsercao { get; set; }
-        [Column(TypeName = "datetime")]
+        [Column(TypeName = "smalldatetime")]
         public DateTime? DataAlteracao { get; set; }
     }
 }

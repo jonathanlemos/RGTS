@@ -8,10 +8,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Dominio.Entidades
 {
+    [Keyless]
     [Table("HistoricoContratoLocacao")]
     public partial class HistoricoContratoLocacao
     {
-        [Key]
         public int Id { get; set; }
         public int? IdShopping { get; set; }
         public int? MesProcessamento { get; set; }

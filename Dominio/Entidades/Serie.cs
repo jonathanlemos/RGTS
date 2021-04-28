@@ -8,18 +8,18 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Dominio.Entidades
 {
+    [Keyless]
     [Table("Serie")]
     public partial class Serie
     {
-        [Key]
         public int Id { get; set; }
         [StringLength(1)]
         public string NomeSerie { get; set; }
         [StringLength(100)]
         public string Usuario { get; set; }
-        [Column(TypeName = "datetime")]
+        [Column(TypeName = "smalldatetime")]
         public DateTime? DataInsercao { get; set; }
-        [Column(TypeName = "datetime")]
+        [Column(TypeName = "smalldatetime")]
         public DateTime? DataAlteracao { get; set; }
     }
 }

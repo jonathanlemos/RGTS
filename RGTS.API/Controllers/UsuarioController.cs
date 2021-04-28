@@ -2,6 +2,7 @@
 using Dominio.Interfaces.Repositorios;
 using Dominio.Interfaces.Servicos;
 using Dominio.ValueType;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RGTS.API.Models;
 using System;
@@ -39,6 +40,7 @@ namespace RGTS.API.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public Pessoa[] Get()
         {
             try
@@ -52,6 +54,7 @@ namespace RGTS.API.Controllers
             }
         }
 
+        [Authorize]
         public ActionResult<NotificacaoPost> Post(CadastroDeUsuario Usuario)
         {
             NotificacaoPost notificacaoPost = new NotificacaoPost();
@@ -78,6 +81,7 @@ namespace RGTS.API.Controllers
         }
 
         [Route("postUsuarios")]
+        [Authorize]
         public ActionResult<NotificacaoPost> postUsuarios(Pessoa[] Pessoa)
         {
             NotificacaoPost notificacaoPost = new NotificacaoPost();
@@ -95,6 +99,7 @@ namespace RGTS.API.Controllers
         }
 
         [Route("putUsuarios")]
+        [Authorize]
         public ActionResult<NotificacaoPost> putUsuarios(Pessoa[] Pessoa)
         {
             NotificacaoPost notificacaoPost = new NotificacaoPost();

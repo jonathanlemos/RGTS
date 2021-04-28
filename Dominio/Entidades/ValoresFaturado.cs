@@ -8,14 +8,17 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Dominio.Entidades
 {
+    [Keyless]
     public partial class ValoresFaturado
     {
         [Key]
         public int Id { get; set; }
+        public int? IdShopping { get; set; }
         [Column("IdND")]
         public int? IdNd { get; set; }
         [Column("IdItemND")]
         public int? IdItemNd { get; set; }
+        public int? IdRemessa { get; set; }
         public int? IdRubrica { get; set; }
         public int? MesCompetencia { get; set; }
         public int? AnoCompetencia { get; set; }
@@ -35,11 +38,11 @@ namespace Dominio.Entidades
         public int? IdDescricaoAlternativa { get; set; }
         [StringLength(100)]
         public string UsuarioInsercao { get; set; }
-        [Column(TypeName = "datetime")]
+        [Column(TypeName = "smalldatetime")]
         public DateTime? DataInsercao { get; set; }
         [StringLength(100)]
         public string UsuarioAlteracao { get; set; }
-        [Column(TypeName = "datetime")]
+        [Column(TypeName = "smalldatetime")]
         public DateTime? DataAlteracao { get; set; }
     }
 }

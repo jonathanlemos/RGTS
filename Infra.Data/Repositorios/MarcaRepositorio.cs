@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Infra.Data.Repositorios
 {
-    public class ContratoUnidadeRepositorio : RepositorioBase<ContratoUnidade>, IContratoUnidadeRepositorio
+    public class MarcaRepositorio : RepositorioBase<Marca>, IMarcaRepositorio
     {
     }
 }

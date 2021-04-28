@@ -8,22 +8,14 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Dominio.Entidades
 {
+    [Keyless]
     [Table("Permissao")]
     public partial class Permissao
     {
-        public Permissao()
-        {
-            PerfilPermissaos = new HashSet<PerfilPermissao>();
-        }
-
-        [Key]
         public int Id { get; set; }
         [Required]
         [StringLength(20)]
         public string Descricao { get; set; }
         public int? PerfilId { get; set; }
-
-        [InverseProperty(nameof(PerfilPermissao.Permissao))]
-        public virtual ICollection<PerfilPermissao> PerfilPermissaos { get; set; }
     }
 }

@@ -15,7 +15,7 @@ namespace Dominio.Serviços
     {
         private readonly IValoresFaturadoRepositorio valoresFaturadosRepositorio;
         private readonly ILucServico lucServico;
-        private readonly IContratoUnidadeServico contratoUnidadeServico;
+        private readonly IContratoLucServico contratoLucServico;
         private readonly IContratoLocacaoServico contratoLocacaoServico;
         private readonly IRubricaServico rubricaServico;
         private readonly IMarcaServico marcaServico;
@@ -26,7 +26,7 @@ namespace Dominio.Serviços
         public ValoresFaturadoServico(
             IValoresFaturadoRepositorio valoresFaturadosRepositorio,
             ILucServico lucServico,
-            IContratoUnidadeServico contratoUnidadeServico,
+            IContratoLucServico contratoUnidadeServico,
             IContratoLocacaoServico contratoLocacaoServico,
             ILucRepositorio lucRepositorio,
             IRubricaServico rubricaServico,
@@ -34,7 +34,7 @@ namespace Dominio.Serviços
             ) : base(valoresFaturadosRepositorio)
         {
             this.lucServico = lucServico;
-            this.contratoUnidadeServico = contratoUnidadeServico;
+            this.contratoLucServico = contratoUnidadeServico;
             this.contratoLocacaoServico = contratoLocacaoServico;
             this.lucRepositorio = lucRepositorio;
             this.rubricaServico = rubricaServico;
@@ -43,14 +43,14 @@ namespace Dominio.Serviços
 
         public NotificacaoPost SalvarImportacaoDeUnidades(string pNomeUnidade, int pIdRubrica, double pValorFaturado)
         {
+            NotificacaoPost notificacaoPost = new NotificacaoPost();
+
             try
-            {
-                NotificacaoPost notificacaoPost = new NotificacaoPost();
+            {   
+                Luc luc = lucRepositorio.GetPorNome(pNomeUnidade).Result;
 
-                int IdUnidade = lucRepositorio.GetPorNome(pNomeUnidade).Id;
-
-                ContratoUnidade unidades = contratoUnidadeServico.GetAll()
-                        .Where(i => i.IdUnidade == IdUnidade && i.EUnidadePrincipal == true)
+                ContratoLuc unidades = contratoLucServico.GetAll()
+                        .Where(i => i.IdLuc.Value == luc.Id && i.EUnidadePrincipal.Value == true)
                         .FirstOrDefault();
 
                 ContratoLocacao contratoLocacao = contratoLocacaoServico.GetAll()
@@ -73,25 +73,27 @@ namespace Dominio.Serviços
 
                 ValoresFaturado valoresFaturado = new ValoresFaturado();
                 valoresFaturado.IdRubrica = rubrica.Id;
-                valoresFaturado.MesCompetencia = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).AddMonths((bool)rubrica.EVencido ? 0 : 1).Month;
-                valoresFaturado.AnoCompetencia = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).AddMonths((bool)rubrica.EVencido ? 0 : 1).Year;
+                valoresFaturado.MesCompetencia = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).AddMonths(rubrica.EVencido.Value ? 0 : 1).Month;
+                valoresFaturado.AnoCompetencia = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).AddMonths(rubrica.EVencido.Value ? 0 : 1).Year;
                 valoresFaturado.MesProcessamento = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).Month;
                 valoresFaturado.AnoProcessamento = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).Year;
                 valoresFaturado.ValorFaturado = pValorFaturado;
-                //perguntar//valoresFaturado.VencimentoNd = new DateTime(DateTime.Now.Year, DateTime.Now.Month, rubrica. .DiaVencimento).AddMonth((bool)rubrica.EVencido ? 0 : 1).year;
+                //valoresFaturado.VencimentoNd = new DateTime(DateTime.Now.Year, DateTime.Now.Month, rubrica. .DiaVencimento).AddMonth((bool)rubrica.EVencido ? 0 : 1).year;
                 //valoresFaturado.IdSerie = rubrica.IdSerie
                 valoresFaturado.EAprovado = false;
                 valoresFaturado.IdSeqAltContratoLocacao = contratoLocacao.Id;
                 valoresFaturado.IdInstrumento = contratoLocacao.IdInstrumento;
 
-                valoresFaturadosRepositorio.Add(valoresFaturado);
-                notificacaoPost.Sucesso = false;
-                notificacaoPost.Mensagem = "Salvo com sucesso";
+                Add(valoresFaturado);
+                notificacaoPost.Sucesso = true;
+                notificacaoPost.Mensagem = "Salvo com sucesso.";
                 return notificacaoPost;
             }
             catch (Exception e)
             {
-                throw;
+                notificacaoPost.Sucesso = false;
+                notificacaoPost.Mensagem = "Erro ao salvar. "+ e.Message;
+                return notificacaoPost;
             }
         }
     }

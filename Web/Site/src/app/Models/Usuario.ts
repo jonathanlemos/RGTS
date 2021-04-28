@@ -1,17 +1,24 @@
 export class Usuario {
-  id: number | undefined;
-  email: string | undefined;
-  senha: string | undefined;
-  primeiroNome: string | undefined;
-  nomeCompleto: string | undefined;
-  endereco: string | undefined;
-  complemento: string | undefined;
-  numero: number | undefined;
-  cidadeId: number | undefined;
-  estadoId: number | undefined;
-  cep: string | undefined;
-  sexoId: number | undefined;
-  dataCadastro: Date | undefined;
-  ativo: Boolean | undefined;
-  tipoPessoa: string | undefined;
+  id: number;
+  email: string;
+  senha: string;
+  primeiroNome: string;
+  nomeCompleto: string;
+  endereco: string;
+  complemento: string;
+  numero: number;
+  cidadeId: number;
+  estadoId: number;
+  cep: string;
+  sexoId: number;
+  dataCadastro: Date;
+  ativo: Boolean;
+  tipoPessoa: string;
+}
+
+export class LoginUsuario {
+  email: string;
+  senha: string;
+  primeiroNome: string;
+  nomeCompleto: string;
 }

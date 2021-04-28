@@ -8,10 +8,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Dominio.Entidades
 {
+    [Keyless]
     [Table("ServicoCobranca")]
     public partial class ServicoCobranca
     {
-        [Key]
         public int Id { get; set; }
         [StringLength(50)]
         public string NomeServico { get; set; }
@@ -39,11 +39,11 @@ namespace Dominio.Entidades
         public int? IdTipoServicoCobranca { get; set; }
         [StringLength(100)]
         public string Usuario { get; set; }
-        [Column(TypeName = "datetime")]
+        [Column(TypeName = "smalldatetime")]
         public DateTime? DataInsercao { get; set; }
         [StringLength(100)]
         public string UsuarioAlteracao { get; set; }
-        [Column(TypeName = "datetime")]
+        [Column(TypeName = "smalldatetime")]
         public DateTime? DataAlteracao { get; set; }
     }
 }

@@ -27,7 +27,14 @@ namespace Infra.Data.Repositorios
 
         public TEntity GetById(int id)
         {
-            return contexto.Set<TEntity>().Find(id);
+            try
+            {
+                return contexto.Set<TEntity>().Find(id);
+            }
+            catch(Exception e)
+            {
+                throw;
+            }
         }
 
         public IEnumerable<TEntity> GetAll()

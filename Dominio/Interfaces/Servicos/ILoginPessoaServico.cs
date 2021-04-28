@@ -6,7 +6,10 @@ using Dominio.Entidades;
 
 namespace Dominio.Interfaces.Servicos
 {
-    public interface IContratoUnidadeServico : IServicoBase<ContratoUnidade>
+    public interface ILoginPessoaServico : IServicoBase<LoginPessoa>
     {
+        public bool ValidarLogin(LoginPessoa login);
+
+        public string GerarToken(LoginPessoa login);
     }
 }

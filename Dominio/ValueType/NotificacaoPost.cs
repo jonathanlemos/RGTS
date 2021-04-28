@@ -8,11 +8,12 @@ namespace Dominio.ValueType
     {
         private string mensagem = "Salvo com sucesso.";
         private bool sucesso = true;
+        private string token = "";
 
         public bool Sucesso { get { return sucesso; } set { sucesso = value; } }
 
-        
-
         public string Mensagem { get { return mensagem; } set { mensagem = value; } }
+
+        public string Token { get { return token; } set { token = value; } }
     }
 }

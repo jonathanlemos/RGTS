@@ -2,10 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 //models
-import { Contrato } from '../Models/Contrato';
+//import { Contrato } from '../Models/Contrato';
+import { ContratoLocacao } from '../Models/contrato-locacao';
 
 //services
-import { ContratoService } from '../Servicos/Contrato/contrato.service';
+import { ContratoLocacaoService } from '../Servicos/ContratoLocacao/contrato-locacao.service';
 import { LocalStorageService } from '../Servicos/LocalStorage/local-storage.service';
 
 @Component({
@@ -16,7 +17,7 @@ import { LocalStorageService } from '../Servicos/LocalStorage/local-storage.serv
 export class ContratoLocacaoComponent implements OnInit {
 
   contratoLocacaoFormulario: FormGroup;
-  contratos: Contrato[];
+  contratos: ContratoLocacao[];
 
   //configuração tipo de tela  
   tipoTela:      any[];
@@ -56,7 +57,7 @@ export class ContratoLocacaoComponent implements OnInit {
 
   mesteste: string;
 
-  constructor(private localStorageService: LocalStorageService, private fb: FormBuilder, private contratoService: ContratoService) {
+  constructor(private localStorageService: LocalStorageService, private fb: FormBuilder, private contratoService: ContratoLocacaoService) {
     this.Formulario();
     this.CombosTela();
 
@@ -103,7 +104,7 @@ export class ContratoLocacaoComponent implements OnInit {
 
   CarregarContratos() {
     this.contratoService.getAll().subscribe(
-      (contratos: Contrato[]) => {
+      (contratos: ContratoLocacao[]) => {
         this.contratos = contratos;
       },
       (erro: any) => {

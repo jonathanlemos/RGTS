@@ -8,9 +8,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Dominio.Entidades
 {
+    [Keyless]
     public partial class ContratoLuc
     {
-        [Key]
         public int Id { get; set; }
         public int? IdInstrumento { get; set; }
         public int? IdLuc { get; set; }

@@ -1,9 +1,16 @@
-<app-cabecalho></app-cabecalho> 
 
-<app-menu></app-menu>
+<div *ngIf="estaLogado">
+  <app-cabecalho></app-cabecalho>
 
-<div class="container">
+  <app-menu></app-menu>
 
+  <div class="container">
+
+  </div>
+
+  <router-outlet></router-outlet>
 </div>
 
-<router-outlet></router-outlet>
+<div *ngIf="!estaLogado">
+  <app-login></app-login>
+</div>

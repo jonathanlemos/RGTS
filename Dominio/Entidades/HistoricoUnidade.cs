@@ -8,16 +8,16 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Dominio.Entidades
 {
+    [Keyless]
     [Table("HistoricoUnidade")]
     public partial class HistoricoUnidade
     {
-        [Key]
         public int Id { get; set; }
         public int? IdShopping { get; set; }
         public int? IdUnidade { get; set; }
         public int? MesProcessamento { get; set; }
         public int? AnoProcessamento { get; set; }
-        [Column("M2ABL", TypeName = "numeric(8, 2)")]
+        [Column("M2ABL", TypeName = "decimal(8, 2)")]
         public decimal? M2abl { get; set; }
         [Column(TypeName = "date")]
         public DateTime? DataDesativacao { get; set; }

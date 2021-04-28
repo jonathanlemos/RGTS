@@ -5,37 +5,37 @@ import { environment } from '../../../environments/environment';
 import { NotificacaoDelete } from '../../Models/notificacao-delete';
 import { NotificacaoPost } from '../../Models/notificacao-post';
 import { NotificacaoPut } from '../../Models/notificacao-put';
-import { Contrato } from '../../Models/Contrato';
+import { ContratoLocacao } from '../../Models/contrato-locacao';
 
 @Injectable({
   providedIn: 'root'
 })
-export class ContratoService {
+export class ContratoLocacaoService {
 
   urlBase = `${environment.urlBase}/api/Contrato`;
 
   constructor(private http: HttpClient) { }
 
-  getAll(): Observable<Contrato[]> {
-    return this.http.get<Contrato[]>(this.urlBase);
+  getAll(): Observable<ContratoLocacao[]> {
+    return this.http.get<ContratoLocacao[]>(this.urlBase);
   };
 
-  getId(id: number): Observable<Contrato> {
-    return this.http.get<Contrato>(this.urlBase + '/' + id);
+  getId(id: number): Observable<ContratoLocacao> {
+    return this.http.get<ContratoLocacao>(this.urlBase + '/' + id);
   };
 
   //salvar
-  post(Contrato: Contrato): Observable<NotificacaoPost> {
+  post(Contrato: ContratoLocacao): Observable<NotificacaoPost> {
     return this.http.post<NotificacaoPost>(this.urlBase, Contrato);
   };
 
   //salvar
-  postContratos(contratos: Contrato[]): Observable<NotificacaoPost> {
-    return this.http.post<NotificacaoPost>(this.urlBase+'/postContratos', contratos);
+  postContratos(contratos: ContratoLocacao[]): Observable<NotificacaoPost> {
+    return this.http.post<NotificacaoPost>(this.urlBase + '/postContratos', contratos);
   };
 
   //editar
-  put(id: number, Contrato: Contrato): Observable<NotificacaoPut> {
+  put(id: number, Contrato: ContratoLocacao): Observable<NotificacaoPut> {
     return this.http.put<NotificacaoPut>(this.urlBase + '/' + id, Contrato);
   };
 
@@ -43,5 +43,3 @@ export class ContratoService {
     return this.http.delete<NotificacaoDelete>(this.urlBase + '/' + id);
   };
 }
-
-

@@ -8,20 +8,14 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Dominio.Entidades
 {
+    [Keyless]
     [Table("PerfilPermissao")]
     public partial class PerfilPermissao
     {
-        [Key]
+        [Required]
         [StringLength(10)]
         public string Id { get; set; }
         public int PerfilId { get; set; }
         public int PermissaoId { get; set; }
-
-        [ForeignKey(nameof(PerfilId))]
-        [InverseProperty("PerfilPermissaos")]
-        public virtual Perfil Perfil { get; set; }
-        [ForeignKey(nameof(PermissaoId))]
-        [InverseProperty("PerfilPermissaos")]
-        public virtual Permissao Permissao { get; set; }
     }
 }

@@ -51,13 +51,6 @@ namespace RGTS.API.Controllers
                     {
                         notificacaoPost.Mensagem = "Rubrica não encontrada.";
                     }
-
-                    if (notificacaoPost.Mensagem != null)
-                    {
-                        notificacaoPost.Sucesso = false;
-                        return notificacaoPost;
-                    }
-
                     valoresFaturadoServico.SalvarImportacaoDeUnidades(_itensNd.Luc.NomeLuc, _itensNd.Rubrica.Id, (double)_itensNd.ValoresFaturado.ValorFaturado);
                 }
 

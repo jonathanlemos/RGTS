@@ -21,18 +21,18 @@ namespace Dominio.Entidades
         public DateTime? DataInicioFaixa { get; set; }
         [Column(TypeName = "date")]
         public DateTime? DataFimFaixa { get; set; }
-        [Column(TypeName = "numeric(15, 2)")]
+        [Column(TypeName = "decimal(15, 2)")]
         public decimal? ValorAluguel { get; set; }
-        [Column("ValorParaFPP", TypeName = "numeric(15, 2)")]
+        [Column("ValorParaFPP", TypeName = "decimal(15, 2)")]
         public decimal? ValorParaFpp { get; set; }
         public int? IdInstrumento { get; set; }
         [Column("eAtivo")]
         public bool? EAtivo { get; set; }
         [StringLength(100)]
         public string Usuario { get; set; }
-        [Column(TypeName = "datetime")]
+        [Column(TypeName = "smalldatetime")]
         public DateTime? DataInsercao { get; set; }
-        [Column(TypeName = "datetime")]
+        [Column(TypeName = "smalldatetime")]
         public DateTime? DataAlteracao { get; set; }
     }
 }

@@ -8,19 +8,19 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Dominio.Entidades
 {
+    [Keyless]
     [Table("CondominioLuc")]
     public partial class CondominioLuc
     {
-        [Key]
         public int Id { get; set; }
         public int? IdLuc { get; set; }
         public int? IdCondominio { get; set; }
         public bool? ParticipaRateio { get; set; }
         [StringLength(100)]
         public string Usuario { get; set; }
-        [Column(TypeName = "datetime")]
+        [Column(TypeName = "smalldatetime")]
         public DateTime? DataInsercao { get; set; }
-        [Column(TypeName = "datetime")]
+        [Column(TypeName = "smalldatetime")]
         public DateTime? DataAlteracao { get; set; }
     }
 }

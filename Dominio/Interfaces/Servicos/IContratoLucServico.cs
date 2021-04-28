@@ -4,10 +4,9 @@ using System.Text;
 using System.Threading.Tasks;
 using Dominio.Entidades;
 
-namespace Dominio.Interfaces.Repositorios
+namespace Dominio.Interfaces.Servicos
 {
-    public interface IContratoUnidadeRepositorio : IRepositorioBase<ContratoUnidade>
+    public interface IContratoLucServico : IServicoBase<ContratoLuc>
     {
-
     }
 }

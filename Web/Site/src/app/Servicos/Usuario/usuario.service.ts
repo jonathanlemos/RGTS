@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
@@ -17,6 +17,10 @@ export class UsuarioService {
   constructor(private http: HttpClient) { }
 
   getAll(): Observable<Usuario[]> {
+    debugger
+    //var reqHeader = new HttpHeaders({ "authorization": localStorage.getItem('token_de_acesso') });
+    //var reqHeader = new HttpHeaders({ 'Content-Type': 'application/json; charset=utf8', "authorization": localStorage.getItem('token_de_acesso') });
+    //return this.http.get<Usuario[]>(this.urlBase, { headers: reqHeader });
     return this.http.get<Usuario[]>(this.urlBase);
   };
 
@@ -42,7 +46,6 @@ export class UsuarioService {
   //editar lista de usuários
   putUsuarios(usuarios: Usuario[]): Observable<NotificacaoPost> {
     let Pessoa = usuarios;
-    debugger
     return this.http.put<NotificacaoPost>(this.urlBase + '/putUsuarios', Pessoa);
   };
 

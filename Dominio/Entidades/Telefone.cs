@@ -8,15 +8,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Dominio.Entidades
 {
+    [Keyless]
     [Table("Telefone")]
     public partial class Telefone
     {
-        public Telefone()
-        {
-            Pessoas = new HashSet<Pessoa>();
-        }
-
-        [Key]
+        [Required]
         [StringLength(20)]
         public string Id { get; set; }
         [Required]
@@ -28,8 +24,5 @@ namespace Dominio.Entidades
         public string Telefone2 { get; set; }
         [StringLength(30)]
         public string Telefone3 { get; set; }
-
-        [InverseProperty(nameof(Pessoa.NumeroNavigation))]
-        public virtual ICollection<Pessoa> Pessoas { get; set; }
     }
 }

@@ -8,10 +8,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Dominio.Entidades
 {
+    [Keyless]
     [Table("ParametrosShopping")]
     public partial class ParametrosShopping
     {
-        [Key]
         public int Id { get; set; }
         [StringLength(100)]
         public string NomeShopping { get; set; }
@@ -44,9 +44,9 @@ namespace Dominio.Entidades
         public DateTime? DataInauguracao { get; set; }
         [StringLength(100)]
         public string UsuarioInsercao { get; set; }
-        [Column(TypeName = "datetime")]
+        [Column(TypeName = "smalldatetime")]
         public DateTime? DataInsercao { get; set; }
-        [Column(TypeName = "datetime")]
+        [Column(TypeName = "smalldatetime")]
         public DateTime? DataAlteracao { get; set; }
         [StringLength(100)]
         public string UsuarioAltecao { get; set; }

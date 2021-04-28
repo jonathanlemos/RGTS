@@ -28,8 +28,7 @@ namespace Dominio.Entidades
         public int CidadeId { get; set; }
         [StringLength(10)]
         public string Pais { get; set; }
-        [Required]
-        public bool? Principal { get; set; }
+        public bool Principal { get; set; }
         public int PessoaId { get; set; }
     }
 }

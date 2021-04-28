@@ -9,12 +9,12 @@ using Microsoft.EntityFrameworkCore;
 namespace Dominio.Entidades
 {
     [Keyless]
-    public partial class ContratoUnidade
+    [Table("Papel")]
+    public partial class Papel
     {
         public int? Id { get; set; }
-        public int? IdInstrumento { get; set; }
-        public int? IdUnidade { get; set; }
-        [Column("eUnidadePrincipal")]
-        public bool? EUnidadePrincipal { get; set; }
+        [StringLength(50)]
+        public string NomePapel { get; set; }
+        public int? IdTipoInstrumento { get; set; }
     }
 }

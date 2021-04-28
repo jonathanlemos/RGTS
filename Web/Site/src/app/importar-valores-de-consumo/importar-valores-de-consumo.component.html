@@ -61,7 +61,7 @@
 
         <div class="col-md-10 mt-5">
           <label for="valorId" class="form-label">Valor</label>
-          <input type="text" pInputText class="form-control" id="valorId" [(ngModel)]="unidadeModalValorFaturado" required />
+          <input type="number" pInputText class="form-control" id="valorId" [(ngModel)]="unidadeModalValorFaturado" required />
           <small class="p-error" *ngIf="submitted && !unidadeModalValorFaturado">Valor faturado é obrigatório.</small>
         </div>
       </ng-template>

@@ -1,5 +1,6 @@
 using Dominio.Interfaces.Repositorios;
 using Dominio.Interfaces.Servicos;
+using Dominio.Autenticacao;
 using Dominio.Serviços;
 using Infra.Data.Repositorios;
 using Microsoft.AspNetCore.Builder;
@@ -14,7 +15,10 @@ using Servicos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 
 namespace RGTS.API
 {
@@ -30,6 +34,27 @@ namespace RGTS.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            //jwt autenticacao
+            services.AddCors();
+            var key = Encoding.ASCII.GetBytes(AutenticacaoConfig.chave);
+            services.AddAuthentication(x =>
+            {
+                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(x =>
+            {
+                x.RequireHttpsMetadata = false;
+                x.SaveToken = true;
+                x.TokenValidationParameters = new TokenValidationParameters()
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(key),
+                    ValidateIssuer = false,
+                    ValidateAudience = false
+                };
+            });
+
+
             services.AddControllers();
 
             AdicinarInjecaoDeDependenciaServico(services);
@@ -49,16 +74,16 @@ namespace RGTS.API
 
             app.UseRouting();
 
-            //app.UseAuthorization();
-
             app.UseCors(i => i.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+            app.UseAuthentication();
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
             });
         }
-        
+
         private void AdicinarInjecaoDeDependenciaServico(IServiceCollection services)
         {
             services.AddScoped(typeof(IServicoBase<>), typeof(ServicoBase<>));
@@ -70,8 +95,11 @@ namespace RGTS.API
             services.AddScoped<IItensNdServico, ItensNdServico>();
             services.AddScoped<IRubricaServico, RubricaServico>();
             services.AddScoped<ILucServico, LucServico>();
-            services.AddScoped<IContratoUnidadeServico, ContratoUnidadeServico>();
+            services.AddScoped<IContratoLucServico, ContratoLucServico>();
             services.AddScoped<IContratoLocacaoServico, ContratoLocacaoServico>();
+            services.AddScoped<IValoresFaturadoServico, ValoresFaturadoServico>();
+            services.AddScoped<IMarcaServico, MarcaServico>();
+            services.AddScoped<ILoginPessoaServico, LoginPessoaServico>();
         }
 
         private void AdicinarInjecaoDeDependenciaRepositorio(IServiceCollection services)
@@ -86,8 +114,11 @@ namespace RGTS.API
             services.AddScoped<IRubricaRepositorio, RubricaRepositorio>();
             services.AddScoped<ILucRepositorio, LucRepositorio>();
             services.AddScoped<IContratoLocacaoRepositorio, ContratoLocacaoRepositorio>();
-            services.AddScoped<IContratoUnidadeRepositorio, ContratoUnidadeRepositorio>();
+            services.AddScoped<IContratoLucRepositorio, ContratoLucRepositorio>();
+            services.AddScoped<IValoresFaturadoRepositorio, ValoresFaturadoRepositorio>();
             services.AddScoped<ISexoRepositorio, SexoRepositorio>();
+            services.AddScoped<IMarcaRepositorio, MarcaRepositorio>();
+            services.AddScoped<ILoginPessoaRepositorio, LoginPessoaRepositorio>();
         }
     }
 }

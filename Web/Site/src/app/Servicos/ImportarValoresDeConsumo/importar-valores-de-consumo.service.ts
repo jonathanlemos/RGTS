@@ -13,7 +13,7 @@ import { Unidade } from '../../Models/Unidade';
 })
 export class ImportarValoresDeConsumoService {
 
-  urlBase = `${environment.urlBase}/api/usuario`;
+  urlBase = `${environment.urlBase}/api/importarValoresDeConsumo`;
 
   constructor(private http: HttpClient) { }
 
@@ -26,9 +26,14 @@ export class ImportarValoresDeConsumoService {
   //};
 
   //salvar
-  post(unidade: ImportarValoresDeConsumoModel): Observable<NotificacaoPost> {
+  post(dadosImportacao: ImportarValoresDeConsumoModel[]): Observable<NotificacaoPost> {
     debugger
-    return this.http.post<NotificacaoPost>(this.urlBase, unidade);
+
+    try {
+      return this.http.post<NotificacaoPost>(this.urlBase, dadosImportacao);
+    } catch (error) {
+      debugger
+    }
   };
 
   ////salvar

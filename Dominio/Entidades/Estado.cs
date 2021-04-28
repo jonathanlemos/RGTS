@@ -8,15 +8,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Dominio.Entidades
 {
+    [Keyless]
     [Table("Estado")]
     public partial class Estado
     {
-        public Estado()
-        {
-            Cidades = new HashSet<Cidade>();
-        }
-
-        [Key]
         public int Id { get; set; }
         [Required]
         [StringLength(30)]
@@ -25,8 +20,5 @@ namespace Dominio.Entidades
         [StringLength(2)]
         public string Sigla { get; set; }
         public int Regiao { get; set; }
-
-        [InverseProperty(nameof(Cidade.Estado))]
-        public virtual ICollection<Cidade> Cidades { get; set; }
     }
 }

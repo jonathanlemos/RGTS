@@ -8,16 +8,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Dominio.Entidades
 {
+    [Keyless]
     [Table("Pessoa")]
     public partial class Pessoa
     {
-        public Pessoa()
-        {
-            InverseUsuarioAlteracao = new HashSet<Pessoa>();
-            InverseUsuarioInsercao = new HashSet<Pessoa>();
-        }
-
-        [Key]
         public int Id { get; set; }
         public int? TipoPessoa { get; set; }
         [StringLength(255)]
@@ -66,16 +60,15 @@ namespace Dominio.Entidades
         [StringLength(100)]
         public string RegimeCasamento { get; set; }
         public int? UsuarioInsercaoId { get; set; }
-        [Column(TypeName = "datetime")]
+        [Column(TypeName = "smalldatetime")]
         public DateTime? DataInsercao { get; set; }
-        [Column(TypeName = "datetime")]
+        [Column(TypeName = "smalldatetime")]
         public DateTime? DataAlteracao { get; set; }
         public int? UsuarioAlteracaoId { get; set; }
         [Required]
         [StringLength(30)]
         public string Senha { get; set; }
-        [Required]
-        public bool? Ativo { get; set; }
+        public bool Ativo { get; set; }
         [Required]
         [StringLength(100)]
         public string Email { get; set; }
@@ -88,22 +81,5 @@ namespace Dominio.Entidades
         [Required]
         [StringLength(100)]
         public string Nome { get; set; }
-
-        [ForeignKey(nameof(Numero))]
-        [InverseProperty(nameof(Telefone.Pessoas))]
-        public virtual Telefone NumeroNavigation { get; set; }
-        [ForeignKey(nameof(TipoPessoa))]
-        [InverseProperty(nameof(Sexo.Pessoas))]
-        public virtual Sexo TipoPessoaNavigation { get; set; }
-        [ForeignKey(nameof(UsuarioAlteracaoId))]
-        [InverseProperty(nameof(Pessoa.InverseUsuarioAlteracao))]
-        public virtual Pessoa UsuarioAlteracao { get; set; }
-        [ForeignKey(nameof(UsuarioInsercaoId))]
-        [InverseProperty(nameof(Pessoa.InverseUsuarioInsercao))]
-        public virtual Pessoa UsuarioInsercao { get; set; }
-        [InverseProperty(nameof(Pessoa.UsuarioAlteracao))]
-        public virtual ICollection<Pessoa> InverseUsuarioAlteracao { get; set; }
-        [InverseProperty(nameof(Pessoa.UsuarioInsercao))]
-        public virtual ICollection<Pessoa> InverseUsuarioInsercao { get; set; }
     }
 }

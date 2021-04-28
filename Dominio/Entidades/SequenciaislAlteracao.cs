@@ -8,10 +8,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Dominio.Entidades
 {
+    [Keyless]
     [Table("SequenciaislAlteracao")]
     public partial class SequenciaislAlteracao
     {
-        [Key]
         public int Id { get; set; }
         public int? IdShopping { get; set; }
         public int? IdInstrumentto { get; set; }
@@ -25,5 +25,7 @@ namespace Dominio.Entidades
         public int? IdSeqAltValoresFixos { get; set; }
         public int? IdSeqAltUnidade { get; set; }
         public int? IdSeqAltUnidadesContrato { get; set; }
+        [Column("eAtivo")]
+        public bool? EAtivo { get; set; }
     }
 }

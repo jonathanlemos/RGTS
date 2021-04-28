@@ -3,7 +3,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { environment } from '../../environments/environment';
 import { ConfirmationService } from 'primeng/api';
 import { MessageService } from 'primeng/api';
-import { ItensNDService } from '../Servicos/ItensNd/itens-nd.service';
+//import { ItensNDService } from '../Servicos/ItensNd/itens-nd.service';
+import { ImportarValoresDeConsumoService } from '../Servicos/ImportarValoresDeConsumo/importar-valores-de-consumo.service';
 import { RubricaService } from '../Servicos/Rubrica/rubrica.service';
 import { HttpHeaders } from '@angular/common/http';
 import * as XLSX from 'xlsx';
@@ -56,7 +57,7 @@ export class ImportarValoresDeConsumoComponent implements OnInit {
   unidadeModalTipoDeConsumo: number[] = [];
 
   constructor(private fb: FormBuilder,
-    private itensNDService: ItensNDService,
+    private itensNDService: ImportarValoresDeConsumoService,
     private messageService: MessageService,
     private confirmationService: ConfirmationService,
     private rubricaService: RubricaService) {
@@ -208,17 +209,20 @@ export class ImportarValoresDeConsumoComponent implements OnInit {
   }
 
   EditarUnidade(unidade: ImportarValoresDeConsumoModel) {
+
+    debugger
+
     this.unidade = { ...unidade };
     this.TituloModal = "Editar a unidade " + unidade.luc.nomeLuc;
     this.ModalUnidade = true;
-    this.adicionarValorFaturado = false;
-    debugger
+    this.adicionarValorFaturado = false;    
     this.unidadeModalNomeLuc = this.unidade.luc.nomeLuc;
-
-    let rubricaId = this.tiposDeConsumos.find(i => i.id == this.unidade.rubrica.id).id;
-    this.unidadeModalTipoDeConsumo[0] = rubricaId;
-
     this.unidadeModalValorFaturado = unidade.valoresFaturado.valorFaturado;
+    this.unidadeModalTipoDeConsumo = [];
+    if (this.unidade.rubrica.id) {
+      let rubricaId = this.tiposDeConsumos.find(i => i.id == this.unidade.rubrica.id).id;
+      this.unidadeModalTipoDeConsumo[0] = rubricaId;
+    }
   }
 
   DeletarUnidade(unidade: ImportarValoresDeConsumoModel) {
@@ -265,6 +269,7 @@ export class ImportarValoresDeConsumoComponent implements OnInit {
         this.messageService.add({ severity: 'success', summary: 'Valores de unidade cadastrado com sucesso.', detail: 'Via MessageService' });
       },
       (error: any) => {
+        debugger
         console.log('Erro: ' + error);
       }
     );

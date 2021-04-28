@@ -8,21 +8,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Dominio.Entidades
 {
+    [Keyless]
     [Table("Sexo")]
     public partial class Sexo
     {
-        public Sexo()
-        {
-            Pessoas = new HashSet<Pessoa>();
-        }
-
-        [Key]
         public int Id { get; set; }
         [Required]
         [StringLength(30)]
         public string Descricao { get; set; }
-
-        [InverseProperty(nameof(Pessoa.TipoPessoaNavigation))]
-        public virtual ICollection<Pessoa> Pessoas { get; set; }
     }
 }

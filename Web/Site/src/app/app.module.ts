@@ -1,7 +1,7 @@
 //angular https://angular.io
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -15,6 +15,8 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatMenuModule } from '@angular/material/menu';
+import { MatInputModule } from '@angular/material/input';
+import { MatCardModule } from '@angular/material/card';
 
 //bootstrap https://ng-bootstrap.github.io/#/home
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -33,6 +35,9 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ToolbarModule } from 'primeng/toolbar';
 import { FileUploadModule } from 'primeng/fileupload';
 import { DialogModule } from 'primeng/dialog';
+//import { PasswordModule } from "primeng/password";
+import { DividerModule } from "primeng/divider";
+import { MenuItem } from 'primeng/api';
 
 //components
 import { AppRoutingModule } from './app-routing.module';
@@ -47,6 +52,11 @@ import { CabecalhoComponent } from './cabecalho/cabecalho.component';
 import { ContratoLocacaoComponent } from './contrato-locacao/contrato-locacao.component';
 import { UnidadeComponent } from './unidade/unidade.component';
 import { ImportarValoresDeConsumoComponent } from './importar-valores-de-consumo/importar-valores-de-consumo.component';
+import { LoginComponent } from './login/login.component';
+import { HomeComponent } from './home/home.component';
+
+//autenticacao
+import { JwtModule } from '@auth0/angular-jwt';
 
 const primeng = [
   AccordionModule,
@@ -60,7 +70,8 @@ const primeng = [
   ConfirmDialogModule,
   ToolbarModule,
   FileUploadModule,
-  DialogModule  
+  DialogModule,
+  DividerModule
 ];
 
 const material = [
@@ -71,7 +82,9 @@ const material = [
   MatProgressSpinnerModule,
   MatToolbarModule,
   MatSidenavModule,
-  MatMenuModule
+  MatMenuModule,
+  MatInputModule,
+  MatCardModule
 ];
 
 const angularImport = [
@@ -81,6 +94,17 @@ const angularImport = [
   FormsModule,
   ReactiveFormsModule,
   CommonModule
+];
+
+const jwt = [
+  JwtModule.forRoot({
+    config: {
+      tokenGetter: function tokenGetter() {
+        return localStorage.getItem('token_de_acesso');
+      },
+      allowedDomains: ["localhost:44370"]
+    }
+  })
 ];
 
 @NgModule({
@@ -95,16 +119,26 @@ const angularImport = [
     CabecalhoComponent,
     ContratoLocacaoComponent,
     UnidadeComponent,
-    ImportarValoresDeConsumoComponent
+    ImportarValoresDeConsumoComponent,
+    LoginComponent,
+    HomeComponent
   ],
   imports: [
     AppRoutingModule,
     NgbModule,
     primeng,
     material,
-    angularImport
+    angularImport,
+    jwt
   ],
-  providers: [ConfirmationService, MessageService],
+  providers: [ConfirmationService, MessageService
+    //,LoginService, AuthGuard,
+    //{
+    //  provide: HTTP_INTERCEPTORS,
+    //  useClass: AuthInterceptor,
+    //  multi: true
+    //}
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
