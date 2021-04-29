@@ -1,7 +1,7 @@
 using Dominio.Interfaces.Repositorios;
 using Dominio.Interfaces.Servicos;
 using Dominio.Autenticacao;
-using Dominio.Serviços;
+using Dominio.Servicos;
 using Infra.Data.Repositorios;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;

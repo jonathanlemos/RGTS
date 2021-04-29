@@ -12,7 +12,7 @@ using Microsoft.IdentityModel.Tokens;
 using Dominio.Autenticacao;
 using System.Linq;
 
-namespace Dominio.Serviços
+namespace Dominio.Servicos
 {
     public class LoginPessoaServico : ServicoBase<LoginPessoa>, ILoginPessoaServico
     {

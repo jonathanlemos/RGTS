@@ -8,19 +8,17 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Dominio.Entidades
 {
-    [Keyless]
     [Table("LoginPessoa")]
     public partial class LoginPessoa
     {
+        [Key]
         public int Id { get; set; }
-        [Required]
         public int PessoaId { get; set; }
         [Required]
-        [StringLength(50)]        
+        [StringLength(50)]
         public string LoginAcesso { get; set; }
         [Required]
         [StringLength(300)]
         public string Senha { get; set; }
-
     }
 }

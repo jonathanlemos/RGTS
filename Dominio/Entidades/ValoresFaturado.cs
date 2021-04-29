@@ -8,7 +8,6 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Dominio.Entidades
 {
-    [Keyless]
     public partial class ValoresFaturado
     {
         [Key]

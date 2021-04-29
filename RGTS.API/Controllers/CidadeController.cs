@@ -9,6 +9,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace RGTS.API.Controllers
 {
@@ -16,36 +17,53 @@ namespace RGTS.API.Controllers
     [Route("api/[controller]")]
     public class CidadeController : ControllerBase
     {
-        ICidadeServico _municipioServico;
+        ICidadeRepositorio _cidadeRepositorio;
 
-        public CidadeController(ICidadeServico municipioServico)
+        public CidadeController(ICidadeRepositorio _cidadeRepositorio)
         {
-            this._municipioServico = municipioServico;
+            this._cidadeRepositorio = _cidadeRepositorio;
         }
 
         [HttpGet]
-        public Cidade[] Get()
+        public Task<List<Cidade>> Get()
         {
             try
             {
-                return _municipioServico.GetAll().ToArray();
+                var ret = _cidadeRepositorio.GetAllComEstado();
+                var ret1 = ret.Result;
+                return ret;
             }
             catch (Exception e)
             {
-                return null;
+                throw;
             }
         }
 
         [HttpGet("{id}")]
-        public Cidade[] Get(int id)
+        public Cidade Get(int id)
         {
             try
             {
-                return _municipioServico.GetAll().Where(i=>i.EstadoId == id).ToArray();
+                var ret = _cidadeRepositorio.GetByIdComEstado(id);
+                return ret;
             }
             catch (Exception e)
             {
-                return null;
+                throw;
+            }
+        }
+
+        [HttpGet("{estadoId}")]
+        public Cidade[] GetCidadesPorEstadoId(int estadoId)
+        {
+            try
+            {
+                var ret = _cidadeRepositorio.GetAll().Where(i => i.EstadoId == estadoId).ToArray();
+                return ret;
+            }
+            catch (Exception e)
+            {
+                throw;
             }
         }
     }

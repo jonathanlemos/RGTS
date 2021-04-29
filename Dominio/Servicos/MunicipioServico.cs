@@ -6,7 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Dominio.Serviços
+namespace Dominio.Servicos
 {
     public class CidadeServico : ServicoBase<Cidade>, ICidadeServico
     {

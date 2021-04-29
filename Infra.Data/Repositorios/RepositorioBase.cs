@@ -61,5 +61,6 @@ namespace Infra.Data.Repositorios
             contexto.Entry(entidade).State = EntityState.Modified;
             contexto.SaveChanges();
         }
+
     }
 }

@@ -15,7 +15,6 @@ namespace Infra.Data.Repositorios
         {
             return await contexto
                 .ItensNds
-                //.Include(i => i.DescricaoAlternativaRubrica)
                 .ToListAsync();
         }
     }

@@ -40,8 +40,8 @@ namespace Infra.Data.Contexto
         public virtual DbSet<Instrumento> Instrumentos { get; set; }
         public virtual DbSet<ItensNd> ItensNds { get; set; }
         public virtual DbSet<Localizacao> Localizacaos { get; set; }
+        public virtual DbSet<LoginPessoa> LoginPessoas { get; set; }
         public virtual DbSet<Luc> Lucs { get; set; }
-        public virtual DbSet<LoginPessoa> Logins { get; set; }
         public virtual DbSet<Marca> Marcas { get; set; }
         public virtual DbSet<Nd> Nds { get; set; }
         public virtual DbSet<Nivel> Nivels { get; set; }
@@ -104,6 +104,12 @@ namespace Infra.Data.Contexto
             modelBuilder.Entity<Cidade>(entity =>
             {
                 entity.Property(e => e.Nome).IsFixedLength(true);
+
+                entity.HasOne(d => d.Estado)
+                    .WithMany(p => p.Cidades)
+                    .HasForeignKey(d => d.EstadoId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Cidade_Estado");
             });
 
             modelBuilder.Entity<Condominio>(entity =>
@@ -225,6 +231,12 @@ namespace Infra.Data.Contexto
                 entity.Property(e => e.Usuario).IsUnicode(false);
 
                 entity.Property(e => e.UsuarioAlteracao).IsUnicode(false);
+
+                entity.HasOne(d => d.IdNdNavigation)
+                    .WithMany(p => p.ItensNds)
+                    .HasForeignKey(d => d.IdNd)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_ItensND_ND");
             });
 
             modelBuilder.Entity<Localizacao>(entity =>
@@ -241,17 +253,8 @@ namespace Infra.Data.Contexto
                 entity.Property(e => e.Usuario).IsUnicode(false);
             });
 
-            modelBuilder.Entity<LoginPessoa>(entity =>
-            {
-                entity.HasKey(e => e.Id);
-
-                entity.Property(e => e.LoginAcesso).IsUnicode(false);
-            });
-
             modelBuilder.Entity<Marca>(entity =>
             {
-                entity.HasKey(e => e.Id);
-
                 entity.Property(e => e.NomeMarca).IsUnicode(false);
 
                 entity.Property(e => e.Usuario).IsUnicode(false);
@@ -403,8 +406,6 @@ namespace Infra.Data.Contexto
 
             modelBuilder.Entity<Rubrica>(entity =>
             {
-                entity.HasKey(e => e.Id);
-
                 entity.Property(e => e.NomeRubrica).IsUnicode(false);
 
                 entity.Property(e => e.UsuarioAlteracao).IsUnicode(false);
@@ -476,10 +477,6 @@ namespace Infra.Data.Contexto
 
             modelBuilder.Entity<ValoresFaturado>(entity =>
             {
-                entity.HasKey(e => e.Id);
-
-                entity.Property(e => e.Id).ValueGeneratedOnAdd();
-
                 entity.Property(e => e.Documento).IsUnicode(false);
 
                 entity.Property(e => e.UsuarioAlteracao).IsUnicode(false);

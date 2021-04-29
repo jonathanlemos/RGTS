@@ -8,10 +8,15 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Dominio.Entidades
 {
-    [Keyless]
     [Table("ND")]
     public partial class Nd
     {
+        public Nd()
+        {
+            ItensNds = new HashSet<ItensNd>();
+        }
+
+        [Key]
         public int Id { get; set; }
         public int? IdShopping { get; set; }
         public int? IdInstrumento { get; set; }
@@ -58,5 +63,8 @@ namespace Dominio.Entidades
         public string UsuarioAlteracao { get; set; }
         [Column(TypeName = "smalldatetime")]
         public DateTime? DataAlteracao { get; set; }
+
+        [InverseProperty(nameof(ItensNd.IdNdNavigation))]
+        public virtual ICollection<ItensNd> ItensNds { get; set; }
     }
 }

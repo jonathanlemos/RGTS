@@ -12,7 +12,6 @@ namespace Dominio.Entidades
     [Table("Marca")]
     public partial class Marca
     {
-        [Key]
         public int Id { get; set; }
         [StringLength(100)]
         public string NomeMarca { get; set; }

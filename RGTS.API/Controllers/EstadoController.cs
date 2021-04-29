@@ -28,12 +28,24 @@ namespace RGTS.API.Controllers
         {
             try
             {
-                var ret = _estadoServico.GetAll().ToArray();
-                return ret;
+                return _estadoServico.GetAll().ToArray();                
             }
             catch (Exception e)
             {
-                return null;
+                throw;
+            }
+        }
+
+        [HttpGet]
+        public Estado Get(int id)
+        {
+            try
+            {
+                return _estadoServico.GetById(id);
+            }
+            catch (Exception e)
+            {
+                throw;
             }
         }
     }

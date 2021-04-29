@@ -9,7 +9,7 @@ using Servicos;
 using System.Linq;
 using Dominio.ValueType;
 
-namespace Dominio.Serviços
+namespace Dominio.Servicos
 {
     public class ValoresFaturadoServico : ServicoBase<ValoresFaturado>, IValoresFaturadoServico
     {

@@ -7,7 +7,7 @@ using Dominio.Interfaces.Repositorios;
 using Dominio.Interfaces.Servicos;
 using Servicos;
 
-namespace Dominio.Serviços
+namespace Dominio.Servicos
 {
     public class MarcaServico : ServicoBase<Marca>, IMarcaServico
     {
