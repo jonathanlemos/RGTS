@@ -10,7 +10,6 @@ namespace Dominio.Serviços
 {
     public class EstadoServico : ServicoBase<Estado>, IEstadoServico
     {
-
         private readonly IEstadoRepositorio estadoRepositorio;
 
         public EstadoServico(IEstadoRepositorio estadoRepositorio) : base(estadoRepositorio)

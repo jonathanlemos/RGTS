@@ -8,13 +8,22 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Dominio.Entidades
 {
-    [Table("ND")]
+    [Table("Nd")]
     public partial class Nd
     {
+        public Nd()
+        {
+            ItensNds = new HashSet<ItensNd>();
+        }
+
         [Key]
         public int Id { get; set; }
         public int? IdShopping { get; set; }
+        [Column(TypeName = "date")]
+        public DateTime? DataEmissao { get; set; }
+        [ForeignKey("instrumento")]
         public int? IdInstrumento { get; set; }
+        [ForeignKey("servicoCobranca")]
         public int? IdServicoCobranca { get; set; }
         public double? ValorOriginal { get; set; }
         public double? ValorPrincipal { get; set; }
@@ -30,7 +39,9 @@ namespace Dominio.Entidades
         public int? IdTipoJuros { get; set; }
         [Column(TypeName = "decimal(12, 7)")]
         public decimal? PercentualJuros { get; set; }
+        [ForeignKey("beneficiario")]
         public int? PessoaBeneficiario { get; set; }
+        [ForeignKey("pagador")]
         public int? PessoaPagador { get; set; }
         [StringLength(20)]
         public string NossoNumero { get; set; }
@@ -46,7 +57,12 @@ namespace Dominio.Entidades
         public DateTime? TratamentoArquivoRetorno { get; set; }
         public int? IdFormaCriacao { get; set; }
         public int? Remessa { get; set; }
+        public int? MesProcessamento { get; set; }
+        public int? AnoProcessamento { get; set; }
+        public int? IdSerie { get; set; }
         public int? IdInclusao { get; set; }
+        public string? CodigoBarras { get; set; }
+        public string? LinhaDigitavel { get; set; }
         [StringLength(100)]
         public string Usuario { get; set; }
         [Column(TypeName = "datetime")]
@@ -55,5 +71,15 @@ namespace Dominio.Entidades
         public string UsuarioAlteracao { get; set; }
         [Column(TypeName = "datetime")]
         public DateTime? DataAlteracao { get; set; }
+        
+        public virtual ServicoCobranca servicoCobranca { get; set; }
+
+        public virtual Pessoa beneficiario { get; set; }
+
+        public virtual Pessoa pagador { get; set; }
+
+        public virtual Instrumento instrumento { get; set; }
+
+        public virtual ICollection<ItensNd> ItensNds { get; set; }
     }
 }

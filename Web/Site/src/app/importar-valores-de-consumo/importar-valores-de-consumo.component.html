@@ -1,0 +1,130 @@
+<div class="container mt-5">
+
+  <div class="row mb-5"><h3>Importar Valores de Consumo</h3></div>
+
+  <div class="col-md-12 mt-5"></div>
+
+  <div class="col-md-12 mt-5">
+
+    <div class="col-md-6 mt-5">
+      <label for="multiselectTipoConsumoImportar" class="form-label">Tipo de Consumo</label><br>
+      <p-multiSelect name="rubricaImportar" id="multiselectTipoConsumoImportar" class="form-select w-25"
+                     defaultLabel="Selecione um tipo de consumo" [(ngModel)]="unidade.rubrica"
+                     [options]="tiposDeConsumos" optionLabel="nomeRubrica" optionValue="id"
+                     display="chip">
+      </p-multiSelect>
+    </div>
+
+    <div class="col-md-6 mt-5">
+      <p-fileUpload name="arquivos" multiple="multiple" (uploadHandler)="Upload($event)"
+                    accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+                    customUpload="true" class="col-md-6 mt-5" (onUpload)="onUpload($event)"
+                    chooseLabel="Buscar arquivo" uploadLabel="Carregar" cancelLabel="Cancelar">
+        <ng-template pTemplate="content">
+          <ul *ngIf="arquivosParaEnviar.length">
+            <li *ngFor="let arquivo of arquivosParaEnviar">{{arquivo.name}} - {{arquivo.size}} bytes</li>
+          </ul>
+        </ng-template>
+      </p-fileUpload>
+      <!--<p-fileUpload mode="basic" customUpload="true" name="arquivos" [auto]="true" chooseLabel="Buscar arquivo"
+                  accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+                  (uploadHandler)="Upload($event)"></p-fileUpload>-->
+    </div>
+
+    <div class="col-md-12 mt-5">
+      <div class="card ">
+        <p-toolbar styleClass="p-mb-4">
+          <ng-template pTemplate="left">
+            <button pButton pRipple label="Novo" icon="pi pi-plus" class="p-button-success p-mr-2" (click)="AbrirModalNovaUnidade();"></button>
+            <button pButton pRipple [label]="Deletar" icon="pi pi-trash" class="p-button-danger ml-3" style="height:38px;" (click)="DeletarUnidadesSelecionadas();" [disabled]="!unidadesSelecionadas || !unidadesSelecionadas.length"></button>
+            <button pButton pRipple label="Salvar" icon="pi pi-save" class="p-button-success" (click)="SalvarValoresImportados();"></button>
+          </ng-template>
+        </p-toolbar>
+      </div>
+    </div>
+
+    <p-dialog [(visible)]="ModalUnidade" [style]="{width: '450px'}" header="{{TituloModal}}" [modal]="true" styleClass="p-fluid">
+      <ng-template pTemplate="content">
+        <div class="col-md-10 mt-5">
+          <label for="UnidadeId" class="form-label">Unidade</label>
+          <input type="text" class="form-control" pInputText id="UnidadeId" [(ngModel)]="unidade.nome" required autofocus />
+          <small class="p-error" *ngIf="submitted && !unidade.nome">Nome da Unidade é obrigatório.</small>
+        </div>
+
+        <div class="col-md-6 mt-5">
+          <label for="multiselectTipoConsumo" class="form-label">Tipo de Consumo</label><br>
+          <p-multiSelect name="rubrica" id="multiselectTipoConsumo" class="form-select w-25"
+                         defaultLabel="Selecione um tipo de consumo" [(ngModel)]="unidade.rubrica"
+                         [options]="tiposDeConsumos" optionLabel="nomeRubrica" optionValue="id"
+                         display="chip">
+          </p-multiSelect>
+        </div>
+
+        <!--<div class="p-field p-col">
+          <label for="price">Price</label>
+          <p-inputNumber id="price" [(ngModel)]="unidade.price" mode="currency" currency="USD" locale="en-US"></p-inputNumber>
+        </div>-->
+        <div class="col-md-6 mt-5">
+          <label for="valorId" class="form-label">Valor</label>
+          <input type="text" pInputText class="form-control" id="valorId" [(ngModel)]="unidade.valorPrincipalRubrica" required />
+          <small class="p-error" *ngIf="submitted && !unidade.valorPrincipalRubrica">Valor da Unidade é obrigatório.</small>
+        </div>
+      </ng-template>
+
+      <ng-template pTemplate="footer">
+        <button pButton pRipple label="Cancelar" icon="pi pi-times" class="p-button-text" (click)="EsconderModal()"></button>
+        <button pButton pRipple label="Salvar" icon="pi pi-check" class="p-button-text" (click)="SalvarUnidade()"></button>
+      </ng-template>
+    </p-dialog>
+
+    <p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>
+
+    <div class="col-md-12 mt-5">
+      <p-table #dt [value]="unidades" [rows]="15" [paginator]="true" [globalFilterFields]="['nome']"
+               [(selection)]="unidadesSelecionadas" [rowHover]="true" dataKey="id"
+               currentPageReportTemplate="{first} - {last} de {totalRecords}" [showCurrentPageReport]="true">
+        <ng-template pTemplate="caption">
+          <div class="p-d-flex p-ai-center p-jc-between">
+            <h5 class="p-m-0">Unidades</h5>
+            <span class="p-input-icon-left">
+              <i class="pi pi-search"></i>
+              <input class="ml-5" pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')" placeholder="Procurar..." />
+            </span>
+          </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+          <tr>
+            <th style="width: 3rem">
+              <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+            </th>
+            <th pSortableColumn="nome">Unidade <p-sortIcon field="nome"></p-sortIcon></th>
+            <th pSortableColumn="valorPrincipalRubrica">Valor <p-sortIcon field="valorPrincipalRubrica"></p-sortIcon></th>
+            <th pSortableColumn="nomeRubrica">Tipo de consumo<p-sortIcon field="nomeRubrica"></p-sortIcon></th>
+            <th></th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-unidade>
+          <tr>
+            <td>
+              <p-tableCheckbox [value]="unidade"></p-tableCheckbox>
+            </td>
+            <td>{{unidade.nome}}</td>
+            <td>{{unidade.valorPrincipalRubrica | currency:'BRL'}}</td>
+            <td>{{unidade.rubrica.nomeRubrica}}</td>
+            <td>
+              <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success p-mr-2" (click)="EditarUnidade(unidade)"></button>
+              <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="DeletarUnidade(unidade)"></button>
+            </td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="summary">
+          <div class="p-d-flex p-ai-center p-jc-between">
+            Total de {{unidades ? unidades.length : 0 }} unidades.
+          </div>
+        </ng-template>
+      </p-table>
+    </div>
+
+  </div>
+
+</div>

@@ -11,6 +11,10 @@ namespace Dominio.Entidades
     [Table("Banco")]
     public partial class Banco
     {
+        public Banco()
+        {
+        }
+
         [Key]
         public int Id { get; set; }
         [StringLength(50)]
@@ -26,5 +30,7 @@ namespace Dominio.Entidades
         public string UsuarioAlteracao { get; set; }
         [Column(TypeName = "datetime")]
         public DateTime? DataAlteracao { get; set; }
+
+        public virtual ICollection<ContaCorrente> ContaCorrentes { get; set; }
     }
 }

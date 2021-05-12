@@ -1,1 +1,108 @@
-<p>unidade works!</p>
+
+<div class="container mt-5">
+
+  <div class="row mb-5"><h3>Unidade</h3></div>
+
+  <p-selectButton [options]="tipoTela" [(ngModel)]="tipoTelaValue" optionLabel="label" optionValue="value"></p-selectButton>
+
+  <div class="col-md-6 mt-5"></div>
+
+  <div *ngIf="tipoTelaValue == 'cadastrar'">
+    <form class="row g-3" [formGroup]="unidadeFormulario">
+
+      <div class="col-md-12 mt-4">
+        <label for="codigoUnidadeId" class="form-label">Código da Unidade</label>
+        <input type="text" formControlName="CodigoUnidadeForm" class="form-control" id="codigoUnidadeId" placeholder="Código da Unidade">
+      </div>
+
+      <div class="col-md-12 mt-4">
+        <label for="multiselectNivelId" class="form-label">Nível</label><br>
+        <p-multiSelect formControlName="nivelForm" name="nivel" [options]="niveis" id="multiselectNivelId" class="form-select"
+                       [(ngModel)]="nivelSelecionado" defaultLabel="Selecione um nível" optionLabel="nome" display="chip">
+        </p-multiSelect>
+      </div>
+
+      <div class="col-md-12 mt-4">
+        <label for="multiselectLocalizacaoId" class="form-label">Localização</label><br>
+        <p-multiSelect formControlName="localizacaoForm" name="localizacao" [options]="localizacoes" id="multiselectLocalizacaoId" class="form-select"
+                       [(ngModel)]="localizacaoSelecionado" defaultLabel="Selecione uma Localização" optionLabel="nome" display="chip">
+        </p-multiSelect>
+      </div>
+
+      <div class="col-md-12 mt-4">
+        <label for="multiselectFaseId" class="form-label">Fase</label><br>
+        <p-multiSelect formControlName="faseForm" name="fase" [options]="fases" id="multiselectFaseId" class="form-select"
+                       [(ngModel)]="faseSelecionado" defaultLabel="Selecione uma fase" optionLabel="nome" display="chip">
+        </p-multiSelect>
+      </div>
+
+      <div class="col-md-12 mt-4">
+        <label for="multiselectEmpreendimento" class="form-label">Empreendimento</label><br>
+        <p-multiSelect formControlName="empreendimentoForm" name="empreendimento" [options]="empreendimentos" id="multiselectEmpreendimento" class="form-select"
+                       [(ngModel)]="empreendimentoSelecionado" defaultLabel="Selecione um empreendimento" optionLabel="nome" display="chip">
+        </p-multiSelect>
+      </div>
+
+      <div class="col-md-12 mt-4">
+        <label for="multiselectEmpreendimentoParaAluguel" class="form-label">Empreendimento para aluguel</label><br>
+        <p-multiSelect formControlName="empreendimentoParaAluguelForm" name="empreendimento" [options]="empreendimentosParaAluguel" id="multiselectEmpreendimentoParaAluguel" class="form-select"
+                       [(ngModel)]="empreendimentoParaAluguelSelecionado" defaultLabel="Selecione um empreendimento para aluguel" optionLabel="nome" display="chip">
+        </p-multiSelect>
+      </div>
+
+      <!--<div class="col-md-12 mt-4">
+        <label for="multiselectClassificacaoId" class="form-label">Classificação</label><br>
+        <p-multiSelect formControlName="classificacaoForm" name="classificacao" [options]="classificacoes" id="multiselectClassificacaoId" class="form-select"
+                       [(ngModel)]="classificacaoSelecionado" defaultLabel="Selecione um nível" optionLabel="nome" display="chip">
+        </p-multiSelect>
+      </div>-->
+
+      <div class="col-md-12 mt-4">
+        <label for="multiselectRamoId" class="form-label">Ramo</label><br>
+        <p-multiSelect formControlName="ramoForm" name="ramo" [options]="ramos" id="multiselectRamoId" class="form-select"
+                       [(ngModel)]="ramoSelecionado" defaultLabel="Selecione um Ramo" optionLabel="nome" display="chip">
+        </p-multiSelect>
+      </div>
+
+      <div class="col-md-12 mt-4">
+        <label for="multiselectAtividade" class="form-label">Atividade</label><br>
+        <p-multiSelect formControlName="atividadeForm" name="atividade" [options]="atividades" id="multiselectAtividades" class="form-select"
+                       [(ngModel)]="AtividadeSelecionado" defaultLabel="Selecione um Atividade" optionLabel="nome" display="chip">
+        </p-multiSelect>
+      </div>
+
+      <div class="col-md-12 mt-4">
+        <label for="multiselectQTDCRDId" class="form-label">Qtd. CRD</label>
+        <input type="text" formControlName="QTDCRDForm" class="form-control" id="multiselectQTDCRDId" placeholder="Qtd. CRD">
+      </div>
+
+      <div class="col-md-12 mt-4">
+        <label for="potenciaFanCoilId" class="form-label">Potência FanCoil</label>
+        <input type="text" formControlName="potenciaFanCoilForm" class="form-control" id="potenciaFanCoilId" placeholder="Potência FanCoil">
+      </div>
+
+      <div class="col-md-12 mt-4">
+        <label for="cargaId" class="form-label">Carga</label>
+        <input type="text" formControlName="cargaForm" class="form-control" id="cargaId" placeholder="Carga">
+      </div>
+
+      <div class="col-md-12 mt-4">
+        <label for="qtdm2InauguracaoId" class="form-label">Qtd. M2 na Inauguração</label>
+        <input type="text" formControlName="qtdm2InauguracaoForm" class="form-control" id="qtdm2InauguracaoId" placeholder="Qtd. M2 na Inauguração">
+      </div>
+
+      <div class="col-md-12 mt-4">
+        <label for="qtdm2ablId" class="form-label">Qtd. M2 ABL</label>
+        <input type="text" formControlName="qtdm2ablForm" class="form-control" id="qtdm2ablId" placeholder="Qtd. M2 ABL">
+      </div>
+
+      <div class="col-md-12 mt-4">
+        <label for="qtdm2LocavelComReducaoId" class="form-label">Qtd. M2 Locável com Redução</label>
+        <input type="text" formControlName="qtdm2LocavelComReducaoForm" class="form-control" id="qtdm2LocavelComReducaoId" placeholder="Qtd. M2 Locável com Redução">
+      </div>
+
+
+
+    </form>
+  </div>
+</div>

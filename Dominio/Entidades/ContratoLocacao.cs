@@ -15,7 +15,10 @@ namespace Dominio.Entidades
         public int Id { get; set; }
         public int? IdShopping { get; set; }
         public int? IdInstrumento { get; set; }
+        [ForeignKey("marca")]
         public int? IdMarca { get; set; }
+        [ForeignKey("luc")]
+        public int? IdLucPrincipal { get; set; }
         [Column(TypeName = "date")]
         public DateTime? DataInicioVigencia { get; set; }
         [Column(TypeName = "date")]
@@ -44,9 +47,9 @@ namespace Dominio.Entidades
         public DateTime? DataInicioCarenciaAluguel { get; set; }
         [Column(TypeName = "date")]
         public DateTime? DataFimCarenciaAluguel { get; set; }
-        public int? IdItemRubricaAluguel { get; set; }
-        public int? IdItemRubricaDescontoAluguel { get; set; }
-        public int? IdItemRubricaCondominio { get; set; }
+        public int? IdRubricaAluguel { get; set; }
+        public int? IdRubricaDescontoAluguel { get; set; }
+        public int? IdRubricaCondominio { get; set; }
         [Column("CRD", TypeName = "numeric(12, 4)")]
         public decimal? Crd { get; set; }
         [Column("FancoilTR", TypeName = "numeric(12, 4)")]
@@ -56,8 +59,8 @@ namespace Dominio.Entidades
         [Column(TypeName = "datetime")]
         public DateTime? DataFimCarenciaCondominio { get; set; }
         [StringLength(10)]
-        public string IdItemRubricaAluguelPercentual { get; set; }
-        public int? IdItemRubricaDescontoAluguelPercentual { get; set; }
+        public string IdRubricaAluguelPercentual { get; set; }
+        public int? IdRubricaDescontoAluguelPercentual { get; set; }
         public int? IdTipoVendaInformada { get; set; }
         public int? IdTipoVendaCalculo { get; set; }
         public int? IdPeriodicidadeInformativoVenda { get; set; }
@@ -67,8 +70,8 @@ namespace Dominio.Entidades
         public DateTime? DataFimCarenciaAluguelPercentual { get; set; }
         public int? IdMesCompetenciaAluguelAntecipado { get; set; }
         public int? IdVencimentoAluguelAntecipado { get; set; }
-        public int? IdItemRubricaCotaOrdinaria { get; set; }
-        public int? IdItemRubricaCotaExtraordinaria { get; set; }
+        public int? IdRubricaCotaOrdinaria { get; set; }
+        public int? IdRubricaCotaExtraordinaria { get; set; }
         [Column(TypeName = "date")]
         public DateTime? DataInicioCarenciaFundo { get; set; }
         [Column(TypeName = "date")]
@@ -81,5 +84,9 @@ namespace Dominio.Entidades
         public bool? EPercentualSobreAluguelPercentual { get; set; }
         [Column("eAtivo")]
         public bool? EAtivo { get; set; }
+        [Column("eEmpreendedor")]
+        public bool? EEmpreendedor { get; set; }
+        public virtual Marca marca { get; set; }
+        public virtual Luc luc { get; set; }
     }
 }

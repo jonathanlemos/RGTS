@@ -21,15 +21,15 @@ namespace Dominio.Entidades
         public int? IdTipoCorrecao { get; set; }
         public int? IdFormaCorrecao { get; set; }
         public int? IdInstrumentoOrigem { get; set; }
-        [StringLength(10)]
-        public string IdTipoInstrumentoOrigem { get; set; }
-        [StringLength(10)]
-        public string IdInstrumentoContrato { get; set; }
+        public int? IdTipoInstrumentoOrigem { get; set; }
+        [ForeignKey("locacao")]
+        public int? IdInstrumentoContrato { get; set; }
         [StringLength(100)]
         public string Usuario { get; set; }
         [Column(TypeName = "datetime")]
         public DateTime? DataInsercao { get; set; }
         [Column(TypeName = "datetime")]
         public DateTime? DataAlteracao { get; set; }
+        public virtual ContratoLocacao locacao { get; set; }
     }
 }

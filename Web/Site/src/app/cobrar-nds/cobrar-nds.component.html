@@ -1,0 +1,148 @@
+<div class="col-md-12 mt-2">
+  <div class="card ">
+    <p-toolbar styleClass="p-mb-4">
+      <ng-template pTemplate="left">
+        <h1 style="margin-bottom: 0px;">Cobrar NDs - Gerar arquivo remessa</h1>
+      </ng-template>
+    </p-toolbar>
+  </div>
+</div>
+<div class="container mt-5">
+  <div class="col-md-12 mt-5">
+    <p-toast position="center"></p-toast>
+    <div class="row">
+      <div class="col-md-4 md-3">
+        <label for="dropdownTipoLocacao" class="form-label">Tipo Locação</label><br>
+        <p-dropdown name="tipoLocacao" id="dropdownTipoLocacao" class="form-select w-25"
+                    [(ngModel)]="tipoLocacaoSelecionada"
+                    [options]="tiposLocacoes" optionLabel="nomeInstrumento" optionValue="id"
+                    display="chip">
+        </p-dropdown>
+      </div>
+      <div class="col-md-4 md-3">
+        <label for="multiselectUnidade" class="form-label">Luc</label><br>
+        <p-multiSelect name="luc" id="multiselectUnidade" class="form-select w-25"
+                       defaultLabel="Selecione uma Luc" [(ngModel)]="lucSelecionada"
+                       [options]="lucs" optionLabel="nomeLuc" optionValue="id"
+                       display="chip">
+        </p-multiSelect>
+      </div>
+      <div class="col-md-4 md-3">
+        <label for="multiselectNomeFantasia" class="form-label">Marca</label><br>
+        <p-multiSelect name="nomeMarca" id="multiselectMarca" class="form-select w-25"
+                       defaultLabel="Selecione uma Marca" [(ngModel)]="marcaSelecionada"
+                       [options]="marcas" optionLabel="nomeMarca" optionValue="id"
+                       display="chip">
+        </p-multiSelect>
+      </div>
+    </div>
+
+    <div class="row mt-3">
+      <div class="col-md-4 md-3">
+        <label for="vencimentoDetxt" class="form-label">Vencimento de:</label><br>
+        <p-calendar [(ngModel)]="vencimentoDe" [showIcon]="true" dateFormat="dd/mm/yy"></p-calendar>
+      </div>
+      <div class="col-md-4 md-3">
+        <label for="vencimentoAtetxt" class="form-label">Vencimento até:</label><br>
+        <p-calendar [(ngModel)]="vencimentoAte" [showIcon]="true" dateFormat="dd/mm/yy"></p-calendar>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="col-md-12 mt-5">
+  <div class="card ">
+    <p-toolbar styleClass="p-mb-4">
+      <ng-template pTemplate="left">
+      </ng-template>
+      <ng-template pTemplate="right">
+        <button pButton pRipple label="Pesquisar" icon="pi pi-search" class="p-button-success ml-1" (click)="PesquisarNDs();"></button>
+      </ng-template>
+    </p-toolbar>
+  </div>
+</div>
+<div class="row mt-5" style="margin-left: 20px !important; margin-right: 20px !important;">
+  <p-table #dt [value]="nds" [rows]="500" [paginator]="true" [globalFilterFields]="['marca.nomeMarca','luc.nomeLuc','id']"
+           [(selection)]="ndsSelecionadas" [rowHover]="true" dataKey="id"
+           currentPageReportTemplate="{first} - {last} de {totalRecords}" [showCurrentPageReport]="true">
+    <ng-template pTemplate="caption">
+      <div class="p-d-flex p-ai-center p-jc-between">
+        <h2 class="p-m-0">NDs</h2>
+        <span class="p-input-icon-left">
+          <i class="pi pi-search"></i>
+          <input class="ml-5" pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')" placeholder="Procurar..." />
+        </span>
+      </div>
+    </ng-template>
+    <ng-template pTemplate="header">
+      <tr>
+        <th style="width: 3rem">
+          <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+        </th>
+        <th pSortableColumn="id">ND <p-sortIcon field="id"></p-sortIcon></th>
+        <th>Vencimento</th>
+        <th pSortableColumn="marca.nomeMarca">Marca <p-sortIcon field="marca.nomeMarca"></p-sortIcon></th>
+        <th pSortableColumn="luc.nomeLuc">Unidade <p-sortIcon field="luc.nomeLuc"></p-sortIcon></th>
+        <th>Tipo Instrumento</th>
+        <th>Valor da ND</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-nd>
+      <tr>
+        <td>
+          <p-tableCheckbox [value]="nd"></p-tableCheckbox>
+        </td>
+        <td>{{nd.id}}</td>
+        <td>{{nd.vencimento | date: 'dd/MM/yyyy'}}</td>
+        <td>{{nd.luc.nomeLuc}}</td>
+        <td>{{nd.marca.nomeMarca}}</td>
+        <td>{{tipoInstrumento}}</td>
+        <td>{{nd.valorSaldo | currency:'BRL'}}</td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="summary">
+      <div class="p-d-flex p-ai-center p-jc-between">
+        Total de {{nds ? nds.length : 0 }} NDs.
+      </div>
+    </ng-template>
+  </p-table>
+</div>
+<div class="container mt-5">
+  <div class="col-md-12 mt-5">
+    <p-toast position="center"></p-toast>
+    <div class="row">
+      <div class="col-md-4 md-3">
+        <label for="dropdownMensagemPadrao" class="form-label">Mensagem Padrão</label><br>
+        <p-dropdown name="mensagemPadrao" id="dropdownMensagemPadrao" class="form-select w-25"                    
+                    [options]="mensagensBoleto" optionLabel="nomeMensagem"
+                    [(ngModel)]="mensagemBoletoSelecionada" placeholder="Selecione uma Mensagem.">
+        </p-dropdown>
+      </div>
+      <div class="col-md-4 md-3">
+        <label for="dropdownInstrucaoPadrao" class="form-label">Instrução Padrao</label><br>
+        <p-dropdown name="instrucaoPadrao" id="dropdownInstrucaoPadrao" class="form-select w-25"
+                    [options]="instrucoesBoleto" optionLabel="nomeIntrucao"
+                    [(ngModel)]="instrucaoBoletoSelecionada" placeholder="Selecione uma Instrução.">
+        </p-dropdown>
+      </div>
+      <div class="col-md-4 md-3">
+        <label for="dropdownServicoCobranca" class="form-label">Serviço de Cobrança</label><br>
+        <p-dropdown name="tipoLocacao" id="dropdownServicoCobranca" class="form-select w-25"
+                    [options]="servicosCobranca" optionLabel="nomeServico"
+                    [(ngModel)]="servicoCobrancaSelecionado" placeholder="Selecione um Serviço."></p-dropdown>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="col-md-12 mt-5">
+  <div class="card ">
+    <p-toolbar styleClass="p-mb-4">
+      <ng-template pTemplate="left">
+      </ng-template>
+      <ng-template pTemplate="right">
+        <button pButton pRipple label="Gerar Arquivo" icon="pi pi-search" class="p-button-success ml-1" (click)="GerarArquivoRemessa();"></button>
+      </ng-template>
+    </p-toolbar>
+  </div>
+</div>
+
+

@@ -23,5 +23,7 @@ namespace Dominio.Entidades
         public DateTime? DataInsercao { get; set; }
         [Column(TypeName = "datetime")]
         public DateTime? DataAlteracao { get; set; }
+
+        public virtual ICollection<Rubrica> rubricas { get; set; }
     }
 }

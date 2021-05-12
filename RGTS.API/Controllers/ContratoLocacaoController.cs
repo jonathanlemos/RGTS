@@ -16,6 +16,41 @@ namespace RGTS.API.Controllers
     [Route("api/[controller]")]
     public class ContratoLocacaoController : ControllerBase
     {
+        IContratoLocacaoServico _contratoLocacaoServico;
 
+        public ContratoLocacaoController(IContratoLocacaoServico contratoLocacaoServico)
+        {
+            this._contratoLocacaoServico = contratoLocacaoServico;
+        }
+
+        [HttpGet]
+        public ContratoLocacao[] Get()
+        {
+            try
+            {
+                return _contratoLocacaoServico.GetAll()
+                    .Select(i => new ContratoLocacao { Id = i.Id, IdInstrumento = i.IdInstrumento })
+                    .ToArray();
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
+        }
+
+        [HttpGet]
+        [Route("instrumento/{idInstrumento}")]
+        public ContratoLocacao GetByIdInstrumento(int idInstrumento)
+        {
+            try
+            {
+                var cl = _contratoLocacaoServico.GetByIdInstrumento(idInstrumento);
+                return cl;
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
+        }
     }
 }

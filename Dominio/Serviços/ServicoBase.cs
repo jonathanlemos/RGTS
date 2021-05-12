@@ -2,6 +2,8 @@
 using Dominio.Interfaces.Servicos;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 
 namespace Servicos
@@ -43,6 +45,11 @@ namespace Servicos
         public void Update(TEntity entidade)
         {
             _repositorio.Update(entidade);
+        }
+
+        public IQueryable<TEntity> Get(Func<TEntity, bool> where)
+        {
+            return _repositorio.Get(where);
         }
     }
 }

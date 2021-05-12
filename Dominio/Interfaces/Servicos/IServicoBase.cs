@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 
 namespace Dominio.Interfaces.Servicos
@@ -12,5 +14,6 @@ namespace Dominio.Interfaces.Servicos
         TEntity GetById(int id);
         IEnumerable<TEntity> GetAll();
         void Dispose();
+        IQueryable<TEntity> Get(Func<TEntity, bool> where);
     }
 }

@@ -1,0 +1,248 @@
+/*----------------------Boleto------------------------*/
+.divTituloBoleto {
+  font-family: "Roboto", Arial, sans-serif;
+  margin-bottom: 5px;
+}
+
+  .divTituloBoleto h1 {
+    padding: 1rem;
+    font-size: 16pt;
+    color: #3d3d3d;
+    border-bottom: 2px solid #05B6A6;
+    margin-bottom: 20px;
+  }
+
+.divFichaCompensacao {
+  width: 100%;
+  max-width: 900px;
+  margin: 1rem auto;
+}
+
+  .divFichaCompensacao * {
+    box-sizing: border-box;
+  }
+
+  .divFichaCompensacao table {
+    width: 100%;
+  }
+
+    .divFichaCompensacao table, .divFichaCompensacao table td, .divFichaCompensacao table th {
+      border: 1px solid black;
+      border-collapse: collapse;
+      vertical-align: top;
+      text-align: left;
+    }
+
+  .divFichaCompensacao label, .divFichaCompensacao span * {
+    line-height: 1;
+    height: auto !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+  }
+
+  .divFichaCompensacao table tr {
+    line-height: 8pt;
+    height: 9pt;
+  }
+
+  .divFichaCompensacao table td span {
+    white-space: normal;
+  }
+
+  .divFichaCompensacao table td > span:after {
+    content: '\A';
+    white-space: pre-wrap;
+  }
+
+  .divFichaCompensacao span, .divFichaCompensacao table th {
+    font-family: Courier;
+    font-size: 8pt;
+    color: #000;
+  }
+
+  .divFichaCompensacao img {
+    display: block;
+    max-width: 70px;
+    max-height: 70px;
+  }
+
+  .divFichaCompensacao .tituloFooter div:first-child {
+    text-align: right;
+    width: 100%;
+  }
+
+  .divFichaCompensacao .tituloDetalhes {
+    margin-top: 5px;
+  }
+
+    .divFichaCompensacao .tituloDetalhes table * {
+      text-align: center;
+    }
+
+  .divFichaCompensacao .textoGrande * {
+    font-size: 10pt;
+    text-transform: uppercase;
+  }
+
+  .divFichaCompensacao .tituloFooter {
+    margin-top: 5px;
+  }
+
+  .divFichaCompensacao .tituloFooter2 {
+    margin-top: 5px;
+  }
+
+  .divFichaCompensacao .linhaDigitavel * {
+    font-size: 10pt !important;
+    font-weight: bold;
+  }
+
+.lblTipoRecibo, .lblDescRecibo {
+  font-size: 10pt;
+  font-style: italic;
+  text-transform: uppercase;
+  font-family: Arial;
+}
+
+.upperCase {
+  text-transform: uppercase !important;
+}
+
+.textLeft {
+  text-align: left !important;
+}
+
+.textRight {
+  text-align: right !important;
+}
+
+.textCenter {
+  text-align: center !important;
+}
+
+.codigoBarras {
+  height: 13mm;
+  margin-top: 2mm;
+}
+
+  .codigoBarras img {
+    margin-bottom: 5px;
+    display: inline-block;
+  }
+
+.divAssinaturas div {
+  text-align: center;
+}
+
+/*--------------Fim Boleto-----------------------*/
+
+body {
+  background: #FFFFFF;
+  color: #000000;
+}
+
+@page {
+  size: 210mm 297mm;
+}
+
+.header, .divTitulo, .menu {
+  display: none !important;
+}
+
+.divFichaCompensacao {
+  font-size: 9pt !important;
+}
+
+.printHide {
+  display: none !important;
+}
+
+.header {
+  border-bottom: 2px solid #000000;
+  overflow: hidden;
+}
+
+#divMenu {
+  display: none;
+}
+
+#divConteudo {
+  margin: 5px !important;
+}
+
+.naoImprimirBordas {
+  border: 0 !important;
+  padding: 0 !important;
+}
+
+table.tabelaFixedHeader {
+  width: 100%;
+}
+
+.tabelaFixedHeader thead tr {
+  position: inherit;
+}
+
+.tabelaFixedHeader thead tr {
+  display: table-row;
+}
+
+.tabelaFixedHeader tbody {
+  display: table-row-group;
+  overflow: auto;
+  width: 100%;
+}
+
+.noprint {
+  display: none;
+}
+
+.print {
+  display: block;
+}
+
+.pageBreaker {
+  position: relative;
+  margin: 0 !important;
+  border: 0px;
+  border-bottom: 1px dashed silver;
+}
+
+.pageBreaker {
+  position: relative;
+  page-break-after: always !important;
+  page-break-inside: avoid;
+  -webkit-page-break-after: always !important;
+  -webkit-page-break-inside: avoid;
+}
+
+  .pageBreaker:last-child {
+    position: relative;
+    page-break-after: avoid !important;
+    page-break-inside: auto !important;
+    -webkit-page-break-after: avoid !important;
+    -webkit-page-break-inside: auto !important;
+  }
+
+.pageBreakerInternal:after {
+  position: relative;
+  page-break-after: always !important;
+}
+
+.codigoBarras {
+  height: 13mm !important;
+  white-space: nowrap;
+}
+
+.divRecibo.pageBreaker {
+  font-size: 10pt;
+  page-break-before: avoid !important;
+  page-break-inside: avoid !important;
+  page-break-after: auto !important;
+}
+
+  .divRecibo.pageBreaker:first-child {
+    position: relative;
+    page-break-before: avoid !important;
+  }

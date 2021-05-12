@@ -4,6 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 
 //angular material https://material.angular.io
 import { MatBadgeModule } from '@angular/material/badge';
@@ -19,6 +20,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 //primeNG https://primefaces.org/primeng
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { AccordionModule } from 'primeng/accordion';
 import { ButtonModule } from 'primeng/button';
 import { TableModule } from 'primeng/table';
@@ -27,7 +29,15 @@ import { ListboxModule } from 'primeng/listbox';
 import { CascadeSelectModule } from 'primeng/cascadeselect';
 import { SelectButtonModule } from 'primeng/selectbutton';
 import { CalendarModule } from 'primeng/calendar';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { ToolbarModule } from 'primeng/toolbar';
+import { FileUploadModule } from 'primeng/fileupload';
+import { DialogModule } from 'primeng/dialog';
 import { InputMaskModule } from 'primeng/inputmask';
+import { ToastModule } from 'primeng/toast';
+import { DropdownModule } from 'primeng/dropdown';
+import { RadioButtonModule } from 'primeng/radiobutton';
+import { SidebarModule } from 'primeng/sidebar';
 
 //components
 import { AppRoutingModule } from './app-routing.module';
@@ -35,20 +45,17 @@ import { AppComponent } from './app.component';
 import { UsuarioComponent } from './usuario/usuario.component';
 import { PerfilComponent } from './perfil/perfil.component';
 import { PermissaoComponent } from './permissao/permissao.component';
-
-//dashboard
-import { MenuSuperiorComponent } from './dashboard/menu-superior/menu-superior.component';
-import { UsuarioMenuComponent } from './dashboard/usuario-menu/usuario-menu.component';
 import { ConfigurarPerfilComponent } from './configurar-perfil/configurar-perfil.component';
 import { ConfigurarPermissaoComponent } from './configurar-permissao/configurar-permissao.component';
-import { PerfilMenuComponent } from './dashboard/perfil-menu/perfil-menu.component';
 import { MenuComponent } from './menu/menu.component';
 import { CabecalhoComponent } from './cabecalho/cabecalho.component';
-import { ContratoComponent } from './contrato/contrato.component';
 import { ContratoLocacaoComponent } from './contrato-locacao/contrato-locacao.component';
 import { UnidadeComponent } from './unidade/unidade.component';
-import { ImportacaoDeValoresComponent } from './importacao-de-valores/importacao-de-valores.component';
-import { ValoreslojistaempreendedorComponent } from './valoreslojistaempreendedor/valoreslojistaempreendedor.component';
+import { ImportarValoresDeConsumoComponent } from './importar-valores-de-consumo/importar-valores-de-consumo.component';
+import { ValoresFaturadosComponent } from './valores-faturados/valores-faturados.component';
+import { CobrarNdsComponent } from './cobrar-nds/cobrar-nds.component';
+import { EmitirNdsComponent } from './emitir-nds/emitir-nds.component';
+import { VisualizarNdsComponent } from './visualizar-nds/visualizar-nds.component';
 
 const primeng = [
   AccordionModule,
@@ -59,7 +66,15 @@ const primeng = [
   CascadeSelectModule,
   SelectButtonModule,
   CalendarModule,
-  InputMaskModule
+  ConfirmDialogModule,
+  ToolbarModule,
+  FileUploadModule,
+  DialogModule,
+  InputMaskModule,
+  DropdownModule,
+  ToastModule,
+  RadioButtonModule,
+  SidebarModule
 ];
 
 const material = [
@@ -73,37 +88,41 @@ const material = [
   MatMenuModule
 ];
 
+const angularImport = [
+  BrowserModule,
+  HttpClientModule,
+  BrowserAnimationsModule,
+  FormsModule,
+  ReactiveFormsModule,
+  CommonModule
+];
+
 @NgModule({
   declarations: [
     AppComponent,
     UsuarioComponent,
-    MenuSuperiorComponent,
     PerfilComponent,
     PermissaoComponent,
-    UsuarioMenuComponent,
     ConfigurarPerfilComponent,
     ConfigurarPermissaoComponent,
-    PerfilMenuComponent,
     MenuComponent,
     CabecalhoComponent,
-    ContratoComponent,
     ContratoLocacaoComponent,
     UnidadeComponent,
-    ImportacaoDeValoresComponent,
-    ValoreslojistaempreendedorComponent
+    ImportarValoresDeConsumoComponent,
+    ValoresFaturadosComponent,
+    CobrarNdsComponent,
+    EmitirNdsComponent,
+    VisualizarNdsComponent
   ],
   imports: [
-    BrowserModule,
-    BrowserAnimationsModule,
-    HttpClientModule,
     AppRoutingModule,
     NgbModule,
-    FormsModule,
-    ReactiveFormsModule,
     primeng,
-    material
+    material,
+    angularImport
   ],
-  providers: [],
+  providers: [ConfirmationService, MessageService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

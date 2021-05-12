@@ -1,0 +1,491 @@
+<div style="display: flex; flex-direction: row; justify-content: center; align-items: center; margin-top: 10px;" (click)="imprimir()">
+  <button pButton pRipple type="button" icon="pi pi-print" class="p-button-rounded p-button-secondary p-button-outlined"></button>
+</div>
+<div id="impressao">
+  <ng-container *ngFor="let tit of resultadoNds">
+    <div class="pageBreaker">
+      <div class="divFichaCompensacao">
+        <div class="tituloHeader">
+          <table>
+            <tbody>
+              <tr>
+                <td rowspan="4">
+                  <asp:Image ID="imgLogoShopping" Width="70px" Height="70px" />
+                </td>
+                <td colspan="3" class="upperCase">
+                  <span>Beneficiário:<label ID="lblNomeCedente">{{tit.beneficiario.razaoSocial}}</label></span>
+                  <span>
+                    <label ID="lblEndCedente">{{tit.beneficiario.logradouro}} {{tit.beneficiario.numero}} {{tit.beneficiario.complemento}} {{tit.beneficiario.bairro}} {{tit.beneficiario.cidade.nome}} {{tit.beneficiario.cep}}</label>
+                  </span> <span>
+                    <label ID="lblCNPJCedente">{{tit.beneficiario.cpfCnpj}}</label>
+                  </span>
+                </td>
+                <td class="textCenter">
+                  <span>
+                    <label class="lblTipoRecibo">
+                      Nota de Débito
+                    </label>
+                  </span><span>
+                    <label class="lblDescRecibo">
+                      Recibo do Pagador
+                    </label>
+                  </span>
+                </td>
+              </tr>
+              <tr>
+                <td colspan="3" rowspan="2" class="upperCase">
+                  <span>Pagador:<label ID="lblNomeSacado">{{tit.pagador.razaoSocial}}</label></span> <span>
+                    <label ID="lblEndSacado">{{tit.pagador.logradouro}} {{tit.pagador.numero}} {{tit.pagador.complemento}} {{tit.pagador.bairro}} {{tit.pagador.cidade.nome}} {{tit.pagador.cep}}</label>
+                  </span> <span>
+                    <label ID="lblCNPJSacado">{{tit.pagador.cpfCnpj}}</label>
+                  </span>
+                </td>
+                <td colspan="2">
+                  <span>Fantasia </span><span class="textoGrande">
+                    <label ID="lblMarca">{{tit.instrumento.locacao.marca.nomeMarca}}</label>
+                  </span>
+                </td>
+              </tr>
+              <tr>
+                <td colspan="3">
+                  <span>Unidade / Nome Empreendimento </span><span class="textoGrande">
+                    <label ID="lblLuc">{{tit.instrumento.locacao.luc.nomeLuc}}</label>
+                    <label ID="lblNomeEmpreendimento">{{nomeEmpreendimento}}</label>
+                  </span>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <span>Nº do Documento </span><span>
+                    <label ID="lblNumeroDocumento">{{tit.id}}</label>
+                  </span>
+                </td>
+                <td>
+                  <span>Data de Emissão </span><span>
+                    <label ID="lblDataEmissao">{{dataEmissao}}</label>
+                  </span>
+                </td>
+                <td>
+                  <span>Nosso Número </span><span>
+                    <label ID="lblNossoNumero">{{tit.nossoNumero}}</label>
+                  </span>
+                </td>
+                <td colspan="2">
+                  <span>Limite para Pagamento </span><span>
+                    <label ID="lblDataLimite">{{dataLimite}}</label>
+                  </span>
+                </td>
+              </tr>
+              <tr>
+                <td colspan="6" class="upperCase">
+                  <span>Mensagens </span><span class="textoGrande">
+                    <label ID="lblMensagem">{{mensagens}}</label>
+                  </span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="tituloDetalhes">
+          <table>
+            <thead>
+              <tr class="upperCase">
+                <th></th>
+                <th class="textLeft">
+                  Discriminação
+                </th>
+                <th>
+                  Competência
+                </th>
+                <th>
+                  ValorParcial R$
+                </th>
+                <th>
+                  Encargos R$
+                </th>
+                <th>
+                  Valor Total R$
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <ng-container *ngFor="let grupo of filtroGruposNd(tit.id)">
+                <tr *ngFor="let item of tit.itensNds">
+                  <td *ngIf="item.rubrica.idGrupoRubrica == grupo.id">
+                    <label ID="lblGrupoCobranca">{{grupo.nomeGrupo}}</label>
+                  </td>
+                  <td class="textLeft" *ngIf="item.rubrica.idGrupoRubrica == grupo.id">
+                    <label ID="lblDescricaoRubrica">{{item.rubrica.nomeRubrica}}</label>
+                  </td>
+                  <td *ngIf="item.rubrica.idGrupoRubrica == grupo.id">
+                    <label ID="lblDataCompetencia">{{item.mesCompetencia}}/{{item.anoCompetencia}}</label>
+                  </td>
+                  <td class="textRight" *ngIf="item.rubrica.idGrupoRubrica == grupo.id">
+                    <label ID="lblValorItemParcial">{{item.valorPrincipalRubrica}}</label>
+                  </td>
+                  <td class="textRight" *ngIf="item.rubrica.idGrupoRubrica == grupo.id">
+                    <label ID="lblValorItemEncargos">{{item.valorMultaRubrica + item.valorCorrecaoRubrica + item.valorJurosRubrica}}</label>
+                  </td>
+                  <td class="textRight" *ngIf="item.rubrica.idGrupoRubrica == grupo.id">
+                    <label ID="lblValorItemTotal">{{item.valorPrincipalRubrica + item.valorMultaRubrica + item.valorCorrecaoRubrica + item.valorJurosRubrica}}</label>
+                  </td>
+                </tr>
+                <tr>
+                  <td colspan="3" class="textRight bold">
+                    <label ID="lblDescricaoGrupoCobranca">{{grupo.nomeGrupo}}</label>
+                  </td>
+                  <td class="textRight bold">
+                    <label ID="lblValorTotalParcialGrupo_{{grupo.id}}"></label>
+                  </td>
+                  <td class="textRight bold">
+                    <label ID="lblValorTotalEncargosGrupo_{{grupo.id}}"></label>
+                  </td>
+                  <td class="textRight bold">
+                    <label ID="lblValorTotalGrupo_{{grupo.id}}"></label>
+                  </td>
+                </tr>
+              </ng-container>
+              <tr>
+                <td>
+                  <label ID="lblQuantidadeItens">{{tit.itensNds.lenght}}</label>
+                </td>
+                <td colspan="2" class="upperCase textoGrande">
+                  <label ID="lblDescFinal" Text="Total Geral do Recibo do Pagador"></label>
+                </td>
+                <td class="textRight textoGrande">
+                  <label ID="lblValorParcial_{{tit.id}}"></label>
+                </td>
+                <td class="textRight textoGrande">
+                  <label ID="lblValorEncargos_{{tit.id}}"></label>
+                </td>
+                <td class="textRight textoGrande">
+                  <label ID="lblValorTotal_{{tit.id}}"></label>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="tituloFooter">
+          <div>
+            <span>Autenticação Mecânica</span>
+          </div>
+          <div class="pageBreakerInternal">
+          </div>
+          <div class="tituloFooter1">
+            <table>
+              <tbody>
+                <tr>
+                  <td colspan="2">
+                    <span>Nome do Banco </span><span class="textoGrande">
+                      <label ID="lblNomeBanco">{{tit.servicoCobranca.contaCorrente.banco.nomeBanco}}</label>
+                    </span>
+                  </td>
+                  <td>
+                    <span></span><span class="textoGrande">
+                      <label ID="lblCodigoBanco">{{tit.servicoCobranca.contaCorrente.banco.numeroBanco}}</label>
+                    </span>
+                  </td>
+                  <td colspan="4" class="textRight">
+                    <span class="textoGrande">Ficha de Caixa </span><span class="textoGrande linhaDigitavel">
+                      <label ID="lblLinhaDigitavel">{{tit.linhaDigitavel}}</label>
+                    </span>
+                  </td>
+                </tr>
+                <tr>
+                  <td colspan="4">
+                    <span>Beneficiário </span><span>
+                      <label ID="lblNomeCedenteFicha">{{tit.beneficiario.razaoSocial}}</label>
+                    </span>
+                  </td>
+                  <td colspan="2">
+                    <span>Agência / Código Beneficiário </span><span>
+                      <label ID="lblAgencia">{{tit.servicoCobranca.contaCorrente.agencia}}</label>
+                      <label ID="lblCodigoCedente">{{tit.servicoCobranca.convenio}}</label>
+                    </span>
+                  </td>
+                  <td>
+                    <span>Vencimento </span><span>
+                      <label ID="lblVencimentoFicha">{{tit.vencimento}}</label>
+                    </span>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <span>Data do Documento </span><span>
+                      <label ID="lblDataDocumento">{{dataDocumento}}</label>
+                    </span>
+                  </td>
+                  <td colspan="2">
+                    <span>Nº do Documento </span><span>
+                      <label ID="lblNumeroDocumentoFicha">{{tit.id}}</label>
+                    </span>
+                  </td>
+                  <td>
+                    <span>Espécie Doc. </span><span>
+                      <label ID="lblEspecieDocFicha">{{especieDocumento}}</label>
+                    </span>
+                  </td>
+                  <td>
+                    <span>Aceite </span><span>
+                      <label ID="lblAceite">{{aceite}}</label>
+                    </span>
+                  </td>
+                  <td>
+                    <span>Data de Processamento </span><span>
+                      <label ID="lblDataProcessamentoFicha">{{dataProcessamento}}</label>
+                    </span>
+                  </td>
+                  <td>
+                    <span>Nosso Número </span><span>
+                      <label ID="lblNossoNumeroFicha">{{tit.nossoNumero}}</label>
+                    </span>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <span>Nº da Conta / Réspo. </span><span>
+                      <label ID="lblNumContaFicha">{{tit.servicoCobranca.contaCorrente.numeroContaCorrente}}</label>
+                    </span>
+                  </td>
+                  <td>
+                    <span>Carteira </span><span>
+                      <label ID="lblCarteiraFicha">{{tit.servicoCobranca.carteira}}</label>
+                    </span>
+                  </td>
+                  <td colspan="2">
+                    <span>Espécie </span><span>
+                      <label ID="lblEspecieFicha">{{especie}}</label>
+                    </span>
+                  </td>
+                  <td>
+                    <span>Quantidade </span><span></span>
+                  </td>
+                  <td>
+                    <span>Valor </span><span></span>
+                  </td>
+                  <td>
+                    <span>(=) Valor do Documento </span><span>
+                      <label ID="lblValorDocFicha">{{tit.valorPrincipal}}</label>
+                    </span>
+                  </td>
+                </tr>
+                <tr>
+                  <td colspan="6" rowspan="4">
+                    <span>Instruções </span><span class="textoGrande">
+                      <label ID="lblInstrucoes">{{instrucoes}}</label>
+                    </span>
+                    <span>Mensagem </span><span>
+                      <label ID="lblMensagemSacado">{{mensagens}}</label>
+                    </span>
+                  </td>
+                  <td>
+                    <span>(-) Desconto </span><span>
+                      <label ID="lblDescontoFicha"></label>
+                    </span>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <span>(-) Outras Deduções / Abatimentos </span><span>
+                      <label ID="lblOutrosAbatFicha"></label>
+                    </span>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <span>(+) Mora / Multa / Juros </span><span>
+                      <label ID="lblMoraMultaJurosFicha"></label>
+                    </span>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <span>(=) Valor Cobrado </span><span>
+                      <label ID="lblValorCobradoFicha"></label>
+                    </span>
+                  </td>
+                </tr>
+                <tr>
+                  <td colspan="7">
+                    <span>Pagador </span><span>
+                      <label ID="lblSacadoNome">{{tit.pagador.razaoSocial}}</label>
+                    </span><span>
+                      <label ID="lblSacadoEnd">{{tit.pagador.logradouro}} {{tit.pagador.numero}} {{tit.pagador.complemento}} {{tit.pagador.bairro}} {{tit.pagador.cidade.nome}} {{tit.pagador.cep}}</label>
+                    </span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="pageBreakerInternal">
+          </div>
+          <div class="tituloFooter2">
+            <table>
+              <tbody>
+                <tr>
+                  <td colspan="2">
+                    <span>Nome do Banco </span><span class="textoGrande">
+                      <label ID="lblNomeBanco2">{{tit.servicoCobranca.contaCorrente.banco.nomeBanco}}</label>
+                    </span>
+                  </td>
+                  <td>
+                    <span></span><span class="textoGrande">
+                      <label ID="lblCodigoBanco2">{{tit.servicoCobranca.contaCorrente.banco.numeroBanco}}</label>
+                    </span>
+                  </td>
+                  <td colspan="4" class="textRight">
+                    <span></span><span class="textoGrande linhaDigitavel">
+                      <label ID="lblLinhaDigitavel2">{{tit.linhaDigitavel}}</label>
+                    </span>
+                  </td>
+                </tr>
+                <tr>
+                  <td colspan="6">
+                    <span>Local de Pagamento </span><span>
+                      <label ID="lblLocalPagamento"></label>
+                    </span>
+                  </td>
+                  <td>
+                    <span>Vencimento </span><span>
+                      <label ID="lblVencimentoSacado">{{tit.vencimento}}</label>
+                    </span>
+                  </td>
+                </tr>
+                <tr>
+                  <td colspan="6">
+                    <span>Cedente </span><span>
+                      <label ID="lblCedente2">{{tit.beneficiario.razaoSocial}}</label>
+                    </span>
+                  </td>
+                  <td>
+                    <span>Agência / Código Beneficiário </span><span>
+                      <label ID="lblAgencia2">{{tit.servicoCobranca.agencia}}</label>
+                      <label ID="lblCodigoCedente2">{{tit.servicoCobranca.convenio}}</label>
+                    </span>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <span>Data do Documento </span><span>
+                      <label ID="lblDataDocumento2">{{dataDocumento}}</label>
+                    </span>
+                  </td>
+                  <td colspan="2">
+                    <span>Nº do Documento </span><span>
+                      <label ID="lblNumDoc2">{{tit.id}}</label>
+                    </span>
+                  </td>
+                  <td>
+                    <span>Espécie Doc. </span><span>
+                      <label ID="lblEspecieDoc2">{{especie}}</label>
+                    </span>
+                  </td>
+                  <td>
+                    <span>Aceite </span><span>
+                      <label ID="lblAceite2">{{aceite}}</label>
+                    </span>
+                  </td>
+                  <td>
+                    <span>Data de Processamento </span><span>
+                      <label ID="lblDataProc2">{{dataProcessamento}}</label>
+                    </span>
+                  </td>
+                  <td>
+                    <span>Nosso Número </span><span>
+                      <label ID="lblNossoNumero2">{{tit.nossoNumero}}</label>
+                    </span>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <span>Nº da Conta / Réspo. </span><span>
+                      <label ID="lblNUmConta2">{{tit.servicoCobranca.contaCorrente.numeroContaCorrente}}</label>
+                    </span>
+                  </td>
+                  <td>
+                    <span>Carteira </span><span>
+                      <label ID="lblCarteira2">{{tit.servicoCobranca.carteira}}</label>
+                    </span>
+                  </td>
+                  <td colspan="2">
+                    <span>Espécie </span><span>
+                      <label ID="lblEspecie2">{{especie}}</label>
+                    </span>
+                  </td>
+                  <td>
+                    <span>Quantidade </span><span></span>
+                  </td>
+                  <td>
+                    <span>Valor </span><span></span>
+                  </td>
+                  <td>
+                    <span>(=) Valor do Documento </span><span>
+                      <label ID="lblValorDoc2">{{tit.valorPrincipal}}</label>
+                    </span>
+                  </td>
+                </tr>
+                <tr>
+                  <td colspan="6" rowspan="4">
+                    <span>Instruções </span><span>
+                      <label ID="lblInstrucoes2">{{instrucoes}}</label>
+                    </span>
+                    <span>Mensagem </span><span>
+                      <label ID="lblMensagemSacado2">{{mensagens}}</label>
+                    </span>
+                  </td>
+                  <td>
+                    <span>(-) Desconto </span><span>
+                      <label ID="lblDesconto2"></label>
+                    </span>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <span>(-) Outras Deduções / Abatimentos </span><span>
+                      <label ID="lblOutrosDed2"></label>
+                    </span>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <span>(+) Mora / Multa / Juros </span><span>
+                      <label ID="lblMoraMultaJuros2"></label>
+                    </span>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <span>(=) Valor Cobrado </span><span>
+                      <label ID="lblValorCobrado2"></label>
+                    </span>
+                  </td>
+                </tr>
+                <tr>
+                  <td colspan="7">
+                    <span>Pagador </span><span>
+                      <label ID="lblSacado2">{{tit.pagador.razaoSocial}}</label>
+                    </span><span>
+                      <label ID="lblEndSacado2">{{tit.beneficiario.logradouro}} {{tit.beneficiario.numero}} {{tit.beneficiario.complemento}} {{tit.beneficiario.bairro}} {{tit.beneficiario.cidade.nome}} {{tit.beneficiario.cep}}</label>
+                    </span>
+                  </td>
+                </tr>
+                <tr>
+                  <td style="border: 1px solid white;">
+                    <div class="codigoBarras">
+                      <ng-container *ngFor="let barra of getArrayCB(tit.id)">
+                        <img *ngIf="barra == 1" ID="imgBarra" CssClass="left" src="../../assets/images/CodigoDeBarras/0.png">
+                        <img *ngIf="barra == 2" ID="imgBarra" CssClass="left" src="../../assets/images/CodigoDeBarras/1.png">
+                        <img *ngIf="barra == 3" ID="imgBarra" CssClass="left" src="../../assets/images/CodigoDeBarras/2.png">
+                        <img *ngIf="barra == 4" ID="imgBarra" CssClass="left" src="../../assets/images/CodigoDeBarras/3.png">
+                      </ng-container>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</div>

@@ -11,11 +11,18 @@ namespace Dominio.Entidades
     [Table("ServicoCobranca")]
     public partial class ServicoCobranca
     {
+        public ServicoCobranca()
+        {
+
+        }
+
         [Key]
         public int Id { get; set; }
+        public int? IdShopping { get; set; }
         [StringLength(50)]
         public string NomeServico { get; set; }
         public int? IdBanco { get; set; }
+        [ForeignKey("contaCorrente")]
         public int? IdContaCorrente { get; set; }
         [StringLength(3)]
         public string Carteira { get; set; }
@@ -36,6 +43,7 @@ namespace Dominio.Entidades
         [StringLength(3)]
         public string ExtensaoArquivoRetorno { get; set; }
         public int? IdTipoEmissao { get; set; }
+        [ForeignKey("tipoServicoCobranca")]
         public int? IdTipoServicoCobranca { get; set; }
         [StringLength(100)]
         public string Usuario { get; set; }
@@ -45,5 +53,18 @@ namespace Dominio.Entidades
         public string UsuarioAlteracao { get; set; }
         [Column(TypeName = "datetime")]
         public DateTime? DataAlteracao { get; set; }
+        [StringLength(100)]
+        public string Empresa { get; set; }
+        public int? IdTipoRateio { get; set; }
+        public int? DiasRepasse { get; set; }
+        public int? SequencialArquivoRemessaBradesco { get; set; }
+
+        public virtual ContaCorrente contaCorrente { get; set; }
+
+        public virtual TipoServicoCobranca tipoServicoCobranca { get; set; }
+
+        public virtual ICollection<Nd> nds { get; set; }
+
+        public virtual ICollection<PartilhaBancarium> partilhaBancarium { get; set; }
     }
 }

@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 
 namespace Infra.Data.Repositorios
@@ -46,6 +47,10 @@ namespace Infra.Data.Repositorios
         {
             contexto.Entry(entidade).State = EntityState.Modified;
             contexto.SaveChanges();
+        }
+        public IQueryable<TEntity> Get(Func<TEntity, bool> where)
+        {
+            return contexto.GetDbSet<TEntity>().Where(where).AsQueryable<TEntity>();
         }
     }
 }

@@ -32,6 +32,10 @@ namespace RGTS.API
         {
             services.AddControllers();
 
+            services.AddControllers().AddNewtonsoftJson(options =>
+                options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+            );
+
             AdicinarInjecaoDeDependenciaServico(services);
 
             AdicinarInjecaoDeDependenciaRepositorio(services);
@@ -58,7 +62,7 @@ namespace RGTS.API
                 endpoints.MapControllers();
             });
         }
-        
+
         private void AdicinarInjecaoDeDependenciaServico(IServiceCollection services)
         {
             services.AddScoped(typeof(IServicoBase<>), typeof(ServicoBase<>));
@@ -67,6 +71,24 @@ namespace RGTS.API
             services.AddScoped<IPermissaoServico, PermissaoServico>();
             services.AddScoped<IEstadoServico, EstadoServico>();
             services.AddScoped<IMunicipioServico, MunicipioServico>();
+            services.AddScoped<IItensNdServico, ItensNdServico>();
+            services.AddScoped<IRubricaServico, RubricaServico>();
+            services.AddScoped<ITipoInstrumentoServico, TipoInstrumentoServico>();
+            services.AddScoped<IMarcaServico, MarcaServico>();
+            services.AddScoped<ILucServico, LucServico>();
+            services.AddScoped<IValoresFaturadosServico, ValoresFaturadosServico>();
+            services.AddScoped<IContratoLucsServico, ContratoLucsServico>();
+            services.AddScoped<IContratoLocacaoServico, ContratoLocacaoServico>();
+            services.AddScoped<IPessoaPapelInstrumentoServico, PessoaPapelInstrumentoServico>();
+            services.AddScoped<INdServico, NdServico>();
+            services.AddScoped<IItensNdServico, ItensNdServico>();
+            services.AddScoped<INdServico, NdServico>();
+            services.AddScoped<IInstrucaoBoletoServico, InstrucaoBoletoServico>();
+            services.AddScoped<IMensagemBoletoServico, MensagemBoletoServico>();
+            services.AddScoped<IPessoaServico, PessoaServico>();
+            services.AddScoped<IPartilhaBancariaServico, PartilhaBancariaServico>();
+            services.AddScoped<IServicoCobrancaServico, ServicoCobrancaServico>();
+            services.AddScoped<IItensNdPartilhadosServico, ItensNdPartilhadosServico>();
         }
 
         private void AdicinarInjecaoDeDependenciaRepositorio(IServiceCollection services)
@@ -77,6 +99,24 @@ namespace RGTS.API
             services.AddScoped<IPermissaoRepositorio, PermissaoRepositorio>();
             services.AddScoped<IEstadoRepositorio, EstadoRepositorio>();
             services.AddScoped<IMunicipioRepositorio, MunicipioRepositorio>();
+            services.AddScoped<IItensNdRepositorio, ItensNdRepositorio>();
+            services.AddScoped<IRubricaRepositorio, RubricaRepositorio>();
+            services.AddScoped<ITipoInstrumentoRepositorio, TipoInstrumentoRepositorio>();
+            services.AddScoped<IMarcaRepositorio, MarcaRepositorio>();
+            services.AddScoped<ILucRepositorio, LucRepositorio>();
+            services.AddScoped<IValoresFaturadosRepositorio, ValoresFaturadosRepositorio>();
+            services.AddScoped<IContratoLucsRepositorio, ContratoLucsRepositorio>();
+            services.AddScoped<IContratoLocacaoRepositorio, ContratoLocacaoRepositorio>();
+            services.AddScoped<IPessoaPapelInstrumentoRepositorio, PessoaPapelInstrumentoRepositorio>();
+            services.AddScoped<INdRepositorio, NdRepositorio>();
+            services.AddScoped<IItensNdRepositorio, ItensNdRepositorio>();
+            services.AddScoped<INdRepositorio, NdRepositorio>();
+            services.AddScoped<IInstrucaoBoletoRepositorio, InstrucaoBoletoRepositorio>();
+            services.AddScoped<IMensagemBoletoRepositorio, MensagemBoletoRepositorio>();
+            services.AddScoped<IPessoaRepositorio, PessoaRepositorio>();
+            services.AddScoped<IPartilhaBancariaRepositorio, PartilhaBancariaRepositorio>();
+            services.AddScoped<IServicoCobrancaRepositorio, ServicoCobrancaRepositorio>();
+            services.AddScoped<IItensNdPartilhadosRepositorio, ItensNdPartilhadosRepositorio>();
         }
     }
 }

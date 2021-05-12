@@ -5,19 +5,25 @@ import { PerfilComponent } from './perfil/perfil.component';
 import { PermissaoComponent } from './permissao/permissao.component';
 import { ConfigurarPerfilComponent } from './configurar-perfil/configurar-perfil.component';
 import { ContratoLocacaoComponent } from './contrato-locacao/contrato-locacao.component';
-import { ValoreslojistaempreendedorComponent } from './valoreslojistaempreendedor/valoreslojistaempreendedor.component'
-
-//dashboard
-import { MenuSuperiorComponent } from './dashboard/menu-superior/menu-superior.component';
+import { UnidadeComponent } from './unidade/unidade.component';
+import { ImportarValoresDeConsumoComponent } from './importar-valores-de-consumo/importar-valores-de-consumo.component';
+import { ValoresFaturadosComponent } from './valores-faturados/valores-faturados.component';
+import { CobrarNdsComponent } from './cobrar-nds/cobrar-nds.component';
+import { EmitirNdsComponent } from './emitir-nds/emitir-nds.component';
+import { VisualizarNdsComponent } from './visualizar-nds/visualizar-nds.component';
 
 const routes: Routes = [
-  { path: 'MenuSuperior', component: MenuSuperiorComponent },
   { path: 'usuario', component: UsuarioComponent },
   { path: 'perfil', component: PerfilComponent },
   { path: 'permissao', component: PermissaoComponent },
   { path: 'configurarPerfil', component: ConfigurarPerfilComponent },
   { path: 'contratoLocacao', component: ContratoLocacaoComponent },
-  { path: 'valoresFaturados', component: ValoreslojistaempreendedorComponent }
+  { path: 'unidade', component: UnidadeComponent },
+  { path: 'importarValoresDeConsumo', component: ImportarValoresDeConsumoComponent },
+  { path: 'valoresFaturados', component: ValoresFaturadosComponent },
+  { path: 'cobrarNds', component: CobrarNdsComponent },
+  { path: 'emitirNds', component: EmitirNdsComponent },
+  { path: 'visualizarNds', component: VisualizarNdsComponent }
 ];
 
 @NgModule({

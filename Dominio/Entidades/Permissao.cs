@@ -2,37 +2,28 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Text;
+using Microsoft.EntityFrameworkCore;
+
+#nullable disable
 
 namespace Dominio.Entidades
 {
     [Table("Permissao")]
-    public class Permissao
+    public partial class Permissao
     {
-        [Column("PermissaoId", TypeName = "int")]
+        public Permissao()
+        {
+            PerfilPermissaos = new HashSet<PerfilPermissao>();
+        }
+
         [Key]
-        [Required]
         public int Id { get; set; }
-
-        [Column("Nome", TypeName = "nvarchar")]
-        [MaxLength(50)]
         [Required]
-        public string Nome { get; set; }
-
-        [Column("Descricao", TypeName = "nvarchar")]
-        [MaxLength(50)]
-        [Required]
+        [StringLength(20)]
         public string Descricao { get; set; }
+        public int? PerfilId { get; set; }
 
-        //[ForeignKey("Perfil")]
-        //public int? PerfilId { get; set; }
-
-        //[Column("Perfil", TypeName = "int")]
-        //[ForeignKey("Perfil")]
-        //public Perfil Perfil { get; set; }
-
-        //[NotMapped]
-        //[ForeignKey("Perfil")]
-        public ICollection<Perfil> ListaPerfil { get; set; }
+        [InverseProperty(nameof(PerfilPermissao.Permissao))]
+        public virtual ICollection<PerfilPermissao> PerfilPermissaos { get; set; }
     }
 }

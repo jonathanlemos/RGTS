@@ -3,10 +3,12 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Dominio;
 using Dominio.Entidades;
+using System.Reflection;
+using System.Linq;
 
 #nullable disable
 
-namespace Infra.Data.Contexto
+namespace Infra.Data
 {
     public partial class RGTSDbContext : DbContext
     {
@@ -19,59 +21,75 @@ namespace Infra.Data.Contexto
         {
         }
 
-        public virtual DbSet<Atividade> Atividades { get; set; }
-        public virtual DbSet<Banco> Bancos { get; set; }
-        public virtual DbSet<Cidade> Cidades { get; set; }
-        public virtual DbSet<Condominio> Condominios { get; set; }
-        public virtual DbSet<CondominioLuc> CondominioLucs { get; set; }
-        public virtual DbSet<ContaCorrente> ContaCorrentes { get; set; }
-        public virtual DbSet<ContratoFaixasAluguel> ContratoFaixasAluguels { get; set; }
-        public virtual DbSet<ContratoLocacao> ContratoLocacaos { get; set; }
-        public virtual DbSet<ContratoUnidade> ContratoUnidades { get; set; }
-        public virtual DbSet<DescricaoAlternativaRubrica> DescricaoAlternativaRubricas { get; set; }
-        public virtual DbSet<Empreendimento> Empreendimentos { get; set; }
-        public virtual DbSet<Estado> Estados { get; set; }
-        public virtual DbSet<EstadoNovo> EstadoNovos { get; set; }
-        public virtual DbSet<Fase> Fases { get; set; }
-        public virtual DbSet<Formula> Formulas { get; set; }
-        public virtual DbSet<GrupoRubrica> GrupoRubricas { get; set; }
-        public virtual DbSet<HistoricoContratoLocacao> HistoricoContratoLocacaos { get; set; }
-        public virtual DbSet<HistoricoUnidade> HistoricoUnidades { get; set; }
-        public virtual DbSet<Instrumento> Instrumentos { get; set; }
-        public virtual DbSet<ItensNd> ItensNds { get; set; }
-        public virtual DbSet<Localizacao> Localizacaos { get; set; }
-        public virtual DbSet<Luc> Lucs { get; set; }
-        public virtual DbSet<Marca> Marcas { get; set; }
-        public virtual DbSet<Municipio> Municipios { get; set; }
-        public virtual DbSet<MunicipioNovo> MunicipioNovos { get; set; }
-        public virtual DbSet<Nd> Nds { get; set; }
-        public virtual DbSet<Nivel> Nivels { get; set; }
-        public virtual DbSet<ParametrosShopping> ParametrosShoppings { get; set; }
-        public virtual DbSet<PartilhaRubricaContaCorrente> PartilhaRubricaContaCorrentes { get; set; }
-        public virtual DbSet<Pessoa> Pessoas { get; set; }
-        public virtual DbSet<PessoaShopping> PessoaShoppings { get; set; }
-        public virtual DbSet<Ramo> Ramos { get; set; }
-        public virtual DbSet<Recebimento> Recebimentos { get; set; }
-        public virtual DbSet<Rubrica> Rubricas { get; set; }
-        public virtual DbSet<RubricasRecebida> RubricasRecebidas { get; set; }
-        public virtual DbSet<SequenciaislAlteracao> SequenciaislAlteracaos { get; set; }
-        public virtual DbSet<Serie> Series { get; set; }
-        public virtual DbSet<SerieBeneficiario> SerieBeneficiarios { get; set; }
-        public virtual DbSet<ServicoCobranca> ServicoCobrancas { get; set; }
-        public virtual DbSet<TipoInstrumento> TipoInstrumentos { get; set; }
-        public virtual DbSet<ValoresFaturado> ValoresFaturados { get; set; }
+        public virtual DbSet<Atividade> Atividade { get; set; }
+        public virtual DbSet<Banco> Banco { get; set; }
+        public virtual DbSet<Cidade> Cidade { get; set; }
+        public virtual DbSet<Condominio> Condominio { get; set; }
+        public virtual DbSet<CondominioLuc> CondominioLuc { get; set; }
+        public virtual DbSet<ContaCorrente> ContaCorrente { get; set; }
+        public virtual DbSet<ContratoFaixasAluguel> ContratoFaixasAluguel { get; set; }
+        public virtual DbSet<ContratoLocacao> ContratoLocacao { get; set; }
+        public virtual DbSet<ContratoLuc> ContratoLuc { get; set; }
+        public virtual DbSet<DescricaoAlternativaRubrica> DescricaoAlternativaRubrica { get; set; }
+        public virtual DbSet<EmailsPessoa> EmailsPessoa { get; set; }
+        public virtual DbSet<Empreendimento> Empreendimento { get; set; }
+        public virtual DbSet<Estado> Estado { get; set; }
+        public virtual DbSet<Fase> Fase { get; set; }
+        public virtual DbSet<Formula> Formula { get; set; }
+        public virtual DbSet<GrupoRubrica> GrupoRubrica { get; set; }
+        public virtual DbSet<HistoricoContratoLocacao> HistoricoContratoLocacao { get; set; }
+        public virtual DbSet<HistoricoUnidade> HistoricoUnidade { get; set; }
+        public virtual DbSet<InstrucaoBoleto> InstrucaoBoleto { get; set; }
+        public virtual DbSet<Instrumento> Instrumento { get; set; }
+        public virtual DbSet<ItensNd> ItensNd { get; set; }
+        public virtual DbSet<ItensNdPartilhado> ItensNdPartilhado { get; set; }
+        public virtual DbSet<ItensNdRecebido> ItensNdRecebido { get; set; }
+        public virtual DbSet<Localizacao> Localizacao { get; set; }
+        public virtual DbSet<Luc> Luc { get; set; }
+        public virtual DbSet<Marca> Marca { get; set; }
+        public virtual DbSet<MensagemBoleto> MensagemBoleto { get; set; }
+        public virtual DbSet<Municipio> Municipio { get; set; }
+        public virtual DbSet<Nd> Nd { get; set; }
+        public virtual DbSet<Nivel> Nivel { get; set; }
+        public virtual DbSet<Papel> Papel { get; set; }
+        public virtual DbSet<ParametrosShopping> ParametrosShopping { get; set; }
+        public virtual DbSet<PartilhaBancarium> PartilhaBancarium { get; set; }
+        public virtual DbSet<Perfil> Perfil { get; set; }
+        public virtual DbSet<PerfilPermissao> PerfilPermissao { get; set; }
+        public virtual DbSet<Permissao> Permissao { get; set; }
+        public virtual DbSet<Pessoa> Pessoa { get; set; }
+        public virtual DbSet<PessoaPapelInstrumento> PessoaPapelInstrumento { get; set; }
+        public virtual DbSet<PessoaShopping> PessoaShopping { get; set; }
+        public virtual DbSet<Ramo> Ramo { get; set; }
+        public virtual DbSet<Recebimento> Recebimento { get; set; }
+        public virtual DbSet<Rubrica> Rubrica { get; set; }
+        public virtual DbSet<SequenciaisAlteracao> SequenciaisAlteracao { get; set; }
+        public virtual DbSet<Serie> Serie { get; set; }
+        public virtual DbSet<SerieBeneficiario> SerieBeneficiario { get; set; }
+        public virtual DbSet<ServicoCobranca> ServicoCobranca { get; set; }
+        public virtual DbSet<Sexo> Sexo { get; set; }
+        public virtual DbSet<TipoInstrumento> TipoInstrumento { get; set; }
+        public virtual DbSet<TipoServicoCobranca> TipoServicoCobranca { get; set; }
+        public virtual DbSet<ValoresFaturado> ValoresFaturado { get; set; }
+
+        public DbSet<TEntity> GetDbSet<TEntity>() where TEntity : class
+        {
+            return this.Set<TEntity>();
+        }
+
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Server=rgtsdb.ch0sy8hf0okh.us-east-2.rds.amazonaws.com,1433;Database=rgtsdb; User Id=admin; Password=qW7Su3aQ;");
+                optionsBuilder.UseLazyLoadingProxies().UseSqlServer("Server=.\\SQLEXPRESS;Database=rgtsdb;User Id=sa; Password=abc123!@#;");
             }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+
             modelBuilder.HasAnnotation("Relational:Collation", "Latin1_General_CI_AS");
 
             modelBuilder.Entity<Atividade>(entity =>
@@ -100,11 +118,11 @@ namespace Infra.Data.Contexto
 
                 entity.Property(e => e.Nome).IsFixedLength(true);
 
-                entity.HasOne(d => d.Estado)
-                    .WithMany(p => p.Cidades)
-                    .HasForeignKey(d => d.EstadoId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Cidade_Estado");
+                //entity.HasOne(d => d.Estado)
+                //    .WithMany(p => p.Cidades)
+                //    .HasForeignKey(d => d.EstadoId)
+                //    .OnDelete(DeleteBehavior.ClientSetNull)
+                //    .HasConstraintName("FK_Cidade_Estado");
             });
 
             modelBuilder.Entity<Condominio>(entity =>
@@ -127,11 +145,18 @@ namespace Infra.Data.Contexto
 
                 entity.Property(e => e.DvContaCorrente).IsUnicode(false);
 
+                entity.Property(e => e.NumeroContaCorrente).IsUnicode(false);
+
                 entity.Property(e => e.OrdemPartilha).IsUnicode(false);
 
                 entity.Property(e => e.Usuario).IsUnicode(false);
 
                 entity.Property(e => e.UsuarioAlteracao).IsUnicode(false);
+
+                //entity.HasOne(d => d.banco)
+                //    .WithMany(p => p.ContaCorrentes)
+                //    .HasForeignKey(d => d.IdBanco)
+                //    .HasConstraintName("FK_ContaCorrente_Banco");
             });
 
             modelBuilder.Entity<ContratoFaixasAluguel>(entity =>
@@ -143,7 +168,7 @@ namespace Infra.Data.Contexto
 
             modelBuilder.Entity<ContratoLocacao>(entity =>
             {
-                entity.Property(e => e.IdItemRubricaAluguelPercentual).IsFixedLength(true);
+                entity.Property(e => e.IdRubricaAluguelPercentual).IsFixedLength(true);
 
                 entity.Property(e => e.Observacao).IsUnicode(false);
             });
@@ -155,12 +180,25 @@ namespace Infra.Data.Contexto
                 entity.Property(e => e.UsuarioAlteracao).IsUnicode(false);
 
                 entity.Property(e => e.UsuarioInsercao).IsUnicode(false);
+
+                //entity.HasOne(d => d.rubrica)
+                //    .WithMany(p => p.descricaoAlternativaRubrica)
+                //    .HasForeignKey(d => d.IdRubrica)
+                //    .HasConstraintName("FK_DescricaoAlternativaRubrica_Rubrica");
+            });
+
+            modelBuilder.Entity<EmailsPessoa>(entity =>
+            {
+                entity.Property(e => e.Email).IsUnicode(false);
+
+                //entity.HasOne(d => d.pessoa)
+                //    .WithMany(p => p.EmailsPessoas)
+                //    .HasForeignKey(d => d.IdPessoa)
+                //    .HasConstraintName("FK_Emails_Pessoa");
             });
 
             modelBuilder.Entity<Empreendimento>(entity =>
             {
-                entity.Property(e => e.Id).ValueGeneratedNever();
-
                 entity.Property(e => e.NomeEmpreendimento).IsUnicode(false);
 
                 entity.Property(e => e.UsuarioAlteracao).IsUnicode(false);
@@ -170,18 +208,11 @@ namespace Infra.Data.Contexto
 
             modelBuilder.Entity<Estado>(entity =>
             {
-                entity.Property(e => e.SiglaEstado).IsUnicode(false);
-
-                entity.Property(e => e.NomeEstado).IsUnicode(false);
-            });
-
-            modelBuilder.Entity<EstadoNovo>(entity =>
-            {
                 entity.Property(e => e.Id).ValueGeneratedNever();
 
                 entity.Property(e => e.Nome).IsFixedLength(true);
 
-                entity.Property(e => e.Sigla).IsFixedLength(true);
+                entity.Property(e => e.Sigla).IsUnicode(false);
             });
 
             modelBuilder.Entity<Fase>(entity =>
@@ -207,6 +238,27 @@ namespace Infra.Data.Contexto
                 entity.Property(e => e.Usuario).IsUnicode(false);
             });
 
+            modelBuilder.Entity<InstrucaoBoleto>(entity =>
+            {
+                entity.Property(e => e.Instrucao1).IsUnicode(false);
+
+                entity.Property(e => e.Instrucao2).IsUnicode(false);
+
+                entity.Property(e => e.Instrucao3).IsUnicode(false);
+
+                entity.Property(e => e.Instrucao4).IsUnicode(false);
+
+                entity.Property(e => e.Instrucao5).IsUnicode(false);
+
+                entity.Property(e => e.Instrucao6).IsUnicode(false);
+
+                entity.Property(e => e.NomeInstrucao).IsUnicode(false);
+
+                entity.Property(e => e.Usuario).IsUnicode(false);
+
+                entity.Property(e => e.UsuarioAlteracao).IsUnicode(false);
+            });
+
             modelBuilder.Entity<Instrumento>(entity =>
             {
                 entity.Property(e => e.IdInstrumentoContrato).IsFixedLength(true);
@@ -221,6 +273,25 @@ namespace Infra.Data.Contexto
                 entity.Property(e => e.Usuario).IsUnicode(false);
 
                 entity.Property(e => e.UsuarioAlteracao).IsUnicode(false);
+
+                //entity.HasOne(d => d.nd)
+                //    .WithMany(p => p.ItensNds)
+                //    .HasForeignKey(d => d.IdNd)
+                //    .OnDelete(DeleteBehavior.ClientSetNull)
+                //    .HasConstraintName("FK_ItensND_ND");
+
+                //entity.HasOne(d => d.rubrica)
+                //    .WithMany(p => p.ItensNds)
+                //    .HasForeignKey(d => d.IdRubrica)
+                //    .HasConstraintName("FK_ItensNd_Rubrica");
+            });
+
+            modelBuilder.Entity<ItensNdPartilhado>(entity =>
+            {
+                //entity.HasOne(d => d.partilhaBancarium)
+                //    .WithMany(p => p.itensNdPartilhado)
+                //    .HasForeignKey(d => d.IdPartilhaBancaria)
+                //    .HasConstraintName("FK_ItensNdPartilhado_PartilhaBancarium");
             });
 
             modelBuilder.Entity<Localizacao>(entity =>
@@ -244,25 +315,38 @@ namespace Infra.Data.Contexto
                 entity.Property(e => e.Usuario).IsUnicode(false);
             });
 
-            modelBuilder.Entity<Municipio>(entity =>
+            modelBuilder.Entity<MensagemBoleto>(entity =>
             {
-                entity.HasKey(e => new { e.SiglaEstado, e.Id });
+                entity.Property(e => e.Mensagem1).IsUnicode(false);
 
-                entity.Property(e => e.SiglaEstado).IsUnicode(false);
+                entity.Property(e => e.Mensagem2).IsUnicode(false);
 
-                entity.Property(e => e.NomeMunicipio).IsUnicode(false);
+                entity.Property(e => e.Mensagem3).IsUnicode(false);
+
+                entity.Property(e => e.Mensagem4).IsUnicode(false);
+
+                entity.Property(e => e.Mensagem5).IsUnicode(false);
+
+                entity.Property(e => e.Mensagem6).IsUnicode(false);
+
+                entity.Property(e => e.NomeMensagem).IsUnicode(false);
+
+                entity.Property(e => e.Usuario).IsUnicode(false);
+
+                entity.Property(e => e.UsuarioAlteracao).IsUnicode(false);
             });
 
-            modelBuilder.Entity<MunicipioNovo>(entity =>
+            modelBuilder.Entity<Municipio>(entity =>
             {
                 entity.Property(e => e.Id).ValueGeneratedNever();
 
-                entity.Property(e => e.Nome).IsFixedLength(true);
+                entity.Property(e => e.NomeMunicipio).IsUnicode(false);
 
-                entity.HasOne(d => d.Estado)
-                    .WithMany(p => p.MunicipioNovos)
-                    .HasForeignKey(d => d.EstadoId)
-                    .HasConstraintName("FK_Municipio_Estado1");
+                //entity.HasOne(d => d.IdEstadoNavigation)
+                //    .WithMany(p => p.Municipios)
+                //    .HasForeignKey(d => d.IdEstado)
+                //    .OnDelete(DeleteBehavior.ClientSetNull)
+                //    .HasConstraintName("FK_Municipio_Estado");
             });
 
             modelBuilder.Entity<Nd>(entity =>
@@ -278,6 +362,21 @@ namespace Infra.Data.Contexto
                 entity.Property(e => e.Usuario).IsUnicode(false);
 
                 entity.Property(e => e.UsuarioAlteracao).IsUnicode(false);
+
+                //entity.HasOne(d => d.servicoCobranca)
+                //    .WithMany(p => p.nds)
+                //    .HasForeignKey(d => d.IdServicoCobranca)
+                //    .HasConstraintName("FK_Nd_ServicoCobranca");
+
+                //entity.HasOne(d => d.beneficiario)
+                //    .WithMany(p => p.ndsBeneficiario)
+                //    .HasForeignKey(d => d.PessoaBeneficiario)
+                //    .HasConstraintName("FK_Nd_Pessoa_Beneficiario");
+
+                //entity.HasOne(d => d.pagador)
+                //    .WithMany(p => p.ndsPagador)
+                //    .HasForeignKey(d => d.PessoaPagador)
+                //    .HasConstraintName("FK_Nd_Pessoa_Pagador");
             });
 
             modelBuilder.Entity<Nivel>(entity =>
@@ -285,6 +384,11 @@ namespace Infra.Data.Contexto
                 entity.Property(e => e.NomeNivel).IsUnicode(false);
 
                 entity.Property(e => e.Usuario).IsUnicode(false);
+            });
+
+            modelBuilder.Entity<Papel>(entity =>
+            {
+                entity.Property(e => e.NomePapel).IsUnicode(false);
             });
 
             modelBuilder.Entity<ParametrosShopping>(entity =>
@@ -310,15 +414,58 @@ namespace Infra.Data.Contexto
                 entity.Property(e => e.UsuarioInsercao).IsUnicode(false);
             });
 
-            modelBuilder.Entity<PartilhaRubricaContaCorrente>(entity =>
+            modelBuilder.Entity<PartilhaBancarium>(entity =>
             {
                 entity.Property(e => e.Usuario).IsUnicode(false);
 
                 entity.Property(e => e.UsuarioAlteracao).IsUnicode(false);
+
+                //entity.HasOne(d => d.contaCorrente)
+                //    .WithMany(p => p.PartilhaBancaria)
+                //    .HasForeignKey(d => d.IdContaCorrente)
+                //    .HasConstraintName("FK_PartilhaBancaria_ContaCorrente");
+
+                //entity.HasOne(d => d.servicoCobranca)
+                //    .WithMany(p => p.partilhaBancarium)
+                //    .HasForeignKey(d => d.IdServicoCobranca)
+                //    .HasConstraintName("FK_PartilhaBancaria_ServicoCobranca");
+            });
+
+            modelBuilder.Entity<Perfil>(entity =>
+            {
+                entity.Property(e => e.Id).ValueGeneratedNever();
+
+                entity.Property(e => e.Descricao).IsFixedLength(true);
+            });
+
+            modelBuilder.Entity<PerfilPermissao>(entity =>
+            {
+                entity.Property(e => e.Id).IsFixedLength(true);
+
+                //entity.HasOne(d => d.Perfil)
+                //    .WithMany(p => p.PerfilPermissaos)
+                //    .HasForeignKey(d => d.PerfilId)
+                //    .OnDelete(DeleteBehavior.ClientSetNull)
+                //    .HasConstraintName("FK_PerfilPermissao_Perfil");
+
+                //entity.HasOne(d => d.Permissao)
+                //    .WithMany(p => p.PerfilPermissaos)
+                //    .HasForeignKey(d => d.PermissaoId)
+                //    .OnDelete(DeleteBehavior.ClientSetNull)
+                //    .HasConstraintName("FK_PerfilPermissao_Permissao");
+            });
+
+            modelBuilder.Entity<Permissao>(entity =>
+            {
+                entity.Property(e => e.Id).ValueGeneratedNever();
+
+                entity.Property(e => e.Descricao).IsFixedLength(true);
             });
 
             modelBuilder.Entity<Pessoa>(entity =>
             {
+                entity.Property(e => e.Ativo).HasDefaultValueSql("((1))");
+
                 entity.Property(e => e.Bairro).IsUnicode(false);
 
                 entity.Property(e => e.Celular1).IsUnicode(false);
@@ -329,29 +476,33 @@ namespace Infra.Data.Contexto
 
                 entity.Property(e => e.Cep).IsUnicode(false);
 
-                entity.Property(e => e.Cidade).IsUnicode(false);
-
                 entity.Property(e => e.Complemento).IsUnicode(false);
 
-                entity.Property(e => e.CpfCnpj).IsUnicode(false);
+                entity.Property(e => e.CpfCnpj).IsFixedLength(true);
 
-                entity.Property(e => e.Endereco).IsUnicode(false);
+                entity.Property(e => e.Email).IsFixedLength(true);
 
-                entity.Property(e => e.InscricaoEstadual).IsUnicode(false);
+                entity.Property(e => e.InscricaoEstadual).IsFixedLength(true);
 
-                entity.Property(e => e.InscricaoMunicipal).IsUnicode(false);
+                entity.Property(e => e.InscricaoMunicipal).IsFixedLength(true);
 
-                entity.Property(e => e.Nacionalidade).IsUnicode(false);
+                entity.Property(e => e.Logradouro).IsUnicode(false);
 
-                entity.Property(e => e.NomeCliente).IsUnicode(false);
+                entity.Property(e => e.Nacionalidade).IsFixedLength(true);
+
+                entity.Property(e => e.Nome).IsFixedLength(true);
 
                 entity.Property(e => e.Numero).IsUnicode(false);
 
-                entity.Property(e => e.OrgaoEmissor).IsUnicode(false);
+                entity.Property(e => e.OrgaoEmissor).IsFixedLength(true);
 
-                entity.Property(e => e.Rg).IsUnicode(false);
+                entity.Property(e => e.PrimeiroNome).IsFixedLength(true);
 
-                entity.Property(e => e.SiglaEstado).IsUnicode(false);
+                entity.Property(e => e.RazaoSocial).IsFixedLength(true);
+
+                entity.Property(e => e.Rg).IsFixedLength(true);
+
+                entity.Property(e => e.Senha).IsFixedLength(true);
 
                 entity.Property(e => e.Telefone1).IsUnicode(false);
 
@@ -359,9 +510,17 @@ namespace Infra.Data.Contexto
 
                 entity.Property(e => e.Telefone3).IsUnicode(false);
 
-                entity.Property(e => e.UsuarioAlteracao).IsUnicode(false);
+                //entity.HasOne(d => d.Cidade)
+                //    .WithMany(p => p.Pessoas)
+                //    .HasForeignKey(d => d.CidadeId)
+                //    .OnDelete(DeleteBehavior.ClientSetNull)
+                //    .HasConstraintName("FK_Pessoa_Cidade");
 
-                entity.Property(e => e.UsuarioInsercao).IsUnicode(false);
+                //entity.HasOne(d => d.tipoPessoa)
+                //    .WithMany(p => p.Pessoas)
+                //    .HasForeignKey(d => d.TipoPessoa)
+                //    .HasConstraintName("FK_Pessoa_Sexo");
+
             });
 
             modelBuilder.Entity<PessoaShopping>(entity =>
@@ -410,6 +569,8 @@ namespace Infra.Data.Contexto
 
                 entity.Property(e => e.Convenio).IsUnicode(false);
 
+                entity.Property(e => e.Empresa).IsUnicode(false);
+
                 entity.Property(e => e.ExtensaoArquivoRemessa).IsUnicode(false);
 
                 entity.Property(e => e.ExtensaoArquivoRetorno).IsUnicode(false);
@@ -429,6 +590,23 @@ namespace Infra.Data.Contexto
                 entity.Property(e => e.UsuarioAlteracao).IsUnicode(false);
 
                 entity.Property(e => e.Variacao).IsUnicode(false);
+
+                //entity.HasOne(d => d.contaCorrente)
+                //    .WithMany(p => p.servicoCobranca)
+                //    .HasForeignKey(d => d.IdContaCorrente)
+                //    .HasConstraintName("FK_ServicoCobranca_ContaCorrente");
+
+                //entity.HasOne(d => d.tipoServicoCobranca)
+                //    .WithMany(p => p.servicoCobranca)
+                //    .HasForeignKey(d => d.IdTipoServicoCobranca)
+                //    .HasConstraintName("FK_ServicoCobranca_TipoServicoCobranca");
+            });
+
+            modelBuilder.Entity<Sexo>(entity =>
+            {
+                entity.Property(e => e.Id).ValueGeneratedNever();
+
+                entity.Property(e => e.Descricao).IsFixedLength(true);
             });
 
             modelBuilder.Entity<TipoInstrumento>(entity =>
@@ -436,10 +614,13 @@ namespace Infra.Data.Contexto
                 entity.Property(e => e.NomeInstrumento).IsUnicode(false);
             });
 
+            modelBuilder.Entity<TipoServicoCobranca>(entity =>
+            {
+                entity.Property(e => e.NomeTipoServicoCobranca).IsUnicode(false);
+            });
+
             modelBuilder.Entity<ValoresFaturado>(entity =>
             {
-                entity.Property(e => e.AnoProcessamento).IsFixedLength(true);
-
                 entity.Property(e => e.Documento).IsUnicode(false);
 
                 entity.Property(e => e.UsuarioAlteracao).IsUnicode(false);
@@ -451,6 +632,7 @@ namespace Infra.Data.Contexto
         }
 
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
+
 
         public override int SaveChanges()
         {

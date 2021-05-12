@@ -27,36 +27,32 @@ export class UsuarioComponent implements OnInit {
   usuarioFormulario: FormGroup;
   usuarios: Usuario[];
   Estados: Estado[];
-  Cidades: Cidade[];
-  tipoTela: string;
-  loading: boolean = true;
+  Cidades: Cidade[];  
   _primeiroNomes: Usuario[];
   _primeiroNomesSelecionado: Usuario[];
 
+  //configuração tipo de tela
+  tipoTela: any[];
+  tipoTelaValue: string = "cadastrar"; //valor default
+
+  loading: boolean = true;
+
   constructor(private fb: FormBuilder, private usuarioService: UsuarioService, private estadoService: EstadoService,
-    private _route: ActivatedRoute, private cidadeService: CidadeService) {
+    private cidadeService: CidadeService) {
     this.Formulario();
+    this.tipoTela = [
+      { label: 'Consultar', value: 'consultar' },
+      { label: 'Cadastrar', value: 'cadastrar' },
+      { label: 'Editar', value: 'editar' }
+    ];
   }
 
   ngOnInit(): void {
 
-    this._route.queryParams.subscribe(params => {
-      this.tipoTela = params['tipoTela'];
-    });
-
-    if (this.tipoTela == "consultar" || this.tipoTela == "editar") this.CarregarUsuarios();
+    //if (this.tipoTela == "consultar" || this.tipoTela == "editar") this.CarregarUsuarios();
 
     this.CarregarEstados();
     this.CarregarCidades();
-  }
-
-  @ViewChild('primeNgTabelaConsultaUsuarios') pTableRef: Table;
-  ngAfterViewInit() {
-    
-    if (this.tipoTela == "consultar" || this.tipoTela == "editar"){
-      const table = this.pTableRef.el.nativeElement.querySelector('table');
-      table.setAttribute('id', 'tabelaConsultaUsuarios');
-    }
   }
 
   CarregarEstados(){

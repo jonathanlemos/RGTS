@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 
 namespace Dominio.Interfaces.Repositorios
@@ -12,5 +14,6 @@ namespace Dominio.Interfaces.Repositorios
         TEntity GetById(int id);
         IEnumerable<TEntity> GetAll();
         void Dispose();
+        IQueryable<TEntity> Get(Func<TEntity, bool> where);
     }
 }

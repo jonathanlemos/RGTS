@@ -11,16 +11,22 @@ namespace Dominio.Entidades
     [Table("Cidade")]
     public partial class Cidade
     {
+        public Cidade()
+        {
+            Pessoas = new HashSet<Pessoa>();
+        }
+
         [Key]
         public int Id { get; set; }
         [Required]
         [StringLength(50)]
         public string Nome { get; set; }
-        [Column("Estado_Id")]
+        [ForeignKey("Estado")]
         public int EstadoId { get; set; }
 
-        [ForeignKey(nameof(EstadoId))]
-        [InverseProperty(nameof(EstadoNovo.Cidades))]
-        public virtual EstadoNovo Estado { get; set; }
+
+        public virtual Estado Estado { get; set; }
+
+        public virtual ICollection<Pessoa> Pessoas { get; set; }
     }
 }
